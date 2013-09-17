@@ -1,6 +1,6 @@
-# Slim
+# afSlim
 
-Slim is a [Fantom](http://fantom.org/) library for ...
+afSlim is a [Fantom](http://fantom.org/) library for generating HTML from lightweight templates.
 
 
 

@@ -5,6 +5,8 @@ internal const class SlimParser {
 
 	const SlimLineCompiler[]	compilers := 
 		[	SlimLineDoctypeCompiler(),
+			SlimLineFanCommentCompiler(),
+			SlimLineHtmlCommentCompiler(),
 			SlimLineElementCompiler()
 		].toImmutable
 

@@ -1,0 +1,26 @@
+
+ -- fantom code
+ == fantom eval (escaped)
+ =- fantom eval (un-escaped)
+ // fantom comment
+ /! html comment
+ 
+ : for unescaped
+ pre:
+ 	Void dude() {
+		doSomehtin
+	}
+       
+javascript:
+	dude = function() {
+		wotever();
+	}
+
+For 1.0.0
+=========
+
+
+
+For Future
+==========
+

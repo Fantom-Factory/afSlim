@@ -1,5 +1,5 @@
 
-internal class TestOneLiners : SlimTest {
+internal class TestDoctype : SlimTest {
 	
 	Void testOneLineDoctype() {
 		text := compiler.compile(``, "doctype html")

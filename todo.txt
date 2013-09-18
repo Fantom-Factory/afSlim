@@ -1,9 +1,17 @@
 
+${escape}  ${or not?}
+
  -- fantom code
  == fantom eval (escaped)
- =- fantom eval (un-escaped)
+ =- fantom eval (un-escaped) ?
  // fantom comment
  /! html comment
+ 
+ how about...
+ == fantom eval (un-escaped)
+ ${..} 			 escapsed?
+ 
+ 
  
  : for unescaped
  pre:
@@ -15,6 +23,14 @@ javascript:
 	dude = function() {
 		wotever();
 	}
+
+
+use ; for multiline?
+
+	h1: Alien-Factory; small: v${projectVersion}
+
+--> <h1>Alien-Factory[ ]<small>v${projectVersion}</small></h1>
+ (where whitespace?)
 
 For 1.0.0
 =========

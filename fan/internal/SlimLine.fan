@@ -37,8 +37,8 @@ internal abstract class SlimLine {
 		return buf
 	}
 	
-	Void indent(StrBuf buf) {
-		indentBy.times { buf.addChar('\t') }
+	Void indent(StrBuf buf, Int plus := 0) {
+		(indentBy + plus).times { buf.addChar('\t') }
 	}
 	
 	override Str toStr() {

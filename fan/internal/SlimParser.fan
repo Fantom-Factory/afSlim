@@ -6,6 +6,7 @@ internal const class SlimParser {
 	const SlimLineCompiler[]	compilers := 
 		[	SlimLineDoctypeCompiler(),
 			SlimLineFanCodeCompiler(),
+			SlimLineFanEvalCompiler(),
 			SlimLineFanCommentCompiler(),
 			SlimLineHtmlCommentCompiler(),
 			SlimLineElementCompiler()

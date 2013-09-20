@@ -2,18 +2,21 @@
 ${escape}  ${or not?}
 
  -- fantom code
- == fantom eval (escaped)
- =- fantom eval (un-escaped) ?
+ == fantom eval (unescaped -> use ${this} for escaping
+ (doens't matter if eval lines are escaped, they'll hardly ever be used! $${} is king!)
  // fantom comment
  /! html comment
  
  how about...
  == fantom eval (un-escaped)
- ${..} 			 escapsed?
+  ${...}	escaped
+ \${...} 	ignored
+ $${...}	unescaped
+\$${...} 	ignored
  
  
- 
- : for unescaped
+ TODO: multiline text
+ : for unescaped?
  pre:
  	Void dude() {
 		doSomehtin
@@ -40,3 +43,4 @@ For 1.0.0
 For Future
 ==========
 
+ 

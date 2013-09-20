@@ -2,6 +2,7 @@
 internal const class SlimLineElementCompiler : SlimLineCompiler {
 
 	override Bool matches(Str line) {
+		// catch all / wotever's left 
 		true
 	}
 	
@@ -50,7 +51,7 @@ internal const class SlimLineElementCompiler : SlimLineCompiler {
 		if (!attr.isEmpty)
 			attrs.add(attr.trim)
 		
-		return SlimLineElement(name, attrs.join(" "), text.trim)
+		return SlimLineElement(escape(name), escape(attrs.join(" ")), escape(text.trim))
 	}
 }
 

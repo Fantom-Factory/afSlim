@@ -6,7 +6,7 @@ internal const class SlimLineHtmlCommentCompiler : SlimLineCompiler {
 	}
 	
 	override SlimLine compile(Str line) {
-		SlimLineHtmlComment(line[2..-1].trim)
+		SlimLineHtmlComment(escape(line[2..-1].trim))
 	}
 }
 

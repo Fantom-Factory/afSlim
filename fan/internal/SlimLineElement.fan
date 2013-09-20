@@ -77,11 +77,15 @@ internal class SlimLineElement : SlimLine {
 		buf.addChar('>')
 		if (!children.isEmpty) {
 			buf.addChar('\n')
-			indent(buf, 1)
+			if (!text.isEmpty) {
+				indent(buf, 1)
+			}
 		}
-		buf.add(text)
-		if (!children.isEmpty) {
-			buf.addChar('\n')			
+		if (!text.isEmpty) {
+			buf.add(text)
+			if (!children.isEmpty) {
+				buf.addChar('\n')
+			}
 		}
 	}
 

@@ -1,15 +1,5 @@
 
 Fook XML namespcing for now - this is for HTML!
-
- -- fantom code
- == fantom eval
- // fantom comment
- /! html   comment
- 
-  ${...}	escaped
- \${...} 	ignored
- $${...}	unescaped
-\$${...} 	ignored
        
  TODO: multiline text
 javascript:
@@ -18,9 +8,10 @@ javascript:
 	}
 
 
-use ; for multiline?
+use ; for multiline? NO - ; is used for HTML entities! => &amp;
+	h1 Alien-Factory; small v${projectVersion}
 
-	h1: Alien-Factory; small: v${projectVersion}
+No multiline - escaping sucks!
 
 TODO: whitespace?
 
@@ -31,9 +22,21 @@ TODO: whitespace?
 For 1.0.0
 =========
 
-BUG: can not have ':' in attribute - thinks it the start of text... hmmm...
+Add | for multiline texts.
+
+script
+	| dude = function() {
+		wotever();
+	}
+
+p |
+	dude = function() {
+		wotever();
+	}
+
 
 For Future
 ==========
 
- 
+ Multiple, non-HTML5 line endings
+  - how do you specify this document wide (nested component) at render time? 

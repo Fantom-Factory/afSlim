@@ -75,6 +75,8 @@ internal class SlimLineElement : SlimLine {
 	Str attr
 	Str text
 	
+	TagEndingsHtml5 endings	:= TagEndingsHtml5()
+	
 	new make(Str name, Str attr, Str text) {
 		this.name = name
 		this.attr = attr
@@ -89,7 +91,9 @@ internal class SlimLineElement : SlimLine {
 			buf.addChar(' ')
 			buf.add(attr)
 		}
-		buf.addChar('>')
+		
+		buf.add(endings.completeStartTag(name))
+		
 		if (!children.isEmpty) {
 			buf.addChar('\n')
 			if (!text.isEmpty) {
@@ -108,9 +112,7 @@ internal class SlimLineElement : SlimLine {
 		if (!children.isEmpty) {
 			indent(buf)
 		}
-		buf.addChar('<').addChar('/')
-		buf.add(name)
-		buf.addChar('>')
+		buf.add(endings.endTag(name))
 		buf.addChar('\n')
 	}
 	

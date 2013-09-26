@@ -2,6 +2,8 @@ Overview [#overview]
 ********************
 A library to ...
 
+based on [Jade]`http://jade-lang.com/` for javascript and [Slim]`http://slim-lang.com/` for Ruby
+
 
 Fook XML namespcing for now - this is for HTML!
 

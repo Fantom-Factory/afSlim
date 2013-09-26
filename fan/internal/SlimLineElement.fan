@@ -7,49 +7,63 @@ internal const class SlimLineElementCompiler : SlimLineCompiler {
 	}
 	
 	override SlimLine compile(Str line) {
+		// I know, I'll use Regular Expressions! ...
+		
+		// match name (attr) text
+		regx := Regex<|^([^\s^\[^\{]+)\s*\((.+)\)(.*)$|>.matcher(line)
+		if (regx.find)
+			return match(regx.group(1), regx.group(2), regx.group(3))
 
+		// match name [attr] text
+		regx = Regex<|^([^\s^\[^\{]+)\s*\[(.+)\](.*)$|>.matcher(line)
+		if (regx.find)
+			return match(regx.group(1), regx.group(2), regx.group(3))
+		
+		// match name {attr} text
+		regx = Regex<|^([^\s^\[^\{]+)\s*\{(.+)\}(.*)$|>.matcher(line)
+		if (regx.find)
+			return match(regx.group(1), regx.group(2), regx.group(3))
+		
+		// match name text
+		regx = Regex<|^([^\s]+)\s*(.*)$|>.matcher(line)
+		if (regx.find)
+			return match(regx.group(1), "", regx.group(2))
+		
+		throw SlimErr("Could not match element in: ${line}")
+	}
+	
+	SlimLine match(Str tag, Str attr, Str text) {
+		attrs	:= Str[,]
 		name	:= ""
 		id		:= ""
 		classes	:= ""
-		attr	:= ""
-		text	:= ""
-		attrs	:= Str[,]
-
-		name	= line.split[0]
-		remain	:= line[name.size..-1]
 		
-		if (name.contains("#")) {
-			temp	:= name.split('#', false)
-			name	= temp[0]
-			temp	= temp[1..-1].join("#").split('.', false)
-			id		= temp[0]
-			classes	= temp[1..-1].join(" ")
-		} else 
-
-		if (name.contains(".")) {
-			temp	:= name.split('.', false)
-			name	= temp[0]
-			classes	= temp[1..-1].join(" ")
-		}
-
-		if (remain.contains(":")) {
-			attr	= remain.split(':', false)[0]
-			text	= remain[attr.size+1..-1]
-		} else 
-		
-		if (name.endsWith(":")) {
-			name	= name[0..-2]
-			text	= remain
+		// match name#id.class.class
+		regx := Regex<|^(.+?)(#.+?)?(\..+)*$|>.matcher(tag)
+		regx.find
+		for (i := 1; i <= regx.groupCount; i++) {
+			group := regx.group(i)
+			if (group == null)
+				continue
+			if (group.startsWith("#")) {
+				id = group[1..-1].trim
+				continue
+			}
+			if (group.startsWith(".")) {
+				classes = group[1..-1].split('.').join(" ")
+				continue
+			}
+			name = group.trim
 		}
 
 		if (!id.isEmpty)
-			attrs.add("id=\"${id.trim}\"")
+			attrs.add("id=\"${id}\"")
 		
 		if (!classes.isEmpty)
-			attrs.add("class=\"${classes.trim}\"")
-
+			attrs.add("class=\"${classes}\"")
+		
 		if (!attr.isEmpty)
-			attrs.add(attr.trim)
+			attrs.add(attr.trim)		
 		
 		return SlimLineElement(escape(name), escape(attrs.join(" ")), escape(text.trim))
 	}

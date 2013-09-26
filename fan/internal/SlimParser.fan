@@ -31,7 +31,7 @@ internal const class SlimParser {
 			current 		= current.add(slimLine)
 		}
 		
-		Env.cur.err.printLine(tree.toEfan(StrBuf()).toStr)
+//		Env.cur.err.printLine(tree.toEfan(StrBuf()).toStr)
 	}
 
 }

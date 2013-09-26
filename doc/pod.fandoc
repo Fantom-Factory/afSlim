@@ -3,6 +3,26 @@ Overview [#overview]
 A library to ...
 
 
+Fook XML namespcing for now - this is for HTML!
+
+ -- fantom code
+ == fantom eval
+ // fantom comment
+ /! html   comment
+
+  ${...}	escaped
+ \${...} 	ignored
+ $${...}	unescaped
+\$${...} 	ignored
+
+ TODO: multiline text
+javascript:
+	dude = function() {
+		wotever();
+	}
+
+
+
 
 Quick Start [#quickStart]
 *************************
@@ -17,4 +37,4 @@ Release Notes [#releaseNotes]
 
 v0.0.2 [#v0.0.2]
 ----------------
- - New: Preview Release 
+ - New: Preview Release

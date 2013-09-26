@@ -1,27 +1,17 @@
 
-${escape}  ${or not?}
+Fook XML namespcing for now - this is for HTML!
 
  -- fantom code
- == fantom eval (unescaped -> use ${this} for escaping
- (doens't matter if eval lines are escaped, they'll hardly ever be used! $${} is king!)
+ == fantom eval
  // fantom comment
- /! html comment
+ /! html   comment
  
- how about...
- == fantom eval (un-escaped)
   ${...}	escaped
  \${...} 	ignored
  $${...}	unescaped
 \$${...} 	ignored
- 
- 
- TODO: multiline text
- : for unescaped?
- pre:
- 	Void dude() {
-		doSomehtin
-	}
        
+ TODO: multiline text
 javascript:
 	dude = function() {
 		wotever();
@@ -32,13 +22,16 @@ use ; for multiline?
 
 	h1: Alien-Factory; small: v${projectVersion}
 
+TODO: whitespace?
+
 --> <h1>Alien-Factory[ ]<small>v${projectVersion}</small></h1>
  (where whitespace?)
+
 
 For 1.0.0
 =========
 
-
+BUG: can not have ':' in attribute - thinks it the start of text... hmmm...
 
 For Future
 ==========

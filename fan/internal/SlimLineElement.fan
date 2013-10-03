@@ -1,6 +1,8 @@
 
 internal const class SlimLineElementCompiler : SlimLineCompiler {
 
+	private const SlimLineTextCompiler textCompiler	:= SlimLineTextCompiler()
+	
 	override Bool matches(Str line) {
 		// catch all / wotever's left 
 		true
@@ -65,7 +67,14 @@ internal const class SlimLineElementCompiler : SlimLineCompiler {
 		if (!attr.isEmpty)
 			attrs.add(attr.trim)		
 		
-		return SlimLineElement(escape(name), escape(attrs.join(" ")), escape(text.trim))
+		element	:= SlimLineElement(escape(name), escape(attrs.join(" ")), escape(text.trimStart))
+
+		// fudge for javascript type lines
+		if (textCompiler.matches(text.trimStart)) {
+			element.multiLine	= textCompiler.compile(text)
+			element.text		= ""
+		}
+		return element
 	}
 }
 

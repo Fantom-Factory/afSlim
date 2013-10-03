@@ -14,8 +14,6 @@ internal const class SlimLineTextCompiler : SlimLineCompiler {
 			extraPadding += 1
 		}
 		
-//		leading	:= text.size - text.trimStart.size
-		
 		return SlimLineText(escape(text), extraPadding)
 	}
 }
@@ -46,12 +44,14 @@ internal class SlimLineText : SlimLine {
 		// preserve any leading whitespace
 		padding -= extraPadding
 		space := "".padl(padding, ' ')
-//		space := ""
 		text += "\n${space}${line}"
 		return true
 	}
 	
 	override Void onEntry(StrBuf buf) {
+		// trim empty lines - don't! Wot of <pre>!!!
+//		if (text.trim.isEmpty)
+//			return
 		indent(buf)
 		buf.add(text)
 	}

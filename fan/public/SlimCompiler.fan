@@ -1,4 +1,5 @@
 
+** Compiles slim templates into efan templates.
 const class SlimCompiler {
 	
 			const  Int 			srcCodePadding	:= 5 

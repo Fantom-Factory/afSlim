@@ -67,10 +67,11 @@ internal const class SlimLineElementCompiler : SlimLineCompiler {
 		if (!attr.isEmpty)
 			attrs.add(attr.trim)		
 		
-		element	:= SlimLineElement(escape(name), escape(attrs.join(" ")), escape(text.trimStart))
+		text = text.trimStart	// very important!
+		element	:= SlimLineElement(escape(name), escape(attrs.join(" ")), escape(text))
 
 		// fudge for javascript type lines
-		if (textCompiler.matches(text.trimStart)) {
+		if (textCompiler.matches(text)) {
 			element.multiLine	= textCompiler.compile(text)
 			element.text		= ""
 		}

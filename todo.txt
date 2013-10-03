@@ -1,37 +1,18 @@
 
     
-Remove all whitespace - pretty print xml
 
 For 1.0.0
 =========
-
 check and err if wrong lines are nested (i.e. a comment in a text, element in doctype, etc)
 
 TODO: whitespace?
+Remove all whitespace - pretty print xml
 
 --> <h1>Alien-Factory[ ]<small>v${projectVersion}</small></h1>
  (where whitespace?)
 
-
-TODO: multiline text
-javascript:
-	dude = function() {
-		wotever();
-	}
-
 convert compilation errs to Slim Src compilation errs
 
-Add | for multiline texts.
-
-script
-	| dude = function() {
-		wotever();
-	}
-
-p |
-	dude = function() {
-		wotever();
-	}
 
 
 For Future

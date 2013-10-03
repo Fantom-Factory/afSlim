@@ -1,6 +1,6 @@
 
 ** @see http://www.w3.org/html/wg/drafts/html/master/syntax.html#void-elements
-const class TagEndingsHtml5 {
+internal const class TagEndingsHtml5 {
 	
 	const Str[] voidTags	:= "area, base, br, col, embed, hr, img, input, keygen, link, menuitem, meta, param, source, track, wbr".split(',')
 	

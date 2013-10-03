@@ -3,7 +3,7 @@ internal class TestFanEval : SlimTest {
 	
 	Void test1Line() {
 s := """== renderStuff() """
-		text := compiler.compile(``, s)
+		text := compiler.compileFromStr(``, s)
 		verifyEq(text, "<%= renderStuff() %>\n")
 	}
 

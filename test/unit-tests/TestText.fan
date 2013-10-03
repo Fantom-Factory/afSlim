@@ -3,20 +3,20 @@ internal class TestText : SlimTest {
 	
 	Void testTextBasic() {
 s := """| Dude"""
-		text := compiler.compile(``, s)
+		text := compiler.compileFromStr(``, s)
 		verifyEq(text, "Dude\n")
 	}
 
 	Void testTextBasicPreservesWhitespace() {
 s := """|  Dude"""
-		text := compiler.compile(``, s)
+		text := compiler.compileFromStr(``, s)
 		verifyEq(text, " Dude\n")
 	}
 
 	Void testMultipleTextsInsertWhitespace() {
 s := """| Wot
         | ever"""
-		text := compiler.compile(``, s)
+		text := compiler.compileFromStr(``, s)
 		// this ensures sentencesdon't suddenly loose spacesbetween words when wrapped!
 		verifyEq(text, "Wot \never\n")
 	}
@@ -25,14 +25,14 @@ s := """| Wot
 s := """| Wot
         a.link thing
         | Ever"""
-		text := compiler.compile(``, s)
+		text := compiler.compileFromStr(``, s)
 		verifyEq(text, "Wot\n<a class=\"link\">thing</a>\nEver\n")
 	}
 
 	Void testNestedText() {
 s := """|
         	Dude"""
-		text := compiler.compile(``, s)
+		text := compiler.compileFromStr(``, s)
 		verifyEq(text, "\nDude\n")
 	}
 
@@ -40,14 +40,14 @@ s := """|
 s := """|
           alert();
             console.log;"""
-		text := compiler.compile(``, s)
+		text := compiler.compileFromStr(``, s)
 		verifyEq(text, "\n alert();\n   console.log;\n")
 	}
 
 	Void testNestedNestedIsIgnored() {
 s := """| wot
            | ever"""
-		text := compiler.compile(``, s)
+		text := compiler.compileFromStr(``, s)
 		verifyEq(text, "wot\n | ever\n")
 	}
 
@@ -55,7 +55,7 @@ s := """| wot
 	Void testElementContainsText() {
 s := """a.link |
         	    link text"""	// tab + 4 spaces - trim empty lines
-		text := compiler.compile(``, s)
+		text := compiler.compileFromStr(``, s)
 		verifyEq(text, "<a class=\"link\">\n\t\n    link text\n</a>\n")
 	}
 
@@ -63,7 +63,7 @@ s := """a.link |
 		// testing the space before pipe (BUGFIX!)
 s := """script (type='text/javascript') |
         	alert();"""
-		text := compiler.compile(``, s)
+		text := compiler.compileFromStr(``, s)
 		verifyEq(text, "<script type='text/javascript'>\n\t\nalert();\n</script>\n")
 	}
 

@@ -6,12 +6,14 @@ Features include:
  - indentation driven - closing tags not needed
  - shortcut notation for IDs and classes
  - '${...}' notation to call Fantom code
+ - [efan]`http://repo.status302.com/doc/afEfan/#overview` template generation
 
 
 
 Quick Start [#quickStart]
 *************************
 Example.slim:
+
 pre>
 doctype html
 html
@@ -52,7 +54,8 @@ html
       }
 <pre
 
-Example.fan
+Example.fan:
+
 pre>
 using afSlim
 
@@ -65,7 +68,6 @@ class Example {
   }
 }
 <pre
-
 
 
 Syntax [#syntax]
@@ -96,24 +98,30 @@ Elements [#elements]
 ====================
 Element lines are formatted as:
 
+pre>
   element[#id][.class][.class] [(attributes)] [text]
 
   div Text here           --> <div>Text here</div>
   div#wombat Text here    --> <div id="wombat">Text here</div>
   div.wombat Text here    --> <div class="wombat">Text here</div>
   div(data-type="wombat") --> <div data-type="wombat"></div>
+<pre
 
-Note that attributes may also be enclosed in [square] brackets and {curly} brackets.
+Note that attributes may also be enclosed in square brackets and curly brackets.
 Which is handy should you want to include brackets as attribute data.
 
+pre>
    div[data-type="(wombat)"] --> <div data-type="(wombat)"></div>
    div{data-type="(wombat)"} --> <div data-type="(wombat)"></div>
+<pre
 
 Use all the shortcuts together:
 
+pre>
   div#robert.juice.media (data-on="You Tube") Rap News
   -->
   <div id="robert" class="juice media" data-on="You Tube">Rap News</div>
+<pre
 
 
 

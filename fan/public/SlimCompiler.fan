@@ -10,17 +10,17 @@ const class SlimCompiler {
 		parser	:= SlimParser() { it.srcCodePadding = this.srcCodePadding }
 	}
 	
-	** Compiles the given slim template into efan source
-	Str compile(Uri srcLocation, Str slimTemplate) {
+	** Compiles the given slim template into an efan template.
+	Str compileFromStr(Uri srcLocation, Str slimTemplate) {
 		tree := SlimLineRoot()
 		parser.parse(srcLocation, slimTemplate, tree)
 		buf	 := StrBuf(slimTemplate.size)
 		return tree.toEfan(buf).toStr
 	}
 
-	** Compiles the given slim file into efan source
+	** Compiles the given slim file into an efan template.
 	Str compileFromFile(File slimFile) {
-		compile(slimFile.normalize.uri, slimFile.readAllStr)
+		compileFromStr(slimFile.normalize.uri, slimFile.readAllStr)
 	}
 
 }

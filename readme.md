@@ -1,6 +1,6 @@
 # afSlim
 
-afSlim is a [Fantom](http://fantom.org/) library for generating HTML from concise, lightweight templates. 'afSlim' is based on [Jade](http://jade-lang.com/) for javascript and [Slim](http://slim-lang.com/) for Ruby.
+afSlim is a [Fantom](http://fantom.org/) library for generating HTML from concise, lightweight templates. afSlim is based on [Jade](http://jade-lang.com/) for javascript and [Slim](http://slim-lang.com/) for Ruby.
 
 
 

@@ -92,6 +92,9 @@ Start a line with 'doctype' to print a document type. Currently only 'html' is s
 
   doctype html   -->   <!DOCTYPE html>
 
+The doctype defines the element endings for tags. Example, 'doctype html' will ensure elements are rendered as valid HTML 5
+tags as described in [W3C HTML 5 Syntax]`http://www.w3.org/html/wg/drafts/html/master/syntax.html#void-elements`.
+
 
 
 Elements [#elements]

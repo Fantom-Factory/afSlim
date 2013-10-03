@@ -27,8 +27,14 @@ internal const class SlimParser {
 			
 			if (!current.consume(leadingWs, source)) {
 				lineCompiler	:= compilers.find { it.matches(source) }
-				slimLine		:= lineCompiler.compile(source) { it.slimLineNo = lineNo; it.leadingWs = leadingWs }			
+				slimLine		:= lineCompiler.compile(source) { it.slimLineNo = lineNo; it.leadingWs = leadingWs }
 				current 		= current.add(slimLine)
+				
+				// fudge for: script (type="text/javascript") | 
+				if (current.isMultiLine) {
+					multiLine	:= current.multiLine.with { it.slimLineNo = lineNo; it.leadingWs = leadingWs}
+					current		= current.addChild(multiLine)
+				}
 			}
 		}
 	}

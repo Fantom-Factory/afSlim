@@ -51,11 +51,12 @@ s := """| wot
 		verifyEq(text, "wot\n | ever\n")
 	}
 
-//	Void testElementContainsText-Advanced() {
-//s := """a.link | 
-//          link text"""
-//		text := compiler.compile(``, s)
-//		verifyEq(text, "<a class=\"link\">link text\n</a>\n")
-//	}
+	// Advanced!!!
+	Void testElementContainsText() {
+s := """a.link |
+        	    link text"""	// tab + 4 spaces - trim empty lines
+		text := compiler.compile(``, s)
+		verifyEq(text, "<a class=\"link\">\n\t\n    link text\n</a>\n")
+	}
 
 }

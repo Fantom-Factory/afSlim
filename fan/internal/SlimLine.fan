@@ -1,45 +1,43 @@
 
 internal abstract class SlimLine {
-	Int slimLineNo
-	Int leadingWs
+	Int 		slimLineNo
+	Int 		leadingWs
 	
-	Int indentBy
-	SlimLine? parent
+	Int 		indentBy
+	SlimLine? 	parent
 	
 	SlimLine[]	children	:= [,]
+
+	SlimLine? 	multiLine
 	
 	new make() { }
 
-	virtual SlimLine add(SlimLine slimLine) {
+	SlimLine add(SlimLine slimLine) {
 		// back out
 		if (slimLine.leadingWs <= leadingWs)
 			return parent.add(slimLine)
 		
+		return addChild(slimLine)
+	}
+
+	SlimLine addChild(SlimLine slimLine) {
 		children.getSafe(-1)?.addSibling(slimLine)
 		children.add(slimLine)
 		slimLine.parent = this
 		slimLine.indentBy = indentBy + 1
 		return slimLine		
-//		return addChild(slimLine)
 	}
 
 	virtual Void addSibling(SlimLine slimLine) { }
-//	virtual SlimLine addChild(SlimLine slimLine) {
-//	}
-
-	
-//	Bool shouldContain(SlimLine slimLine) {
-//		slimLine.leadingWs > leadingWs
-//	}
-	
-//	Bool isInside(SlimLine slimLine) {
-//		slimLine.leadingWs < leadingWs		
-//	}
 	
 	virtual Bool consume(Int leadingWs, Str line) { false }
 	
 	abstract Void onEntry(StrBuf buf)
 	abstract Void onExit(StrBuf buf)
+	
+	Bool isMultiLine() {
+		multiLine != null
+	}
 	
 	StrBuf toEfan(StrBuf buf) {
 		onEntry(buf)

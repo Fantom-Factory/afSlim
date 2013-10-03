@@ -1,7 +1,14 @@
 
 const class SlimCompiler {
 	
-	private const SlimParser 		parser	:= SlimParser()
+			const  Int 			srcCodePadding	:= 5 
+	
+	private const SlimParser	parser	:= SlimParser()
+
+	new make(|This|? in := null) {
+		in?.call(this)
+		parser	:= SlimParser() { it.srcCodePadding = this.srcCodePadding }
+	}
 	
 	** Compiles the given slim template into efan source
 	Str compile(Uri srcLocation, Str slimTemplate) {

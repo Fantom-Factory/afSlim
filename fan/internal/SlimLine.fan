@@ -10,22 +10,33 @@ internal abstract class SlimLine {
 	
 	new make() { }
 
-	Bool shouldContain(SlimLine slimLine) {
-		slimLine.leadingWs > leadingWs
-	}
-	
-	SlimLine add(SlimLine slimLine) {
+	virtual SlimLine add(SlimLine slimLine) {
+		// back out
 		if (slimLine.leadingWs <= leadingWs)
 			return parent.add(slimLine)
+		
+		children.getSafe(-1)?.addSibling(slimLine)
 		children.add(slimLine)
 		slimLine.parent = this
 		slimLine.indentBy = indentBy + 1
-		return slimLine
+		return slimLine		
+//		return addChild(slimLine)
 	}
+
+	virtual Void addSibling(SlimLine slimLine) { }
+//	virtual SlimLine addChild(SlimLine slimLine) {
+//	}
+
 	
-	Bool isInside(SlimLine slimLine) {
-		slimLine.leadingWs < leadingWs		
-	}
+//	Bool shouldContain(SlimLine slimLine) {
+//		slimLine.leadingWs > leadingWs
+//	}
+	
+//	Bool isInside(SlimLine slimLine) {
+//		slimLine.leadingWs < leadingWs		
+//	}
+	
+	virtual Bool consume(Int leadingWs, Str line) { false }
 	
 	abstract Void onEntry(StrBuf buf)
 	abstract Void onExit(StrBuf buf)

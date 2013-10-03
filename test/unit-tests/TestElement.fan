@@ -80,9 +80,9 @@ s := """title dude :: still text!"""
 	}
 
 	Void testNameAndAttr() {
-s := """meta (name="bier") """
+s := """dude (name="bier") """
 		text := compiler.compile(``, s)
-		verifyEq(text, """<meta name="bier"></meta>\n""")
+		verifyEq(text, """<dude name="bier"></dude>\n""")
 	}
 
 	Void testAttributesMixed() {

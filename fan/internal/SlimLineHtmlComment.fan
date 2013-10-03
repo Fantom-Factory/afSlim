@@ -19,6 +19,7 @@ internal class SlimLineHtmlComment : SlimLine {
 	}
 	
 	override Void onEntry(StrBuf buf) {
+		indent(buf)
 		buf.add("<!-- ${comment} -->\n")
 	}
 

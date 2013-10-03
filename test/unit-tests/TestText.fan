@@ -59,4 +59,12 @@ s := """a.link |
 		verifyEq(text, "<a class=\"link\">\n\t\n    link text\n</a>\n")
 	}
 
+	Void testElementContainsText2() {
+		// testing the space before pipe (BUGFIX!)
+s := """script (type='text/javascript') |
+        	alert();"""
+		text := compiler.compile(``, s)
+		verifyEq(text, "<script type='text/javascript'>\n\t\nalert();\n</script>\n")
+	}
+
 }

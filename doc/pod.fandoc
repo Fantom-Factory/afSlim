@@ -1,8 +1,16 @@
 Overview [#overview]
 ********************
-A library to ...
+'afSlim' is a library for generating HTML from lightweight templates.
 
-based on [Jade]`http://jade-lang.com/` for javascript and [Slim]`http://slim-lang.com/` for Ruby
+Based on [Jade]`http://jade-lang.com/` for javascript and [Slim]`http://slim-lang.com/` for Ruby, 'afSlim' generates HTML from
+concise, lightweight templates. Features include:
+
+ - No closing tags, use indentation instead
+ - Use '#' shortcut for IDs
+ - Use '.' shortcut for classes
+ - Use fantom '${...}' notation for
+
+'afSlim' uses
 
 
 Fook XML namespcing for now - this is for HTML!
@@ -29,9 +37,68 @@ javascript:
 Quick Start [#quickStart]
 *************************
 pre>
-  Example here
+doctype html
+html
+  head
+    title afSlim Example
+    meta name="keywords" content="fantom html template language"
+    script (type="text/javascript")
+      alert("Hello ${name}");
+
+  body
+    h1 Slim Example
+
+    p This is what a basic Slim file looks like.
+
+    div#content This div has an ID of 'content'
+    div.content This div has a class of 'content'
+
+    div (style="color: red;") Specify attributes in brackets
+
+    div[style="color: blue;"] You can also use [square] and {curly} brackets
+      p Use indentation...
+        span ...to nest tags
+
+    // The is a Slim comment
+    /! This is a HTML comment
+
+    -- if (examples.empty)
+      p No items found!
+
+    -- else
+      table
+        -- items.each |item|
+          tr
+            td.name Embed Fantom ${item.name) values
+            td.price
+              == "Write whole " + item.price + " fantom liness"
+
+    div#footer
+      -- renderFooter
 <pre
 
+
+
+Doctype [#doctype]
+******************
+pre>
+doctype <XXX>
+<pre
+
+Start a line with 'doctype' to print a document type. Currently only 'html' is supported:
+
+**html** : <!DOCTYPE html>
+
+
+
+Tags [#tags]
+************
+pre>
+tag#id.class.class (attributes) tag content
+<pres
+
+Lines that start with text define a tag / HTML element.
+Slim tags start withdo not need closing tags (they are definded by the
 
 
 Release Notes [#releaseNotes]

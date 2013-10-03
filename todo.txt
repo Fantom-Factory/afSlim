@@ -1,17 +1,11 @@
 
-Fook XML namespcing for now - this is for HTML!
-       
- TODO: multiline text
-javascript:
-	dude = function() {
-		wotever();
-	}
+    
+Remove all whitespace - pretty print xml
 
+For 1.0.0
+=========
 
-use ; for multiline? NO - ; is used for HTML entities! => &amp;
-	h1 Alien-Factory; small v${projectVersion}
-
-No multiline - escaping sucks!
+check and err if wrong lines are nested (i.e. a comment in a text, element in doctype, etc)
 
 TODO: whitespace?
 
@@ -19,8 +13,13 @@ TODO: whitespace?
  (where whitespace?)
 
 
-For 1.0.0
-=========
+TODO: multiline text
+javascript:
+	dude = function() {
+		wotever();
+	}
+
+convert compilation errs to Slim Src compilation errs
 
 Add | for multiline texts.
 
@@ -40,3 +39,18 @@ For Future
 
  Multiple, non-HTML5 line endings
   - how do you specify this document wide (nested component) at render time? 
+ Best to set at compiler time
+ 
+ Don't make doctype an enum - for what about custom doctypes?
+ 
+ Could doctype be a service / helper method?
+ 
+ 
+ Just aBad Idea
+ ==============
+ 
+ use ; for multiline? NO - ; is used for HTML entities! => &amp;
+	h1 Alien-Factory; small v${projectVersion}
+
+No multiline - escaping sucks!
+  

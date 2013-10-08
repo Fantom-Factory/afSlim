@@ -13,8 +13,7 @@ const class Slim {
 	Str renderFromStr(Str slimTemplate, Obj? ctx := null, Type[] viewHelpers := Type#.emptyList) {
 		location	:= `render/from/str`
 		efan		:= slimCompiler.compileFromStr(location, slimTemplate)
-		renderType	:= efanCompiler.compileWithHelpers(location, efan, ctx?.typeof, viewHelpers)
-		renderer	:= (EfanRenderer) renderType.make
+		renderer	:= efanCompiler.compileWithHelpers(location, efan, ctx?.typeof, viewHelpers)
 		return renderer.render(ctx)
 	}
 
@@ -22,8 +21,7 @@ const class Slim {
 	Str renderFromFile(File slimFile, Obj? ctx := null, Type[] viewHelpers := Type#.emptyList) {
 		location	:= slimFile.normalize.uri
 		efan		:= slimCompiler.compileFromFile(slimFile)
-		renderType	:= efanCompiler.compileWithHelpers(location, efan, ctx?.typeof, viewHelpers)
-		renderer	:= (EfanRenderer) renderType.make
+		renderer	:= efanCompiler.compileWithHelpers(location, efan, ctx?.typeof, viewHelpers)
 		return renderer.render(ctx)
 	}
 	

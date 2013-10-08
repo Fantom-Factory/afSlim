@@ -219,6 +219,10 @@ pre>
 Release Notes [#releaseNotes]
 *****************************
 
+v0.0.4 [#v0.0.4]
+----------------
+ - Chg: Updated to use [afEfan 1.2]`http://repo.status302.com/doc/afEfan/#overview`
+
 v0.0.2 [#v0.0.2]
 ----------------
  - New: Preview Release

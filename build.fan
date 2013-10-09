@@ -5,14 +5,14 @@ class Build : BuildPod {
 	new make() {
 		podName = "afSlim"
 		summary = "A library for generating HTML from concise, lightweight templates."
-		version = Version([0,0,3])
+		version = Version([0,0,4])
 
 		meta	= [	"org.name"		: "Alien-Factory",
 					"org.uri"		: "http://www.alienfactory.co.uk/",
 					"vcs.uri"		: "https://bitbucket.org/Alien-Factory/afslim",
 					"proj.name"		: "Slim",
 					"license.name"	: "BSD 2-Clause License",
-					"repo.private"	: "true"
+					"repo.private"	: "false"
 				]
 
 		depends = ["sys 1.0", "afEfan 1.2+", "afPlastic 1.0.2+"]

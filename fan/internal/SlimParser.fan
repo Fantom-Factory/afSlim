@@ -1,8 +1,6 @@
 
 internal const class SlimParser {
 
-	const  Int 	srcCodePadding	:= 5 
-
 	const SlimLineCompiler[]	compilers := 
 		[	SlimLineDoctypeCompiler(),
 			SlimLineFanCodeCompiler(),
@@ -14,8 +12,6 @@ internal const class SlimParser {
 		].toImmutable
 
 
-	new make(|This|? in := null) { in?.call(this) }
-	
 	Void parse(Uri srcLocation, Str slimTemplate, SlimLine current) {
 		
 		slimTemplate.splitLines.each |line, lineNo| {

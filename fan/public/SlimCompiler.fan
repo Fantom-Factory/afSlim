@@ -2,14 +2,7 @@
 ** Compiles slim templates into efan templates.
 const class SlimCompiler {
 	
-			const  Int 			srcCodePadding	:= 5 
-	
 	private const SlimParser	parser	:= SlimParser()
-
-	new make(|This|? in := null) {
-		in?.call(this)
-		parser	:= SlimParser() { it.srcCodePadding = this.srcCodePadding }
-	}
 	
 	** Compiles the given slim template into an efan template.
 	Str compileFromStr(Uri srcLocation, Str slimTemplate) {
@@ -23,5 +16,4 @@ const class SlimCompiler {
 	Str compileFromFile(File slimFile) {
 		compileFromStr(slimFile.normalize.uri, slimFile.readAllStr)
 	}
-
 }

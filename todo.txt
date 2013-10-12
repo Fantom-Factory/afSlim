@@ -1,22 +1,22 @@
 
     
-
 For 1.0.0
 =========
 check and err if wrong lines are nested (i.e. a comment in a text, element in doctype, etc)
 
-TODO: whitespace?
-Remove all whitespace - pretty print xml
-
---> <h1>Alien-Factory[ ]<small>v${projectVersion}</small></h1>
- (where whitespace?)
-
 convert compilation errs to Slim Src compilation errs
 
+ afSlim
+  - Parser Errs
+  - doctypes
+  - compilation errs
+  - runtime errs
 
 
 For Future
 ==========
+
+DocType step 1 - just HTML5 or XML, set via static config
 
  Multiple, non-HTML5 line endings
   - how do you specify this document wide (nested component) at render time? 
@@ -27,11 +27,9 @@ For Future
  Could doctype be a service / helper method?
  
  
- Just aBad Idea
- ==============
+Just a Bad Idea
+===============
  
- use ; for multiline? NO - ; is used for HTML entities! => &amp;
+use ; for multiline? NO! - ; is used for HTML entities! => &amp;
 	h1 Alien-Factory; small v${projectVersion}
-
-No multiline - escaping sucks!
   

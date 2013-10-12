@@ -10,7 +10,7 @@ afSlim is a [Fantom](http://fantom.org/) library for generating HTML from concis
     html
       head
         title afSlim Example
-        meta name="keywords" content="fantom html template language"
+        meta (name="keywords" content="fantom html template language")
 
       body
         h1 Slim Example

@@ -9,7 +9,12 @@ const class SlimCompiler {
 		tree := SlimLineRoot()
 		parser.parse(srcLocation, slimTemplate, tree)
 		buf	 := StrBuf(slimTemplate.size)
-		return tree.toEfan(buf).toStr
+		efan := tree.toEfan(buf).toStr.trim
+		if (efan.startsWith("%>"))
+			efan = efan[2..-1]
+		if (efan.endsWith("<%#"))
+			efan = efan[0..-4]
+		return efan
 	}
 
 	** Compiles the given slim file into an efan template.

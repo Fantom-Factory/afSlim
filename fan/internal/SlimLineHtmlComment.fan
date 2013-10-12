@@ -20,7 +20,8 @@ internal class SlimLineHtmlComment : SlimLine {
 	
 	override Void onEntry(StrBuf buf) {
 		indent(buf)
-		buf.add("<!-- ${comment} -->\n")
+		buf.add("<!-- ${comment} -->")
+		newLine(buf)
 	}
 
 	override Void onExit(StrBuf buf) { }

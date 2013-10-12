@@ -57,6 +57,6 @@ internal class SlimLineText : SlimLine {
 	}
 
 	override Void onExit(StrBuf buf) {
-		buf.addChar('\n')
+		newLine(buf)
 	}
 }

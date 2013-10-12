@@ -48,6 +48,11 @@ internal abstract class SlimLine {
 	
 	Void indent(StrBuf buf, Int plus := 0) {
 		(indentBy + plus).times { buf.addChar('\t') }
+		buf.add("%>")
+	}
+
+	Void newLine(StrBuf buf) {
+		buf.add("<%#\n")
 	}
 	
 	override Str toStr() {

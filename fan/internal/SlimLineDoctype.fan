@@ -14,7 +14,9 @@ internal const class SlimLineDoctypeCompiler : SlimLineCompiler {
 internal class SlimLineDoctype : SlimLine {
 
 	override Void onEntry(StrBuf buf) {
-		buf.add("<!DOCTYPE html>\n")
+		indent(buf)
+		buf.add("<!DOCTYPE html>")
+		newLine(buf)
 	}
 
 	override Void onExit(StrBuf buf) { }

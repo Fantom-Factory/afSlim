@@ -105,7 +105,7 @@ internal class SlimLineElement : SlimLine {
 		buf.add(endings.completeStartTag(name))
 		
 		if (!children.isEmpty) {
-			buf.addChar('\n')
+			newLine(buf)
 			if (!text.isEmpty) {
 				indent(buf, 1)
 			}
@@ -113,7 +113,7 @@ internal class SlimLineElement : SlimLine {
 		if (!text.isEmpty) {
 			buf.add(text)
 			if (!children.isEmpty) {
-				buf.addChar('\n')
+				newLine(buf)
 			}
 		}
 	}
@@ -123,7 +123,7 @@ internal class SlimLineElement : SlimLine {
 			indent(buf)
 		}
 		buf.add(endings.endTag(name))
-		buf.addChar('\n')
+		newLine(buf)
 	}
 	
 }

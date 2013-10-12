@@ -25,13 +25,14 @@ internal class SlimLineFanCode : SlimLine {
 		if (!children.isEmpty)
 			buf.add(" {")
 		buf.add(" %>")
-		buf.addChar('\n')
+		newLine(buf)
 	}
 
 	override Void onExit(StrBuf buf) {
 		if (!children.isEmpty) {
 			indent(buf)
-			buf.add("<% } %>\n")
+			buf.add("<% } %>")
+			newLine(buf)
 		}
 	}
 	

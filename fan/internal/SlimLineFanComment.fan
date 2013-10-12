@@ -20,7 +20,9 @@ internal class SlimLineFanComment : SlimLine {
 	}
 	
 	override Void onEntry(StrBuf buf) {
-		buf.add("<%# ${comment} %>\n")
+		indent(buf)
+		buf.add("<%# ${comment} %>")
+		newLine(buf)
 	}
 
 	override Void onExit(StrBuf buf) { }

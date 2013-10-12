@@ -23,7 +23,7 @@ internal class SlimLineFanEval : SlimLine {
 		buf.add("<%= ")
 		buf.add(code)
 		buf.add(" %>")
-		buf.addChar('\n')
+		newLine(buf)
 	}
 
 	override Void onExit(StrBuf buf) { }

@@ -7,9 +7,10 @@ internal const class SlimLineTextCompiler : SlimLineCompiler {
 	
 	override SlimLine compile(Str line) {
 		text := line[1..-1]
-		extraPadding := 1
+		extraPadding := 1	// why do I need this?
 		
-		if (text.startsWith(" ")) {
+		// !text.trim.isEmpty not tested, the idea being, don't force padding for empty lines
+		if (text.getSafe(0).isSpace && !text.trim.isEmpty) {
 			text = text[1..-1]
 			extraPadding += 1
 		}

@@ -11,7 +11,7 @@ s := """-- if (wotever) ... """
 s := """-- if (wotever) 
           para"""
 		text := compiler.compileFromStr(``, s)
-		verifyEq(text, "<% if (wotever) { %>\n\t<para></para>\n<% } %>")
+		verifyEq(text, "<% if (wotever) { %><%#\n\t%><para></para><%#\n%><% } %>")
 	}
 
 }

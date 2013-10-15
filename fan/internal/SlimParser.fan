@@ -33,7 +33,6 @@ internal const class SlimParser {
 				}
 			}
 		}
-		echo("4")
 	}
 }
 

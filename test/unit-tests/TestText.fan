@@ -48,9 +48,8 @@ s := """|
 s := """| wot
            | ever"""
 		text := compiler.compileFromStr(``, s)
-		Env.cur.err.printLine(text)
-		concurrent::Actor.sleep(20ms)	
-		verifyEq(text, "wot\n | ever")
+		print(text)
+		verifyEq(text, "wot\n| ever")
 	}
 
 	// Advanced!!!
@@ -58,8 +57,6 @@ s := """| wot
 s := """a.link |
         	    link text"""	// tab + 4 spaces - trim empty lines
 		text := compiler.compileFromStr(``, s)
-//		Env.cur.err.printLine(text)
-//		concurrent::Actor.sleep(20ms)	
 		// only 3 spaces added before 'link text' because 1 is always chomped after |
 		verifyEq(text, "<a class=\"link\"><%#\n\t%>\n    link text<%#\n%></a>")
 	}
@@ -68,8 +65,6 @@ s := """a.link |
 s := """script (type='text/javascript') |
         	alert();"""
 		text := compiler.compileFromStr(``, s)
-//		Env.cur.err.printLine(text)
-//		concurrent::Actor.sleep(20ms)
 //<script type='text/javascript'><%#
 //	%><%#
 //	%><alert();></alert();><%#

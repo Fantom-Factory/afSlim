@@ -36,32 +36,31 @@ const class Slim {
 	** Compiles a renderer from the given slim template.
 	** 
 	** 'srcLocation' may anything - used for meta information only.
-	EfanRenderer compileFromStr(Str slimTemplate, Type? ctxType := null, Type[] viewHelpers := Type#.emptyList, Uri? srcLocation := null) {
+	EfanRenderer compileFromStr(Str slimTemplate, Type? ctxType := null, Type[]? viewHelpers := null, Uri? srcLocation := null) {
 		srcLocation	=  srcLocation ?: `from/slim/template`
 		efan		:= this.parseFromStr(slimTemplate, srcLocation)
-		renderer	:= efanCompiler.compileWithHelpers(srcLocation, efan, ctxType, viewHelpers)
+		renderer	:= efanCompiler.compile(srcLocation, efan, ctxType, viewHelpers ?: Type#.emptyList)
 		return renderer
 	}
 
 	** Compiles a renderer from the given slim file.
-	EfanRenderer compileFromFile(File slimFile, Type? ctxType := null, Type[] viewHelpers := Type#.emptyList) {
+	EfanRenderer compileFromFile(File slimFile, Type? ctxType := null, Type[]? viewHelpers := null) {
 		srcLocation	:= slimFile.normalize.uri
 		efan		:= this.parseFromStr(slimFile.readAllStr, srcLocation)
-		renderer	:= efanCompiler.compileWithHelpers(srcLocation, efan, ctxType, viewHelpers)
+		renderer	:= efanCompiler.compile(srcLocation, efan, ctxType, viewHelpers ?: Type#.emptyList)
 		return renderer
 	}
 
 	** Renders the given slim template into HTML.
 	** 
 	** 'srcLocation' may anything - used for meta information only.
-	Str renderFromStr(Str slimTemplate, Obj? ctx := null, Type[] viewHelpers := Type#.emptyList, Uri? srcLocation := null) {
-		srcLocation	=  srcLocation ?: `from/slim/template`
+	Str renderFromStr(Str slimTemplate, Obj? ctx := null, Type[]? viewHelpers := null, Uri? srcLocation := null) {
 		renderer	:= this.compileFromStr(slimTemplate, ctx?.typeof, viewHelpers, srcLocation)
 		return renderer.render(ctx)
 	}
 
 	** Renders the given slim template file into HTML.
-	Str renderFromFile(File slimFile, Obj? ctx := null, Type[] viewHelpers := Type#.emptyList) {
+	Str renderFromFile(File slimFile, Obj? ctx := null, Type[]? viewHelpers := null) {
 		renderer	:= this.compileFromFile(slimFile, ctx?.typeof, viewHelpers)
 		return renderer.render(ctx)
 	}

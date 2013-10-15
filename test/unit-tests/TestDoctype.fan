@@ -2,7 +2,7 @@
 internal class TestDoctype : SlimTest {
 	
 	Void testOneLineDoctype() {
-		text := compiler.compileFromStr(``, "doctype html")
+		text := slim.parseFromStr("doctype html")
 		verifyEq(text, "<!DOCTYPE html>")
 	}
 

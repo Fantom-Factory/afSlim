@@ -5,7 +5,7 @@ internal class TestExample : SlimTest {
 		template := `test/unit-tests/Example.slim`.toFile.readAllStr
 		ctx  := ["name":"Emma"]
 		
-		efan := compiler.compileFromStr(`Dude`, template)
+		efan := slim.parseFromStr(template)
 		Env.cur.err.printLine(efan)
 //		concurrent::Actor.sleep(20ms)
 

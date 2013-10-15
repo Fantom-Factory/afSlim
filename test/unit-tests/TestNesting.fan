@@ -12,8 +12,9 @@ i := """p inner-start
         == renderBody
         p inner-end"""
 		
-		oo := efanComp.compile(`outer`, compiler.compileFromStr(`outer`, o), EfanRenderer#)
-		ii := efanComp.compile(`inner`, compiler.compileFromStr(`inner`, i))
+		// FIXME: mention the (null) thing
+		oo := slim.compileFromStr(o, EfanRenderer#)
+		ii := slim.compileFromStr(i)
 		
 		print(oo.efanMetaData.efanTemplate)
 		print(ii.efanMetaData.efanTemplate)

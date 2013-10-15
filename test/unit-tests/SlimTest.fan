@@ -2,8 +2,8 @@ using afEfan
 
 abstract internal class SlimTest : Test {
 	
-	SlimCompiler	compiler	:= SlimCompiler()
 	Slim			slim		:= Slim()
+//	Slim			compiler	:= slim
 	EfanCompiler	efanComp	:= EfanCompiler()
 	
 	Void verifySlimErrMsg(Str errMsg, |Obj| func) {

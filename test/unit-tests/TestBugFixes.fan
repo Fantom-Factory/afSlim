@@ -5,7 +5,7 @@ internal class TestBugFixes : SlimTest {
 s := """		p	| More recently, I discovered the 
         			a (href="http://fantom.org/") Fantom programming language
         			| , a niffty pragmatic language"""
-		text := compiler.compileFromStr(``, s)
+		text := slim.parseFromStr(s)
 
 e := """<p><%#
         	%>More recently, I discovered the <%#

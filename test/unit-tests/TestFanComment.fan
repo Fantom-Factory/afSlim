@@ -2,12 +2,12 @@
 internal class TestFanComment : SlimTest {
 	
 	Void testFanComment() {
-		text := compiler.compileFromStr(``, "// wotever")
+		text := slim.parseFromStr("// wotever")
 		verifyEq(text, "<%# wotever %>")
 	}
 
 	Void testFanCommentTrim() {
-		text := compiler.compileFromStr(``, "//    wotever     ")
+		text := slim.parseFromStr("//    wotever     ")
 		verifyEq(text, "<%# wotever %>")
 	}
 

@@ -3,20 +3,20 @@ internal class TestText : SlimTest {
 	
 	Void testTextBasic() {
 s := """| Dude"""
-		text := compiler.compileFromStr(``, s)
+		text := slim.parseFromStr(s)
 		verifyEq(text, "Dude")
 	}
 
 	Void testTextBasicPreservesWhitespace() {
 s := """|  Dude"""
-		text := compiler.compileFromStr(``, s)
+		text := slim.parseFromStr(s)
 		verifyEq(text, " Dude")
 	}
 
 	Void testMultipleTextsInsertWhitespace() {
 s := """| Wot
         | ever"""
-		text := compiler.compileFromStr(``, s)
+		text := slim.parseFromStr(s)
 		// this ensures sentencesdon't suddenly loose spacesbetween words when wrapped!
 		verifyEq(text, "Wot <%#\n%>ever")
 	}
@@ -25,14 +25,14 @@ s := """| Wot
 s := """| Wot
         a.link thing
         | Ever"""
-		text := compiler.compileFromStr(``, s)
+		text := slim.parseFromStr(s)
 		verifyEq(text, "Wot<%#\n%><a class=\"link\">thing</a><%#\n%>Ever")
 	}
 
 	Void testNestedText() {
 s := """|
         	Dude"""
-		text := compiler.compileFromStr(``, s)
+		text := slim.parseFromStr(s)
 		verifyEq(text, "\nDude")
 	}
 
@@ -40,14 +40,14 @@ s := """|
 s := """|
           alert();
             console.log;"""
-		text := compiler.compileFromStr(``, s)
+		text := slim.parseFromStr(s)
 		verifyEq(text, "\n alert();\n   console.log;")
 	}
 
 	Void testNestedNestedIsIgnored() {
 s := """| wot
            | ever"""
-		text := compiler.compileFromStr(``, s)
+		text := slim.parseFromStr(s)
 		print(text)
 		verifyEq(text, "wot\n| ever")
 	}
@@ -56,7 +56,7 @@ s := """| wot
 	Void testElementContainsText() {
 s := """a.link |
         	    link text"""	// tab + 4 spaces - trim empty lines
-		text := compiler.compileFromStr(``, s)
+		text := slim.parseFromStr(s)
 		// only 3 spaces added before 'link text' because 1 is always chomped after |
 		verifyEq(text, "<a class=\"link\"><%#\n\t%>\n    link text<%#\n%></a>")
 	}
@@ -64,7 +64,7 @@ s := """a.link |
 	Void testElementContainsText2() {
 s := """script (type='text/javascript') |
         	alert();"""
-		text := compiler.compileFromStr(``, s)
+		text := slim.parseFromStr(s)
 //<script type='text/javascript'><%#
 //	%><%#
 //	%><alert();></alert();><%#

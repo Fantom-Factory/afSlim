@@ -1,8 +1,10 @@
+using afEfan
 
 abstract internal class SlimTest : Test {
 	
 	SlimCompiler	compiler	:= SlimCompiler()
 	Slim			slim		:= Slim()
+	EfanCompiler	efanComp	:= EfanCompiler()
 	
 	Void verifySlimErrMsg(Str errMsg, |Obj| func) {
 		verifyErrTypeMsg(SlimErr#, errMsg, func)
@@ -23,4 +25,8 @@ abstract internal class SlimTest : Test {
 		throw Err("$errType not thrown")
 	}
 	
+	Void print(Str text) {
+		Env.cur.err.printLine("[$text]")
+//		concurrent::Actor.sleep(20ms)
+	}
 }

@@ -22,10 +22,17 @@ internal class SlimLineFanEval : SlimLine {
 		indent(buf)
 		buf.add("<%= ")
 		buf.add(code)
+		if (!children.isEmpty)
+			buf.add(" {")
 		buf.add(" %>")
 		newLine(buf)
 	}
 
-	override Void onExit(StrBuf buf) { }
-	
+	override Void onExit(StrBuf buf) {
+		if (!children.isEmpty) {
+			indent(buf)
+			buf.add("<% } %>")
+			newLine(buf)
+		}
+	}	
 }

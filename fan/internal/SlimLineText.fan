@@ -5,12 +5,13 @@ internal const class SlimLineTextCompiler : SlimLineCompiler {
 		line.startsWith("|")
 	}
 	
-	override SlimLine compile(Str line) {
+	override SlimLineText compile(Str line) {
 		text := line[1..-1]
 		extraPadding := 1	// why do I need this?
 		
 		// !text.trim.isEmpty not tested, the idea being, don't force padding for empty lines
-		if (text.getSafe(0).isSpace && !text.trim.isEmpty) {
+//		if (text.getSafe(0).isSpace && !text.trim.isEmpty) {
+		if (text.getSafe(0).isSpace) {
 			text = text[1..-1]
 			extraPadding += 1
 		}
@@ -23,6 +24,15 @@ internal class SlimLineText : SlimLine {
 	
 	Str text
 	Int extraPadding
+	Bool fromMultiLine
+	
+	
+	override This with(|This| f) {
+		f(this)
+		if (fromMultiLine)
+			leadingWs +=1
+		return this
+	}
 	
 	new make(Str text, Int extraPadding) {
 		this.text = text
@@ -38,7 +48,7 @@ internal class SlimLineText : SlimLine {
 	
 	override Bool consume(Int leadingWs, Str line) {
 		// consume all children!
-		padding := leadingWs - this.leadingWs
+		padding := leadingWs - this.leadingWs - extraPadding+1
 		if (padding <= 0)
 			return false
 		

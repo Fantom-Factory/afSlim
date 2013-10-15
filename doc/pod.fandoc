@@ -84,6 +84,8 @@ a-Z  HTML element
   |  plain text
 <pre
 
+> ALIEN-AID: Because whitespace indentation is important, if your HTML looks wrong, you may have mixed up tabs and sapces.
+> Click the 'Show Whitespace' button in your editor / IDE and ensure you're using all tabs or all spaces.
 
 
 Doctype [#doctype]

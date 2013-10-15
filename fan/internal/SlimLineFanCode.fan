@@ -35,5 +35,4 @@ internal class SlimLineFanCode : SlimLine {
 			newLine(buf)
 		}
 	}
-	
 }

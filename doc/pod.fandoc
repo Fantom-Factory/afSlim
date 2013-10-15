@@ -5,12 +5,12 @@ Overview [#overview]
 Features include:
  - indentation driven - closing tags not needed
  - CSS shortcut notation for id and class attributes
- - '${...}' notation to call Fantom code
+ - '${...}' notation to interpolate with Fantom code
  - [efan]`http://repo.status302.com/doc/afEfan/#overview` template generation
- - Template nesting with *Layout* patter.
+ - Template nesting with *Layout* pattern.
 
 .
- > **ALIEN-ID:** Turn afSlim templates into powerful components with [afEfanExtra]`http://repo.status302.com/doc/afEfanExtra/#overview`!
+ > **ALIEN-AID:** Turn 'afSlim' templates into powerful components with [afEfanExtra]`http://repo.status302.com/doc/afEfanExtra/#overview`!
 
 
 
@@ -172,7 +172,7 @@ Start any line with '==' to evaluate a line of Fantom code and print it out in t
 
   == ctx.doughnut.filling
 
-The resulting string is printed raw and is *NOT* HTML escaped. Evals should be kept to the one line.
+The resulting string is printed raw and is *not* HTML escaped.
 
 
 
@@ -190,7 +190,7 @@ Unlike other line types, text may flow / span multiple lines.
 
 You can use '|' as the first character of an element, handy for writing <script> tags:
 
-  script(type="text/javascript")|
+  script (type="text/javascript") |
     console.info("Hello...");
     console.info("     ...Pips!");
 
@@ -242,13 +242,12 @@ Code to run the above example:
 
 Index.fan:
 pre>
-usinf afSlim
+using afSlim
 
 class Index {
   Str renderIndex() {
-    slim   := SlimCompiler()
-    index  := slim.compileFromFile(`index.slim` .toFile, EfanRenderer#)
-    layout := slim.compileFromFile(`layout.slim`.tofile, Str#)
+    index  := Slim().compileFromFile(`index.slim` .toFile, EfanRenderer#)
+    layout := Slim().compileFromFile(`layout.slim`.tofile, Str#)
     return index.render(layout)
   }
 }

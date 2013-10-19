@@ -12,7 +12,7 @@ internal abstract class SlimLine {
 	
 	new make() { }
 
-	SlimLine add(SlimLine slimLine) {
+	virtual SlimLine add(SlimLine slimLine) {
 		// back out
 		if (slimLine.leadingWs <= leadingWs)
 			return parent.add(slimLine)

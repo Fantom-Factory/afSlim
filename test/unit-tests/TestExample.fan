@@ -6,11 +6,11 @@ internal class TestExample : SlimTest {
 		ctx  := ["name":"Emma"]
 		
 		efan := slim.parseFromStr(template)
-		Env.cur.err.printLine(efan)
+//		Env.cur.err.printLine(efan)
 //		concurrent::Actor.sleep(20ms)
 
 		html := slim.renderFromStr(template, ctx)
-		Env.cur.err.printLine(html)
+//		Env.cur.err.printLine(html)
 //		concurrent::Actor.sleep(20ms)
 	}
 

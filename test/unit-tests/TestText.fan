@@ -57,6 +57,7 @@ s := """| wot
 s := """a.link |
         	    link text"""	// tab + 4 spaces - trim empty lines
 		text := slim.parseFromStr(s)
+		print(text)
 		// only 3 spaces added before 'link text' because 1 is always chomped after |
 		verifyEq(text, "<a class=\"link\"><%#\n\t%>\n    link text<%#\n%></a>")
 	}
@@ -69,8 +70,15 @@ s := """script (type='text/javascript') |
 //	%><%#
 //	%><alert();></alert();><%#
 //%></script>
+		print(text)
 		// there's this extra <%#\n\t%> but as it's an efan comment - I don't case! 
 		verifyEq(text, "<script type='text/javascript'><%#\n\t%>\nalert();<%#\n%></script>")
 	}
 
+//s := """
+//        		p	| More recently
+//        			| re-writing Gundam in Fantom.
+//        		p	| And so was born Gundam v2.
+//        """
+	
 }

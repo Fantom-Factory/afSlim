@@ -16,4 +16,17 @@ e := """<p><%#
 		print(text)
 		verifyEq(text, e)
 	}
+
+	Void testBugFromGundamIndex2() {
+s := """
+        		p	| More recently
+        			| re-writing Gundam in Fantom.
+        		p	| And so was born Gundam v2.
+        """
+		renderer := slim.compileFromStr(s)
+
+		text := renderer.render(null)
+		print(text)
+		verifyEq(text, "<p>More recently re-writing Gundam in Fantom.</p><p>And so was born Gundam v2.</p>")
+	}
 }

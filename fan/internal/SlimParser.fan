@@ -21,18 +21,22 @@ internal const class SlimParser {
 			leadingWs 	:= line.chars.findIndex { !it.isSpace } ?: 0
 			source		:= line.trimStart
 			
+			// this allows TextLines to consume / span across multiple lines
 			if (!current.consume(leadingWs, source)) {
 				lineCompiler	:= compilers.find { it.matches(source) }
-				slimLine		:= lineCompiler.compile(source) { it.slimLineNo = lineNo; it.leadingWs = leadingWs }
+				slimLine		:= lineCompiler.compile(source) { it.slimLineNo = lineNo; it.leadingWs = leadingWs }				
 				current 		= current.add(slimLine)
 				
 				// fudge for: script (type="text/javascript") | 
 				if (current.isMultiLine) {
-					multiLine	:= current.multiLine.with { it.slimLineNo = lineNo; it.leadingWs = leadingWs}
-					current		= current.addChild(multiLine)
+					multiLine	:= current.multiLine.with { it.slimLineNo = lineNo; it.leadingWs = leadingWs+1}
+					
+					current = current.add(multiLine)
+//					current = current.addChild(multiLine)
 				}
 			}
 		}
+		Env.cur.err.printLine()
 	}
 }
 

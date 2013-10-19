@@ -7,12 +7,6 @@ s := """| Dude"""
 		verifyEq(text, "Dude")
 	}
 
-	Void testTextBasicPreservesWhitespace() {
-s := """|  Dude"""
-		text := slim.parseFromStr(s)
-		verifyEq(text, " Dude")
-	}
-
 	Void testMultipleTextsInsertWhitespace() {
 s := """| Wot
         | ever"""
@@ -49,7 +43,7 @@ s := """| wot
            | ever"""
 		text := slim.parseFromStr(s)
 		print(text)
-		verifyEq(text, "wot\n| ever")
+		verifyEq(text, "wot\n | ever")
 	}
 
 	// Advanced!!!
@@ -63,7 +57,9 @@ s := """a.link |
 	}
 
 	Void testElementContainsText2() {
-s := """script (type='text/javascript') |
+q := """p |
+        	alert();"""
+s := """script (type='text/javascript')|
         	alert();"""
 		text := slim.parseFromStr(s)
 //<script type='text/javascript'><%#

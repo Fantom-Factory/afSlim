@@ -22,17 +22,16 @@ internal const class SlimParser {
 			source		:= line.trimStart
 			
 			// this allows TextLines to consume / span across multiple lines
-			if (!current.consume(leadingWs, source)) {
+			if (!current.consume(leadingWs, line)) {
 				lineCompiler	:= compilers.find { it.matches(source) }
 				slimLine		:= lineCompiler.compile(source) { it.slimLineNo = lineNo; it.leadingWs = leadingWs }				
 				current 		= current.add(slimLine)
 				
 				// fudge for: script (type="text/javascript") | 
 				if (current.isMultiLine) {
-					multiLine	:= current.multiLine.with { it.slimLineNo = lineNo; it.leadingWs = leadingWs+1}
+					multiLine	:= current.multiLine.with { it.slimLineNo = lineNo; it.leadingWs = leadingWs + 1}
 					
 					current = current.add(multiLine)
-//					current = current.addChild(multiLine)
 				}
 			}
 		}

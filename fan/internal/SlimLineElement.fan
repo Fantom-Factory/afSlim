@@ -72,7 +72,7 @@ internal const class SlimLineElementCompiler : SlimLineCompiler {
 
 		// fudge for javascript type lines
 		if (textCompiler.matches(text)) {
-			element.multiLine	= textCompiler.compile(text)
+			element.multiLine	= textCompiler.compile(text) { it.optionalPadding = it.optionalPadding - 1 }
 			element.text		= ""
 		}
 		return element

@@ -8,15 +8,12 @@ internal const class SlimLineTextCompiler : SlimLineCompiler {
 	override SlimLineText compile(Str line) {
 		text := line[1..-1]
 		
-		// !text.trim.isEmpty not tested, the idea being, don't force padding for empty lines
-//		if (text.getSafe(0).isSpace && !text.trim.isEmpty) {
-
-//		if (text.getSafe(0).isSpace) {
-//			text = text[1..-1]
-//			extraPadding += 1
-//		}
+		// count and note the leading whitespace
+		optionalPadding := text.chars.findIndex |char->Bool| { !char.isSpace } ?: 0		
+		text = text[optionalPadding..-1]
 		
-		return SlimLineText(escape(text))
+		// +1 for the | (we remove it for multilines)
+		return SlimLineText(escape(text), optionalPadding + 1)
 	}
 }
 
@@ -24,15 +21,11 @@ internal class SlimLineText : SlimLine {
 	
 	Str text
 	Bool fromMultiLine
+	Int	optionalPadding
 	
-	
-	override This with(|This| f) {
-		f(this)
-		return this
-	}
-	
-	new make(Str text) {
+	new make(Str text, Int optionalPadding) {
 		this.text = text
+		this.optionalPadding = optionalPadding
 	}
 	
 	override Void addSibling(SlimLine slimLine) {
@@ -41,16 +34,21 @@ internal class SlimLineText : SlimLine {
 			if (!text.endsWith(" "))
 				text += " "
 	}
-	
+		
 	override Bool consume(Int leadingWs, Str line) {
 		// consume all children!
 		padding := leadingWs - this.leadingWs
-		if (padding <= 0)
+		if (inScript && padding < 0)
+			return false
+		if (!inScript && padding <= 0)
 			return false
 		
-		// preserve any leading whitespace
-		space := "".padl(padding, ' ')
-		text += "\n${space}${line}"
+		line 	= line[this.leadingWs..-1]
+		chomp 	:= optionalPadding.min(line.chars.findIndex { !it.isSpace } ?: 0)
+		line	= line[chomp..-1]
+		
+		text	+= "\n${line}"
+
 		return true
 	}
 	
@@ -61,5 +59,9 @@ internal class SlimLineText : SlimLine {
 
 	override Void onExit(StrBuf buf) {
 		newLine(buf)
+	}
+	
+	private Bool inScript() {
+		parent is SlimLineElement && ["script", "pre"].contains(((SlimLineElement) parent).name.lower)
 	}
 }

@@ -21,6 +21,10 @@ internal abstract class SlimLine {
 	}
 
 	SlimLine addChild(SlimLine slimLine) {
+		if (!legalChildren.contains(slimLine.typeof)) {
+			throw SlimErr(ErrMsgs.slimLineCanNotNest(typeof, slimLine.typeof))
+		}
+		
 		children.getSafe(-1)?.addSibling(slimLine)
 		children.add(slimLine)
 		slimLine.parent = this
@@ -34,6 +38,8 @@ internal abstract class SlimLine {
 	
 	abstract Void onEntry(StrBuf buf)
 	abstract Void onExit(StrBuf buf)
+
+	virtual Type[] legalChildren() { Type#.emptyList }
 	
 	Bool isMultiLine() {
 		multiLine != null

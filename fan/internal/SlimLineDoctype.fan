@@ -20,4 +20,5 @@ internal class SlimLineDoctype : SlimLine {
 	}
 
 	override Void onExit(StrBuf buf) { }
+	
 }

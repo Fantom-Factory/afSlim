@@ -27,7 +27,7 @@ internal class SlimLineText : SlimLine {
 	Str text
 	Bool fromMultiLine
 	Int	optionalPadding
-	
+
 	new make(Str text, Int optionalPadding) {
 		this.text = text
 		this.optionalPadding = optionalPadding

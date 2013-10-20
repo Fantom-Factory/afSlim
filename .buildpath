@@ -3,4 +3,5 @@
 	<buildpathentry kind="src" path="fan"/>
 	<buildpathentry kind="src" path="test/unit-tests"/>
 	<buildpathentry kind="con" path="org.eclipse.dltk.launching.INTERPRETER_CONTAINER"/>
+	<buildpathentry kind="src" path="afPillow"/>
 </buildpath>

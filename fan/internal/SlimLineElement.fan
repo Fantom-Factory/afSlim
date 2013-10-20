@@ -71,7 +71,7 @@ internal const class SlimLineElementCompiler : SlimLineCompiler {
 		element	:= SlimLineElement(escape(name), escape(attrs.join(" ")), escape(text))
 
 		// fudge for javascript type lines
-		if (textCompiler.matches(text)) {
+		if (textCompiler.isMultiLine(text)) {
 			element.multiLine	= textCompiler.compile(text) { it.optionalPadding = it.optionalPadding - 1 }
 			element.text		= ""
 		}

@@ -35,4 +35,8 @@ internal class SlimLineFanCode : SlimLine {
 			newLine(buf)
 		}
 	}
+
+	override Type[] legalChildren() {
+		[SlimLineElement#, SlimLineFanCode#, SlimLineFanComment#, SlimLineFanEval#, SlimLineHtmlComment#, SlimLineText#]
+	}
 }

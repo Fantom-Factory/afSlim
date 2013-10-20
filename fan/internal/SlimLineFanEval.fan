@@ -34,5 +34,9 @@ internal class SlimLineFanEval : SlimLine {
 			buf.add("<% } %>")
 			newLine(buf)
 		}
-	}	
+	}
+
+	override Type[] legalChildren() {
+		[SlimLineElement#, SlimLineFanCode#, SlimLineFanComment#, SlimLineFanEval#, SlimLineHtmlComment#, SlimLineText#]
+	}
 }

@@ -4,12 +4,9 @@ For 1.0.0
 
 Allow ${..} in ID and class notation 
 
-check and err if wrong lines are nested (i.e. a comment in a text, element in doctype, etc)
-
 convert compilation errs to Slim Src compilation errs
 
  afSlim
-  - Parser Errs
   - doctypes
   - compilation errs
   - runtime errs

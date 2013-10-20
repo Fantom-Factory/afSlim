@@ -31,7 +31,7 @@ internal const class SlimLineElementCompiler : SlimLineCompiler {
 		if (regx.find)
 			return match(regx.group(1), "", regx.group(2))
 		
-		throw SlimErr("Could not match element in: ${line}")
+		throw SlimErr(ErrMsgs.elementCompilerNoMatch(line))
 	}
 	
 	SlimLine match(Str tag, Str attr, Str text) {
@@ -126,4 +126,7 @@ internal class SlimLineElement : SlimLine {
 		newLine(buf)
 	}
 	
+	override Type[] legalChildren() {
+		[SlimLineElement#, SlimLineFanCode#, SlimLineFanComment#, SlimLineFanEval#, SlimLineHtmlComment#, SlimLineText#]
+	}
 }

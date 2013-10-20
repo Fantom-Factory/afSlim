@@ -15,6 +15,11 @@ internal const class SlimLineTextCompiler : SlimLineCompiler {
 		// +1 for the | (we remove it for multilines)
 		return SlimLineText(escape(text), optionalPadding + 1)
 	}
+	
+	Bool isMultiLine(Str line) {
+		line.trim == "|"
+	}
+	
 }
 
 internal class SlimLineText : SlimLine {
@@ -37,10 +42,7 @@ internal class SlimLineText : SlimLine {
 		
 	override Bool consume(Int leadingWs, Str line) {
 		// consume all children!
-		padding := leadingWs - this.leadingWs
-		if (inScript && padding < 0)
-			return false
-		if (!inScript && padding <= 0)
+		if (leadingWs <= this.leadingWs)
 			return false
 		
 		line 	= line[this.leadingWs..-1]
@@ -59,9 +61,5 @@ internal class SlimLineText : SlimLine {
 
 	override Void onExit(StrBuf buf) {
 		newLine(buf)
-	}
-	
-	private Bool inScript() {
-		parent is SlimLineElement && ["script", "pre"].contains(((SlimLineElement) parent).name.lower)
-	}
+	}	
 }

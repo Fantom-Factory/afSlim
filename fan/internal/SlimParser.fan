@@ -29,9 +29,10 @@ internal const class SlimParser {
 				
 				// fudge for: script (type="text/javascript") | 
 				if (current.isMultiLine) {
-					multiLine	:= current.multiLine.with { it.slimLineNo = lineNo; it.leadingWs = leadingWs + 1}
+					multiLine	:= current.multiLine.with { it.slimLineNo = lineNo; it.leadingWs = leadingWs}
 					
-					current = current.add(multiLine)
+//					current = current.add(multiLine)
+					current = current.addChild(multiLine)
 				}
 			}
 		}

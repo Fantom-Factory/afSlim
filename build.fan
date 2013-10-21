@@ -9,7 +9,7 @@ class Build : BuildPod {
 
 		meta	= [	"org.name"		: "Alien-Factory",
 					"org.uri"		: "http://www.alienfactory.co.uk/",
-					"vcs.uri"		: "https://bitbucket.org/Alien-Factory/afslim",
+					"vcs.uri"		: "https://bitbucket.org/AlienFactory/afslim",
 					"proj.name"		: "Slim",
 					"license.name"	: "BSD 2-Clause License",
 					"repo.private"	: "true"

@@ -48,9 +48,10 @@ s := """| wot
 	// Advanced!!!
 	Void testElementContainsText() {
 s := """a.link |
-        	    link text"""	// tab + 4 spaces - trim empty lines
+        	    link text"""	// tab + 4 spaces
 		text := slim.renderFromStr(s)
-		verifyEq(text, "<a class=\"link\">\n\t    link text</a>")
+		// we trim the leading tab
+		verifyEq(text, "<a class=\"link\">\n    link text</a>")
 	}
 
 	Void testElementContainsText2() {
@@ -64,7 +65,7 @@ s := """script (type='text/javascript') |
 //	%><alert();></alert();><%#
 //%></script>
 		print(text)
-		// there's this extra <%#\n\t%> but as it's an efan comment - I don't case! 
-		verifyEq(text, "<script type='text/javascript'>\n\talert();\n\tvar x = 3;</script><a>Dude</a>")
+		// we trim the leading tab
+		verifyEq(text, "<script type='text/javascript'>\nalert();\nvar x = 3;</script><a>Dude</a>")
 	}
 }

@@ -34,6 +34,8 @@ html
       div.wombat This div has a class of 'wombat'
       div (style="color: red;") Attributes are specified in brackets
 
+      div You can still use tags in <abbr>HTML</abbr>
+
     | Use the pipe character for text.
       It also lets text be spanned
       across multiple lines!
@@ -271,10 +273,14 @@ pre>
 Release Notes [#releaseNotes]
 *****************************
 
+v0.0.10 [#v0.0.10]
+------------------
+ - Chg: Trimmed 1 char of whitespace from multilines
+
 v0.0.8 [#v0.0.8]
 ----------------
  - New: Illegal parent / child combinations now throw 'SlimParserErrs'.
- - Bug: Cleaned up a persistent bug around element multilines.
+ - Bug: Cleaned up an annoying niggle around element multilines.
 
 v0.0.6 [#v0.0.6]
 ----------------

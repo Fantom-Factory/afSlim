@@ -21,6 +21,8 @@
           div.wombat This div has a class of 'wombat'
           div (style="color: red;") Attributes are specified in brackets
 
+          div You can still use tags in <abbr>HTML</abbr>
+
         | Use the pipe character for text.
           It also lets text be spanned
           across multiple lines!

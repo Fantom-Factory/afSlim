@@ -6,13 +6,13 @@ internal const class SlimLineTextCompiler : SlimLineCompiler {
 	}
 	
 	override SlimLineText compile(Str line) {
-		text := line[1..-1]
+		text := line.trimStart[1..-1]
 		
 		// count and note the leading whitespace
 		optionalPadding := text.chars.findIndex |char->Bool| { !char.isSpace } ?: 0		
 		text = text[optionalPadding..-1]
 		
-		// +1 for the | (we remove it for multilines)
+		// +1 for the | (leave it for multilines - it soaks up the leading tab)
 		return SlimLineText(escape(text), optionalPadding + 1)
 	}
 	

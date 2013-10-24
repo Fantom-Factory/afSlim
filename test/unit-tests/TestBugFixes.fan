@@ -51,7 +51,6 @@ s := """		p	| More recently
         """
 		renderer := slim.compileFromStr(s)
 		text 	 := renderer.render(null)
-		print(text)
 		verifyEq(text, "<p>More recently re-writing Gundam in Fantom.</p>")
 	}
 
@@ -62,7 +61,15 @@ s := """		p |	And so was born Gundam v2.
         """
 		renderer := slim.compileFromStr(s)
 		text 	 := renderer.render(null)
-		print(text)
 		verifyEq(text, "<p>And so was born Gundam v2.\nMaybe there'll be a v3?</p>")
+	}
+
+	Void testAddingLeadingSpacesToText() {
+s := """a wot
+        |  ever
+        """
+		renderer := slim.compileFromStr(s)
+		text 	 := renderer.render(null)
+		verifyEq(text, "<a>wot</a> ever")
 	}
 }

@@ -9,7 +9,12 @@ internal const class SlimLineTextCompiler : SlimLineCompiler {
 		text := line.trimStart[1..-1]
 		
 		// count and note the leading whitespace
-		optionalPadding := text.chars.findIndex |char->Bool| { !char.isSpace } ?: 0		
+		optionalPadding := text.chars.findIndex |char->Bool| { !char.isSpace } ?: 0
+		
+		// actually, limit optionalPadding to 1 so we can add leading spaces after elements
+		// see TestBugFixes.testAddingLeadingSpacesToText()
+		optionalPadding = optionalPadding.min(1) 
+		
 		text = text[optionalPadding..-1]
 		
 		// +1 for the | (leave it for multilines - it soaks up the leading tab)

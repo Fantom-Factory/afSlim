@@ -25,7 +25,7 @@ Example.slim:
         div You can even embed <abbr>HTML</abbr> tags!
 
         | Use the pipe character for text.
-          It also lets text be spanned
+          Text may also be spanned
           across multiple lines!
 
         // This is a Slim comment

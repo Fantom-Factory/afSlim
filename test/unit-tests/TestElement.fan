@@ -37,18 +37,6 @@ s := """tag [data="wotever"] (text)"""
 		verifyEq(text, "<tag data=\"wotever\">(text)</tag>")
 	}
 
-	Void testAttributesCurly() {
-s := """tag{data="wotever"} [text]"""
-		text := slim.parseFromStr(s)
-		verifyEq(text, "<tag data=\"wotever\">[text]</tag>")
-	}
-
-	Void testAttributesCurly2() {
-s := """tag {data="wotever"} [text]"""
-		text := slim.parseFromStr(s)
-		verifyEq(text, "<tag data=\"wotever\">[text]</tag>")
-	}
-
 	Void testId() {
 s := """tag#id"""
 		text := slim.parseFromStr(s)

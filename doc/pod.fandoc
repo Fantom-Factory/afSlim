@@ -323,7 +323,6 @@ Release Notes [#releaseNotes]
 v0.0.10 [#v0.0.10]
 ------------------
  - Chg: Tweaked and changed the multiline text rules again and again... then updated the docs with the final(!) decision.
- - Chg: Trimmed 1 char of whitespace from multilines
  - Chg: Attributes may no longer be wrapped in { curly } braces.
  - Bug: Element ID and class shortcuts could not be interpolated.
 

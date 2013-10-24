@@ -239,9 +239,18 @@ may be freely mixed. (Using '>' to show tabs):
 pre>
   p>  | More recently, I discovered
   >   a (href="http://fantom.org/") Fantom
-  >   | a niffty pragmatic language
+  >   |  a niffty pragmatic language (*)
   >   | which runs on Java and .NET
 <pre
+
+(*) Note: the extra leading space at the start of the line prevents it from butting up against the previous '<a>' tag:
+
+  <a href="http://fantom.org/">Fantom</a> a niffty pragmatic language --> Fantom a niffty pragmatic language
+
+and not
+
+  <a href="http://fantom.org/">Fantom</a>a niffty pragmatic language --> Fantoma niffty pragmatic language
+
 
 
 HTML Escaping [#htmlEscaping]

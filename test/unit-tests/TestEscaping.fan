@@ -1,7 +1,7 @@
 
 internal class TestEscaping : SlimTest {
 	
-	SlimLineCompiler oneLine	:= SlimLineElementCompiler()
+	SlimLineElementCompiler oneLine	:= SlimLineElementCompiler()
 
 	// ---- Escaped Text ----
 	
@@ -89,5 +89,20 @@ internal class TestEscaping : SlimTest {
 	Void testEscapingHanging2() {
 		text := oneLine.escape(Str<|before\$${wotever|>)
 		verifyEq(text, Str<|before\$${wotever|>)
+	}
+			
+	// ---- element shortcut escaping ----
+
+	Void testIdInterpolation() {
+		line := oneLine.compile(Str<|div#${ctx}|>)
+		text := line.toEfan(StrBuf()).toStr
+		verifyEq(text, Str<|%><div id="<%= (ctx).toStr.toXml %>"></div><%#
+                            |>)
+	}
+	Void testClassInterpolation() {
+		line := oneLine.compile(Str<|div.dude.${ctx}|>)
+		text := line.toEfan(StrBuf()).toStr
+		verifyEq(text, Str<|%><div class="dude <%= (ctx).toStr.toXml %>"></div><%#
+                            |>)
 	}
 }

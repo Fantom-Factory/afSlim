@@ -38,26 +38,29 @@ s := """|
 		verifyEq(text, "\n alert();\n   console.log;")
 	}
 
-	Void testNestedNestedIsIgnored() {
-s := """| wot
-           | ever"""
-		text := slim.parseFromStr(s)
-		verifyEq(text, "wot\n | ever")
-	}
+	// NOT ANYMORE! See TestBugFixes.testHowMultilineUsage1()
+//	Void testNestedNestedIsIgnored() {
+//s := """| wot
+//           | ever"""
+//		text := slim.parseFromStr(s)
+//		print(text)
+//		verifyEq(text, "wot\n | ever")
+//	}
 
 	// Advanced!!!
 	Void testElementContainsText() {
 s := """a.link |
         	    link text"""	// tab + 4 spaces
 		text := slim.renderFromStr(s)
-		// we trim the leading tab
-		verifyEq(text, "<a class=\"link\">\n    link text</a>")
+		// we trim 2 leading whitespaces
+		verifyEq(text, "<a class=\"link\">\n   link text</a>")
 	}
 
 	Void testElementContainsText2() {
+		// NOTE 2 TABS!
 s := """script (type='text/javascript') |
-        	alert();
-        	var x = 3;
+        		alert();
+        		var x = 3;
         a Dude"""
 		text := slim.renderFromStr(s)
 //<script type='text/javascript'><%#

@@ -2,8 +2,6 @@
 For 1.0.0
 =========
 
-Allow ${..} in ID and class notation 
-
 convert compilation errs to Slim Src compilation errs
 
  afSlim

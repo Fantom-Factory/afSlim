@@ -83,8 +83,8 @@ a-Z  HTML element
   |  plain text
 <pre
 
-> ALIEN-AID: Because whitespace indentation is important, if your HTML looks wrong, you may have mixed up tabs and sapces.
-> Click the 'Show Whitespace' button in your editor / IDE and ensure you're using all tabs or all spaces.
+> **ALIEN-AID:** Whitespace indentation is *very* important! If your HTML looks wrong, click 'Show Whitespace' in your editor /
+> IDE and make sure you are not mixing up tabs and spaces.
 
 
 Doctype [#doctype]
@@ -111,12 +111,17 @@ pre>
   div(data-type="wombat") --> <div data-type="wombat"></div>
 <pre
 
-Note that attributes may also be enclosed in square brackets and curly brackets.
-Which is handy should you want to include brackets as attribute data.
+Whitespace around the attributes is optional:
 
 pre>
-   div[data-type="(wombat)"] --> <div data-type="(wombat)"></div>
-   div{data-type="(wombat)"} --> <div data-type="(wombat)"></div>
+  a (href="http://fantom.org.") Fantom
+  a(href="http://fantom.org.") Fantom
+<pre
+
+Attributes may also be enclosed in square brackets. Handy when using Fantom interpolation:
+
+pre>
+   div[data-type="${ calculateWombat() }"]
 <pre
 
 Use all the shortcuts together:
@@ -241,8 +246,8 @@ pre>
 
 HTML Escaping [#htmlEscaping]
 =============================
-Just like [Fantom Str interpolation]`http://fantom.org/doc/docLang/Literals.html#interpolation`, you can output Fantom
-expressions anywhere in the template using the standard '${...}' notation;
+Similar to [Fantom Str interpolation]`http://fantom.org/doc/docLang/Literals.html#interpolation`, you can output Fantom
+expressions *anywhere* in the template using the standard '${...}' notation;
 
   div Mmmm... ${ctx.doughnut.filling} is my favourite!
 
@@ -317,8 +322,10 @@ Release Notes [#releaseNotes]
 
 v0.0.10 [#v0.0.10]
 ------------------
- - Chg: Trimmed 1 char of whitespace from multilines
  - Chg: Tweaked and changed the multiline text rules again and again... then updated the docs with the final(!) decision.
+ - Chg: Trimmed 1 char of whitespace from multilines
+ - Chg: Attributes may no longer be wrapped in { curly } braces.
+ - Bug: Element ID and class shortcuts could not be interpolated.
 
 v0.0.8 [#v0.0.8]
 ----------------

@@ -6,6 +6,8 @@
 
 ## Quick Start
 
+Example.slim:
+
     doctype html
     html
       head
@@ -17,11 +19,10 @@
 
         h2 Element shortcut notation:
 
-          div#slimer This div has an ID of 'slimer'
-          div.wombat This div has a class of 'wombat'
-          div (style="color: red;") Attributes are specified in brackets
-
-          div You can still use tags in <abbr>HTML</abbr>
+        div#slimer This div has an ID of 'slimer'
+        div.wombat This div has a class of 'wombat'
+        div (style="color: red;") Attributes are specified in brackets
+        div You can even embed <abbr>HTML</abbr> tags!
 
         | Use the pipe character for text.
           It also lets text be spanned
@@ -40,11 +41,18 @@
         // Use $(...) notation to embed Fantom expressions
         | Hello ${ctx["name"]}!
 
-        // Use the | char for javascript snippets
+        // Embedding Javascript is easy!
         script (type="text/javascript") |
           for (var i=0; i<3; i++) {
             console.info("Greetings from Slim!");
           }
+
+Example.fan:
+
+    using afSlim
+    ...
+    ctx  := ["name":"Emma"]
+    Slim().renderFromFile(`Example.slim`.toFile, ctx) // --> HTML!
 
 
 

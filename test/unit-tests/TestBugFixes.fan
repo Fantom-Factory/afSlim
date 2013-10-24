@@ -30,16 +30,39 @@ s := """
 		verifyEq(text, "<p>More recently re-writing Gundam in Fantom.</p><p>And so was born Gundam v2.</p>")
 	}
 	
-	Void testBugFromGundamIndex3() {
-		// don't allow text on multilines - for it leads you down a BAD path, i.e. testBugFromGundamIndex
-		// will no longer work
+	// Fook this - I discovered that *I* want text on multilines - it just looks better!
+//	Void testBugFromGundamIndex3() {
+//		// don't allow text on multilines - for it leads you down a BAD path, i.e. testBugFromGundamIndex
+//		// will no longer work
+//s := """		p	| More recently
+//        			| re-writing Gundam in Fantom.
+//        		p	| And so was born Gundam v2.
+//        """
+//		renderer := slim.compileFromStr(s)
+//		text 	 := renderer.render(null)
+//		print(text)
+//		verifyEq(text, "<p>| More recentlyre-writing Gundam in Fantom.</p><p>| And so was born Gundam v2.</p>")
+//	}
+
+	// this is how I do it!...
+	Void testHowMultilineUsage1() {
 s := """		p	| More recently
         			| re-writing Gundam in Fantom.
-        		p	| And so was born Gundam v2.
         """
 		renderer := slim.compileFromStr(s)
 		text 	 := renderer.render(null)
 		print(text)
-		verifyEq(text, "<p>| More recentlyre-writing Gundam in Fantom.</p><p>| And so was born Gundam v2.</p>")
+		verifyEq(text, "<p>More recently re-writing Gundam in Fantom.</p>")
+	}
+
+	// this is how I do it!...
+	Void testHowMultilineUsage2() {
+s := """		p |	And so was born Gundam v2.
+        		 	Maybe there'll be a v3?
+        """
+		renderer := slim.compileFromStr(s)
+		text 	 := renderer.render(null)
+		print(text)
+		verifyEq(text, "<p>And so was born Gundam v2.\nMaybe there'll be a v3?</p>")
 	}
 }

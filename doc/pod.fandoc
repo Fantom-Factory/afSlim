@@ -4,8 +4,8 @@ Overview [#overview]
 
 Features include:
  - indentation driven - closing tags not needed
- - CSS shortcut notation for id and class attributes
- - '${...}' notation to interpolate with Fantom code
+ - CSS shortcut notation for '#id' and '.class' attributes
+ - '${...}' notation to interpolate Fantom code
  - [efan]`http://repo.status302.com/doc/afEfan/#overview` template generation
  - Template nesting with *Layout* pattern.
 
@@ -30,14 +30,13 @@ html
 
     h2 Element shortcut notation:
 
-      div#slimer This div has an ID of 'slimer'
-      div.wombat This div has a class of 'wombat'
-      div (style="color: red;") Attributes are specified in brackets
-
-      div You can still use tags in <abbr>HTML</abbr>
+    div#slimer This div has an ID of 'slimer'
+    div.wombat This div has a class of 'wombat'
+    div (style="color: red;") Attributes are specified in brackets
+    div You can even embed <abbr>HTML</abbr> tags!
 
     | Use the pipe character for text.
-      It also lets text be spanned
+      Text may also be spanned
       across multiple lines!
 
     // This is a Slim comment
@@ -53,7 +52,7 @@ html
     // Use $(...) notation to embed Fantom expressions
     | Hello ${ctx["name"]}!
 
-    // Use the | char for javascript snippets
+    // embedding Javascript is easy!
     script (type="text/javascript") |
       for (var i=0; i<3; i++) {
         console.info("Greetings from Slim!");
@@ -186,21 +185,64 @@ Any line starting with a '|' denotes plain text and is printed raw. You can even
 
 Unlike other line types, text may flow / span multiple lines.
 
+pre>
   | Use the pipe character for text.
     It also lets text be spanned
     across multiple lines!
+<pre
 
-You can use '|' as the first character of an element, handy for writing <script> tags:
+You can use '|' as the first character of an element. So the following:
 
+pre>
+  p
+    | More recently, I discovered
+      Fantom
+      a niffty pragmatic language
+<pre
+
+May be re-written as:
+
+pre>
+  p | More recently, I discovered
+      Fantom
+      a niffty pragmatic language
+<pre
+
+This is handy for writing '<script>' tags:
+
+pre>
   script (type="text/javascript") |
+    console.info("Hello...");       // note the leading 2 spaces
+    console.info("     ...Pips!");  // note the leading 2 spaces
+<pre
+
+Note you *must* indent the text by at least 2 whitespace characters to ensure the text is inside the '|' character.
+Remember what you're actually writing is a condensed version of:
+
+pre>
+  script (type="text/javascript")
+   |
     console.info("Hello...");
     console.info("     ...Pips!");
+<pre
 
+This means that, even though it looks okay to the naked eye, indenting the script by **1 Tab will not work!**
+
+When using tabs, the following is a personal preference for formatting Slim; everything lines up nicely and text and elements
+may be freely mixed. (Using '>' to show tabs):
+
+pre>
+  p>  | More recently, I discovered
+  >   a (href="http://fantom.org/") Fantom
+  >   | a niffty pragmatic language
+  >   | which runs on Java and .NET
+<pre
 
 
 HTML Escaping [#htmlEscaping]
 =============================
-You can output Fantom expressions anywhere in the template by using the standard '${...}' notation;
+Just like [Fantom Str interpolation]`http://fantom.org/doc/docLang/Literals.html#interpolation`, you can output Fantom
+expressions anywhere in the template using the standard '${...}' notation;
 
   div Mmmm... ${ctx.doughnut.filling} is my favourite!
 
@@ -220,12 +262,12 @@ pre>
 
 Layout Pattern / Nesting Templates [#nestingTemplates]
 ******************************************************
-afSlim templates may be nested inside one another, effectively allowing you to componentise your templates. This is accomplished
-by passing body functions in to the efan 'render()' method and calling 'renderBody()' to invoke it.
+Just like efan, Slim templates may be nested inside one another, effectively allowing you to componentise your templates. This
+is accomplished by passing body functions to the efan 'render()' method and calling 'renderBody()' to invoke it.
 
 This is best explained in an example. Here we will use the *layout pattern*:
 
-layout.efan:
+layout.slim:
 pre>
 head
   title ${ctx}
@@ -233,7 +275,7 @@ body
   == renderBody()
 <pre
 
-index.efan:
+index.slim:
 pre>
 html
   == ctx.layout.render("Cranberry Whips")
@@ -276,6 +318,7 @@ Release Notes [#releaseNotes]
 v0.0.10 [#v0.0.10]
 ------------------
  - Chg: Trimmed 1 char of whitespace from multilines
+ - Chg: Tweaked and changed the multiline text rules again and again... then updated the docs with the final(!) decision.
 
 v0.0.8 [#v0.0.8]
 ----------------

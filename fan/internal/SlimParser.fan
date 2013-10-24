@@ -30,8 +30,8 @@ internal const class SlimParser {
 					
 					// fudge for: script (type="text/javascript") | 
 					if (current.isMultiLine) {
-						multiLine	:= current.multiLine.with { it.slimLineNo = lineNo; it.leadingWs = leadingWs}
-						current = current.addChild(multiLine)
+						multiLine	:= current.multiLine.with { it.slimLineNo = lineNo; it.leadingWs = leadingWs + 1}
+						current 	= current.addChild(multiLine)
 					}
 				}
 			} catch (SlimErr slimErr) {
@@ -55,7 +55,7 @@ internal class SlimLineRoot : SlimLine {
 	override Void onExit(StrBuf buf) {	}
 	
 	override Type[] legalChildren() {
-		[SlimLineDoctype#, SlimLineElement#, SlimLineFanCode#, SlimLineFanComment#, SlimLineFanEval#, SlimLineHtmlComment#, SlimLineText#]
+		[SlimLine#]	// ALL SlimLines
 	}
 }
 

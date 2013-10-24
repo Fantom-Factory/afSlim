@@ -17,12 +17,12 @@ internal const class SlimLineTextCompiler : SlimLineCompiler {
 	}
 	
 	Bool isMultiLine(Str line) {
-		line.trim == "|"
+		line.trimStart.startsWith("|")
 	}
-	
 }
 
 internal class SlimLineText : SlimLine {
+	private const SlimLineTextCompiler textCompiler	:= SlimLineTextCompiler()
 	
 	Str text
 	Bool fromMultiLine
@@ -31,6 +31,13 @@ internal class SlimLineText : SlimLine {
 	new make(Str text, Int optionalPadding) {
 		this.text = text
 		this.optionalPadding = optionalPadding
+	}
+	
+	override SlimLine add(SlimLine slimLine) {
+		// back out so we don't add text to text
+		if (slimLine is SlimLineText)
+			return parent.add(slimLine)
+		return super.add(slimLine)
 	}
 	
 	override Void addSibling(SlimLine slimLine) {
@@ -43,6 +50,9 @@ internal class SlimLineText : SlimLine {
 	override Bool consume(Int leadingWs, Str line) {
 		// consume all children!
 		if (leadingWs <= this.leadingWs)
+			return false
+		
+		if (textCompiler.matches(line.trimStart))
 			return false
 		
 		line 	= line[this.leadingWs..-1]

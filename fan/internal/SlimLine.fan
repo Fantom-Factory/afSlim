@@ -21,9 +21,8 @@ internal abstract class SlimLine {
 	}
 
 	SlimLine addChild(SlimLine slimLine) {
-		if (!legalChildren.contains(slimLine.typeof)) {
+		if (!legalChildren.any { slimLine.typeof.fits(it) })
 			throw SlimErr(ErrMsgs.slimLineCanNotNest(typeof, slimLine.typeof))
-		}
 		
 		children.getSafe(-1)?.addSibling(slimLine)
 		children.add(slimLine)

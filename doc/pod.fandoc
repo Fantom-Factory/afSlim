@@ -233,8 +233,8 @@ pre>
 
 This means that, even though it looks okay to the naked eye, indenting the script by **1 Tab will not work!**
 
-When using tabs, the following is a personal preference for formatting Slim; everything lines up nicely and text and elements
-may be freely mixed. (Using '>' to show tabs):
+A personal formatting preference is to use the '|' character for each line of text, prefixed with a tab. Text may then be
+freely mixed with elements and it all lines up nicely. Example using '>' to show tabs:
 
 pre>
   p>  | More recently, I discovered
@@ -329,8 +329,8 @@ pre>
 Release Notes [#releaseNotes]
 *****************************
 
-v0.0.10 [#v0.0.10]
-------------------
+v1.0.0 [#v1.0.0]
+----------------
  - Chg: Tweaked and changed the multiline text rules again and again... then updated the docs with the final(!) decision.
  - Chg: Attributes may no longer be wrapped in { curly } braces.
  - Chg: Text may have leading space to prevent them from butting up against previous elements.

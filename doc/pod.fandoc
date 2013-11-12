@@ -328,6 +328,9 @@ pre>
 
 Release Notes [#releaseNotes]
 *****************************
+v1.0.2 [#v1.0.2]
+----------------
+ - Bug: Could not mix interpolated ID and class notation with attributes.
 
 v1.0.0 [#v1.0.0]
 ----------------

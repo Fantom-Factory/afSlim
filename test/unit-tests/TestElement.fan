@@ -78,4 +78,16 @@ s := """tag(data="[wot]{ever}") text"""
 		text := slim.parseFromStr(s)
 		verifyEq(text, "<tag data=\"[wot]{ever}\">text</tag>")
 	}
+
+	Void testAttributesWithEscapedId() {
+s := """tag#\$\${id} (data="wot") ever"""
+		text := slim.parseFromStr(s)
+		verifyEq(text, "<tag id=\"<%= id %>\" data=\"wot\">ever</tag>")
+	}
+
+	Void testAttributesWithEscapedClass() {
+s := """tag.\$\${id} (data="wot") ever"""
+		text := slim.parseFromStr(s)
+		verifyEq(text, "<tag class=\"<%= id %>\" data=\"wot\">ever</tag>")
+	}
 }

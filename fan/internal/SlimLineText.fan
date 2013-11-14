@@ -26,7 +26,7 @@ internal const class SlimLineTextCompiler : SlimLineCompiler {
 	}
 }
 
-internal class SlimLineText : SlimLine {
+internal class SlimLineText : SlimLine, Escape {
 	private const SlimLineTextCompiler textCompiler	:= SlimLineTextCompiler()
 	
 	Str text
@@ -64,7 +64,7 @@ internal class SlimLineText : SlimLine {
 		chomp 	:= optionalPadding.min(line.chars.findIndex { !it.isSpace } ?: 0)
 		line	= line[chomp..-1]
 		
-		text	+= "\n${line}"
+		text	+= "\n${escape(line)}"
 
 		return true
 	}

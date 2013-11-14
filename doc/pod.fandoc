@@ -328,9 +328,11 @@ pre>
 
 Release Notes [#releaseNotes]
 *****************************
+
 v1.0.2 [#v1.0.2]
 ----------------
  - Bug: Could not mix interpolated ID and class notation with attributes.
+ - Bug: Multiline text was not being escaped / interpolated.
 
 v1.0.0 [#v1.0.0]
 ----------------

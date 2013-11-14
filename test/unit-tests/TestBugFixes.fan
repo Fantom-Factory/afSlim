@@ -72,4 +72,13 @@ s := """a wot
 		text 	 := renderer.render(null)
 		verifyEq(text, "<a>wot</a> ever")
 	}
+
+	Void testMutilineTextIsInterpolated() {
+s := """| line 1 \${ctx}
+          line 2 \${ctx}
+        """
+		renderer := slim.compileFromStr(s)
+		text 	 := renderer.render("HaHa!")
+		verifyEq(text, "line 1 HaHa!\nline 2 HaHa!")
+	}
 }

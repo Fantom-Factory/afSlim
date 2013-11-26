@@ -23,6 +23,7 @@ DocType step 1 - just HTML5 or XML, set via static config
  
  Could doctype be a service / helper method?
  
+escape <% so slim templates can be mixed with ejs -> requires an efan change
  
 Just a Bad Idea
 ===============

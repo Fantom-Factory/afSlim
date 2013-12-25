@@ -1,6 +1,6 @@
 Overview [#overview]
 ********************
-'afSlim' is a library for generating HTML from concise, lightweight templates. 'afSlim' is based on [Jade]`http://jade-lang.com/` for javascript and [Slim]`http://slim-lang.com/` for Ruby.
+'Slim' is a library for generating HTML from concise, lightweight templates. 'Slim' is based on [Jade]`http://jade-lang.com/` for javascript and [Slim]`http://slim-lang.com/` for Ruby.
 
 Features include:
  - indentation driven - closing tags not needed
@@ -10,7 +10,7 @@ Features include:
  - Template nesting with *Layout* pattern.
 
 .
- > **ALIEN-AID:** Turn 'afSlim' templates into powerful components with [afEfanExtra]`http://repo.status302.com/doc/afEfanExtra/#overview`!
+ > **ALIEN-AID:** Turn 'afSlim' templates into powerful components with [afEfanXtra]`http://repo.status302.com/doc/afEfanXtra/#overview`!
 
 
 

@@ -2,6 +2,13 @@
 For 1.0.0
 =========
 
+BUG! a(..) wotever (efan) - doesn't render! attr mixup with (...)
+a (href="http://repo.status302.com/doc/afEfan/#overview") Embedded Fantom (efan)
+
+make == null safe
+- java.lang.NullPointerException
+ - %><title><%= (pageTitle).toStr.toXml %> :: Dekxa</title><%#
+
 convert compilation errs to Slim Src compilation errs
 
  afSlim

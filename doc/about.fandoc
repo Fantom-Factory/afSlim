@@ -1,0 +1,10 @@
+'Slim' is a library for generating HTML from concise, lightweight templates. 'Slim' is based on [Jade]`http://jade-lang.com/` for javascript and [Slim]`http://slim-lang.com/` for Ruby.
+
+Features include:
+ - indentation driven - closing tags not needed
+ - CSS shortcut notation for '#id' and '.class' attributes
+ - '${...}' notation to interpolate Fantom code
+ - [efan]`http://repo.status302.com/doc/afEfan/#overview` template generation
+ - Template nesting with *Layout* pattern.
+ - Create powerful components with [efanXtra]`afEfanXtra`!
+

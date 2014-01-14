@@ -12,9 +12,9 @@ internal mixin Escape {
 			
 			if (regx.group(2) == "\${") {
 				code.add( escapeEfan(regx.group(1))	)
-				code.add( "<%= ("					)
+				code.add( "<%= ((Obj?)("			)
 				code.add( escapeEfan(regx.group(3))	)
-				code.add( ")?.toStr?.toXml %>"		)
+				code.add( "))?.toStr?.toXml %>"		)
 			}
 
 			if (regx.group(2) == "\\\${") {

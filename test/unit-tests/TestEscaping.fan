@@ -7,17 +7,17 @@ internal class TestEscaping : SlimTest {
 	
 	Void testBasic() {
 		text := oneLine.escape("\${wotever}")
-		verifyEq(text, "<%= (wotever)?.toStr?.toXml %>")
+		verifyEq(text, "<%= ((Obj?)(wotever))?.toStr?.toXml %>")
 	}
 
 	Void testBefore() {
 		text := oneLine.escape("before\${wotever}")
-		verifyEq(text, "before<%= (wotever)?.toStr?.toXml %>")
+		verifyEq(text, "before<%= ((Obj?)(wotever))?.toStr?.toXml %>")
 	}
 
 	Void testAfter() {
 		text := oneLine.escape("\${wotever}after")
-		verifyEq(text, "<%= (wotever)?.toStr?.toXml %>after")
+		verifyEq(text, "<%= ((Obj?)(wotever))?.toStr?.toXml %>after")
 	}
 
 	Void testHanging() {
@@ -27,7 +27,7 @@ internal class TestEscaping : SlimTest {
 
 	Void testMultiple() {
 		text := oneLine.escape("before \${1} middle \${2} end")
-		verifyEq(text, "before <%= (1)?.toStr?.toXml %> middle <%= (2)?.toStr?.toXml %> end")
+		verifyEq(text, "before <%= ((Obj?)(1))?.toStr?.toXml %> middle <%= ((Obj?)(2))?.toStr?.toXml %> end")
 	}
 
 	// ---- Unescaped Text ----
@@ -96,13 +96,13 @@ internal class TestEscaping : SlimTest {
 	Void testIdInterpolation() {
 		line := oneLine.compile(Str<|div#${ctx}|>)
 		text := line.toEfan(StrBuf()).toStr
-		verifyEq(text, Str<|%><div id="<%= (ctx)?.toStr?.toXml %>"></div><%#
+		verifyEq(text, Str<|%><div id="<%= ((Obj?)(ctx))?.toStr?.toXml %>"></div><%#
                             |>)
 	}
 	Void testClassInterpolation() {
 		line := oneLine.compile(Str<|div.dude.${ctx}|>)
 		text := line.toEfan(StrBuf()).toStr
-		verifyEq(text, Str<|%><div class="dude <%= (ctx)?.toStr?.toXml %>"></div><%#
+		verifyEq(text, Str<|%><div class="dude <%= ((Obj?)(ctx))?.toStr?.toXml %>"></div><%#
                             |>)
 	}
 

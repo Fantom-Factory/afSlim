@@ -85,7 +85,12 @@ s := """| line 1 \${ctx}
 	// ---- Slim v1.1 --------------------------------------------------------------------------------------------------
 
 	Void testNullsAreRendered() {
-		text	:= slim.renderFromStr("|[\${ctx}]", null)
+		text	:= slim.renderFromStr("|[\${ctx}]", (Str?) null)
+		verifyEq(text, "[null]")
+	}
+
+	Void testNullsAreRendered2() {
+		text	:= slim.renderFromStr("|[\${ctx}]", "null")	// test compilation of non-null
 		verifyEq(text, "[null]")
 	}
 

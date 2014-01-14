@@ -2,16 +2,19 @@ using afPlastic::SrcCodeSnippet
 
 internal const class SlimParser {
 
-	const SlimLineCompiler[]	compilers := 
-		[	SlimLineDoctypeCompiler(),
+	private const SlimLineCompiler[] compilers
+
+	new make(TagStyle tagStyle) {
+		this.compilers = [
+			SlimLineDoctypeCompiler(),
 			SlimLineFanCodeCompiler(),
 			SlimLineFanEvalCompiler(),
 			SlimLineFanCommentCompiler(),
 			SlimLineHtmlCommentCompiler(),
 			SlimLineTextCompiler(),
-			SlimLineElementCompiler()
-		].toImmutable
-
+			SlimLineElementCompiler(tagStyle)
+		]
+	}
 
 	Void parse(Uri srcLocation, Str slimTemplate, SlimLine current) {
 		slimTemplate.splitLines.each |line, lineNo| {

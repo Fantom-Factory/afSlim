@@ -5,6 +5,7 @@ For 1.0.0
 use -? using afSlim for <%? using  
 
 escape <% to <%% so we can use EJS in slim templates
+escape <% so slim templates can be mixed with ejs -> requires an efan change
 
 Have pretty print option, remove <%#\n    %>
 
@@ -15,32 +16,15 @@ make == null safe
 - java.lang.NullPointerException
  - %><title><%= (pageTitle).toStr.toXml %> :: Dekxa</title><%#
 
-convert compilation errs to Slim Src compilation errs
-
- afSlim
-  - doctypes
-  - compilation errs
-  - runtime errs
-
 
 For Future
 ==========
 
-XML doctype that ignores Void tags and gives empty tag endings (xml)
- - but then we need to suppress void warnings on a per TEMPLATE basis, not just slim compiler
- - fook it, make it per Slim instance
+convert compilation errs to Slim Src compilation errs
 
-DocType step 1 - just HTML5 or XML, set via static config
-
- Multiple, non-HTML5 line endings
-  - how do you specify this document wide (nested component) at render time? 
- Best to set at compiler time
- 
- Don't make doctype an enum - for what about custom doctypes? (they can write it themselfs! | <!DOCTYPE
- 
- Could doctype be a service / helper method?
- 
-escape <% so slim templates can be mixed with ejs -> requires an efan change
+ afSlim
+  - compilation errs
+  - runtime errs 
  
 Just a Bad Idea
 ===============

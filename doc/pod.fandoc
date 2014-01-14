@@ -468,6 +468,7 @@ v1.1.0 [#v1.1.0]
 ----------------
  - New: Support for HTML, XHTML and XML style tag endings.
  - New: Support for multiple 'doctype' declarations.
+ - Bug: Null values no longer thow an NPE but print 'null'.
 
 v1.0.2 [#v1.0.2]
 ----------------

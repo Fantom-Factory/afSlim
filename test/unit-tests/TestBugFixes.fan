@@ -81,4 +81,11 @@ s := """| line 1 \${ctx}
 		text 	 := renderer.render("HaHa!")
 		verifyEq(text, "line 1 HaHa!\nline 2 HaHa!")
 	}
+	
+	// ---- Slim v1.1 --------------------------------------------------------------------------------------------------
+
+	Void testNullsAreRendered() {
+		text	:= slim.renderFromStr("|[\${ctx}]", null)
+		verifyEq(text, "[null]")
+	}
 }

@@ -18,12 +18,12 @@ internal const class SlimLineElementCompiler : SlimLineCompiler {
 		// I know, I'll use Regular Expressions! ...
 		
 		// match name (attr) text
-		regx := Regex<|^([^\s^\[]+)\s*\((.+)\)(.*)$|>.matcher(line)
+		regx := Regex<|^([^\s^\[]+)\s*\((.+?)\)(.*)$|>.matcher(line)
 		if (regx.find)
 			return match(regx.group(1), regx.group(2), regx.group(3))
 
 		// match name [attr] text
-		regx = Regex<|^([^\s^\[]+)\s*\[(.+)\](.*)$|>.matcher(line)
+		regx = Regex<|^([^\s^\[]+)\s*\[(.+?)\](.*)$|>.matcher(line)
 		if (regx.find)
 			return match(regx.group(1), regx.group(2), regx.group(3))
 		

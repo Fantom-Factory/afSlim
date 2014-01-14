@@ -12,10 +12,6 @@ Have pretty print option, remove <%#\n    %>
 BUG! a(..) wotever (efan) - doesn't render! attr mixup with (...)
 a (href="http://repo.status302.com/doc/afEfan/#overview") Embedded Fantom (efan)
 
-make == null safe
-- java.lang.NullPointerException
- - %><title><%= (pageTitle).toStr.toXml %> :: Dekxa</title><%#
-
 
 For Future
 ==========

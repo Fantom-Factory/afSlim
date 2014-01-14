@@ -88,4 +88,14 @@ s := """| line 1 \${ctx}
 		text	:= slim.renderFromStr("|[\${ctx}]", null)
 		verifyEq(text, "[null]")
 	}
+
+	Void testBracketsAllowedInText() {
+		text	:= slim.renderFromStr("a (href=url) Embedded Fantom (efan)", null)
+		verifyEq(text, "<a href=url>Embedded Fantom (efan)</a>")
+	}
+
+	Void testBracketsAllowedInText2() {
+		text	:= slim.renderFromStr("a [href=url] Embedded Fantom [efan]", null)
+		verifyEq(text, "<a href=url>Embedded Fantom [efan]</a>")
+	}
 }

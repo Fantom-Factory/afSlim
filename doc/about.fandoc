@@ -4,6 +4,7 @@ Features include:
  - indentation driven - closing tags not needed
  - CSS shortcut notation for '#id' and '.class' attributes
  - '${...}' notation to interpolate Fantom code
+ - Configurable HTML, XHTML or XML tag endings
  - [efan]`http://repo.status302.com/doc/afEfan/#overview` template generation
  - Template nesting with *Layout* pattern.
  - Create powerful components with [efanXtra]`afEfanXtra`!

@@ -14,4 +14,8 @@ internal class ErrMsgs {
 	static Str unknownDoctype(Str doctype) {
 		"Unknown Doctype: ${doctype}"
 	}
+
+	static Str voidTagsMustNotHaveContent(Str tag) {
+		"Void tag '${tag}' *MUST NOT* have content!"
+	}
 }

@@ -6,6 +6,7 @@ Features include:
  - indentation driven - closing tags not needed
  - CSS shortcut notation for '#id' and '.class' attributes
  - '${...}' notation to interpolate Fantom code
+ - Configurable HTML, XHTML or XML tag endings
  - [efan](http://www.fantomfactory.org/pods/afEfan) template generation
  - Template nesting with *Layout* pattern.
  

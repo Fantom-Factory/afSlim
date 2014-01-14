@@ -1,5 +1,4 @@
 
-// FIXME: test comments can't contain nested slim lines
 internal const class SlimLineFanCommentCompiler : SlimLineCompiler {
 	
 	override Bool matches(Str line) {

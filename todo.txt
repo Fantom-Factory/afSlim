@@ -1,23 +1,20 @@
 
-For 1.0.0
+For 1.1.2
 =========
 
-use -? using afSlim for <%? using  
-
-escape <% to <%% so we can use EJS in slim templates
-escape <% so slim templates can be mixed with ejs -> requires an efan change
-
-Have pretty print option, remove <%#\n    %>
 
 
 For Future
 ==========
+Have pretty print option, remove <%#\n    %>
 
 convert compilation errs to Slim Src compilation errs
 
  afSlim
   - compilation errs
   - runtime errs 
+
+
  
 Just a Bad Idea
 ===============

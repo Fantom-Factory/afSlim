@@ -2,6 +2,12 @@
 For 1.0.0
 =========
 
+use -? using afSlim for <%? using  
+
+escape <% to <%% so we can use EJS in slim templates
+
+Have pretty print option, remove <%#\n    %>
+
 BUG! a(..) wotever (efan) - doesn't render! attr mixup with (...)
 a (href="http://repo.status302.com/doc/afEfan/#overview") Embedded Fantom (efan)
 
@@ -20,13 +26,17 @@ convert compilation errs to Slim Src compilation errs
 For Future
 ==========
 
+XML doctype that ignores Void tags and gives empty tag endings (xml)
+ - but then we need to suppress void warnings on a per TEMPLATE basis, not just slim compiler
+ - fook it, make it per Slim instance
+
 DocType step 1 - just HTML5 or XML, set via static config
 
  Multiple, non-HTML5 line endings
   - how do you specify this document wide (nested component) at render time? 
  Best to set at compiler time
  
- Don't make doctype an enum - for what about custom doctypes?
+ Don't make doctype an enum - for what about custom doctypes? (they can write it themselfs! | <!DOCTYPE
  
  Could doctype be a service / helper method?
  

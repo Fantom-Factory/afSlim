@@ -10,7 +10,7 @@ internal class TestExample : SlimTest {
 //		concurrent::Actor.sleep(20ms)
 
 		html := slim.renderFromStr(template, ctx)
-//		Env.cur.err.printLine(html)
+		Env.cur.err.printLine(html)
 //		concurrent::Actor.sleep(20ms)
 	}
 

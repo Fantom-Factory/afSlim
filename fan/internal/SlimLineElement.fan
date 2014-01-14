@@ -3,6 +3,12 @@ internal const class SlimLineElementCompiler : SlimLineCompiler {
 
 	private const SlimLineTextCompiler textCompiler	:= SlimLineTextCompiler()
 	
+	private const TagStyle tagStyle
+	
+	new make(TagStyle tagStyle) {
+		this.tagStyle = tagStyle
+	}
+	
 	override Bool matches(Str line) {
 		// catch all / wotever's left 
 		true
@@ -68,7 +74,7 @@ internal const class SlimLineElementCompiler : SlimLineCompiler {
 			attrs.add(attr.trim)		
 		
 		text = text.trimStart	// very important!
-		element	:= SlimLineElement(escape(name), escape(attrs.join(" ")), escape(text))
+		element	:= SlimLineElement(tagStyle, escape(name), escape(attrs.join(" ")), escape(text))
 
 		// fudge for javascript type lines
 		if (textCompiler.isMultiLine(text)) {
@@ -81,13 +87,13 @@ internal const class SlimLineElementCompiler : SlimLineCompiler {
 
 internal class SlimLineElement : SlimLine {
 	
+	TagStyle tagStyle
 	Str name
 	Str attr
 	Str text
 	
-	TagEndingsHtml5 endings	:= TagEndingsHtml5()
-	
-	new make(Str name, Str attr, Str text) {
+	new make(TagStyle tagStyle, Str name, Str attr, Str text) {
+		this.tagStyle = tagStyle
 		this.name = name
 		this.attr = attr
 		this.text = text
@@ -101,8 +107,8 @@ internal class SlimLineElement : SlimLine {
 			buf.addChar(' ')
 			buf.add(attr)
 		}
-		
-		buf.add(endings.completeStartTag(name))
+
+		buf.add(tagStyle.tagEnding.startTag(name, children.isEmpty))
 		
 		if (!children.isEmpty) {
 			newLine(buf)
@@ -122,7 +128,9 @@ internal class SlimLineElement : SlimLine {
 		if (!children.isEmpty) {
 			indent(buf)
 		}
-		buf.add(endings.endTag(name))
+		
+		buf.add(tagStyle.tagEnding.endTag(name, children.isEmpty))
+		
 		newLine(buf)
 	}
 	

@@ -7,9 +7,17 @@ using afEfan::EfanRenderer
 ** [efan: Passing Data]`http://repo.status302.com/doc/afEfan/#ctx`
 const class Slim {
 	
-	private const SlimParser	slimParser		:= SlimParser()
-	const private EfanCompiler	efanCompiler	:= EfanCompiler()
+	** The void tag ending style for compiled templates
+			const TagStyle tagStyle
 
+	private const EfanCompiler	efanCompiler	:= EfanCompiler()
+	private const SlimParser	slimParser
+	
+	** Creates 'Slim' setting the void tag ending style for the compiler to use.
+	new make(TagStyle tagStyle := TagStyle.html) {
+		this.tagStyle	= tagStyle
+		this.slimParser	= SlimParser(tagStyle)
+	}
 	
 	** Parses the given slim template into an efan template.
 	** 
@@ -64,5 +72,5 @@ const class Slim {
 		renderer	:= this.compileFromFile(slimFile, ctx?.typeof, viewHelpers)
 		return renderer.render(ctx)
 	}
-	
 }
+

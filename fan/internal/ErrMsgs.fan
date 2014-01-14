@@ -11,4 +11,7 @@ internal class ErrMsgs {
 		return "Can not nest a ${cName} in a ${pName}"
 	}
 
+	static Str unknownDoctype(Str doctype) {
+		"Unknown Doctype: ${doctype}"
+	}
 }

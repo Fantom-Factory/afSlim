@@ -108,7 +108,7 @@ internal class SlimLineElement : SlimLine {
 			buf.add(attr)
 		}
 
-		buf.add(tagStyle.tagEnding.startTag(name, children.isEmpty))
+		buf.add(tagStyle.tagEnding.startTag(name, children.isEmpty && text.isEmpty))
 		
 		if (!children.isEmpty) {
 			newLine(buf)
@@ -129,7 +129,7 @@ internal class SlimLineElement : SlimLine {
 			indent(buf)
 		}
 		
-		buf.add(tagStyle.tagEnding.endTag(name, children.isEmpty))
+		buf.add(tagStyle.tagEnding.endTag(name, children.isEmpty && text.isEmpty))
 		
 		newLine(buf)
 	}

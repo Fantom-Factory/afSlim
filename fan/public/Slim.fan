@@ -13,7 +13,9 @@ const class Slim {
 	private const EfanCompiler	efanCompiler	:= EfanCompiler()
 	private const SlimParser	slimParser
 	
-	** Creates 'Slim' setting the void tag ending style for the compiler to use.
+	** Creates a 'Slim' instance, setting the ending style for tags.
+	** 
+	** Defaults to 'html'.
 	new make(TagStyle tagStyle := TagStyle.html) {
 		this.tagStyle	= tagStyle
 		this.slimParser	= SlimParser(tagStyle)

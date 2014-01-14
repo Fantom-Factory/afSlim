@@ -9,9 +9,6 @@ escape <% so slim templates can be mixed with ejs -> requires an efan change
 
 Have pretty print option, remove <%#\n    %>
 
-BUG! a(..) wotever (efan) - doesn't render! attr mixup with (...)
-a (href="http://repo.status302.com/doc/afEfan/#overview") Embedded Fantom (efan)
-
 
 For Future
 ==========

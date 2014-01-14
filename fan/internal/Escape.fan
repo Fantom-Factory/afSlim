@@ -11,39 +11,43 @@ internal mixin Escape {
 		while (find) {
 			
 			if (regx.group(2) == "\${") {
-				code.add( regx.group(1)			)
-				code.add( "<%= ("				)
-				code.add( regx.group(3)			)
-				code.add( ")?.toStr?.toXml %>"	)
+				code.add( escapeEfan(regx.group(1))	)
+				code.add( "<%= ("					)
+				code.add( escapeEfan(regx.group(3))	)
+				code.add( ")?.toStr?.toXml %>"		)
 			}
 
 			if (regx.group(2) == "\\\${") {
-				code.add( regx.group(1)			)
-				code.add( "\${"					)
-				code.add( regx.group(3)			)
-				code.add( "}"					)
+				code.add( escapeEfan(regx.group(1))	)
+				code.add( "\${"						)
+				code.add( escapeEfan(regx.group(3))	)
+				code.add( "}"						)
 			}
 
 			if (regx.group(2) == "\$\${") {
-				code.add( regx.group(1)			)
-				code.add( "<%= "				)
-				code.add( regx.group(3)			)
-				code.add( " %>"				)				
+				code.add( escapeEfan(regx.group(1))	)
+				code.add( "<%= "					)
+				code.add( escapeEfan(regx.group(3))	)
+				code.add( " %>"						)				
 			}
 
 			if (regx.group(2) == "\\\$\${") {
-				code.add( regx.group(1)			)
-				code.add( "\$\${"				)
-				code.add( regx.group(3)			)
-				code.add( "}"					)
+				code.add( escapeEfan(regx.group(1))	)
+				code.add( "\$\${"					)
+				code.add( escapeEfan(regx.group(3))	)
+				code.add( "}"						)
 			}
 		
 			last = regx.end(3)+1
 			find = regx.find
 		}
 
-		code.add( line[last..-1] )
+		code.add( escapeEfan(line[last..-1]) )
 	
 		return code.toStr
+	}
+	
+	private Str escapeEfan(Str efan) {
+		efan.replace("<%", "<%%").replace("%>", "%%>")
 	}
 }

@@ -105,4 +105,32 @@ internal class TestEscaping : SlimTest {
 		verifyEq(text, Str<|%><div class="dude <%= (ctx)?.toStr?.toXml %>"></div><%#
                             |>)
 	}
+
+	// ---- Efan Escaping ----
+
+	Void testEfanEscaping1() {
+		text := oneLine.escape("<% Look ma! EJS! %>")
+		verifyEq(text, "<%% Look ma! EJS! %%>")
+	}
+
+	Void testEfanEscaping2() {
+		text := slim.renderFromStr("|<% Look ma! EJS! %>")
+		verifyEq(text, "<% Look ma! EJS! %>")
+	}
+
+	Void testEfanEscaping3() {
+		text := oneLine.escape("<% Look \$\${ma}! EJS! %>")
+		verifyEq(text, "<%% Look <%= ma %>! EJS! %%>")
+	}
+
+	Void testEfanEscaping4() {
+		text := oneLine.escape("There \$\${\"is <% NO %> escape\"} !!!")
+		verifyEq(text, "There <%= \"is <%% NO %%> escape\" %> !!!")
+	}
+
+	Void testEfanEscaping5() {
+		text := slim.renderFromStr("|There \$\${ \"is <% NO %> escape\" } !!!")
+		verifyEq(text, "There is <% NO %> escape !!!")
+	}
+
 }

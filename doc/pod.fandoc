@@ -468,6 +468,7 @@ v1.1.0 [#v1.1.0]
 ----------------
  - New: Support for HTML, XHTML and XML style tag endings.
  - New: Support for multiple 'doctype' declarations.
+ - New: '<%' and '%>' escaping means EJS can be embedded in 'Slim' templates!
  - Bug: Null values no longer thow an NPE but print 'null'.
  - Bug: Brackets in text could be mistaken for attributes.
 

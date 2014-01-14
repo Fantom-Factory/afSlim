@@ -10,6 +10,7 @@ internal const class SlimParser {
 			SlimLineDoctypeCompiler(),
 			SlimLineFanCodeCompiler(),
 			SlimLineFanEvalCompiler(),
+			SlimLineInstructionCompiler(),
 			SlimLineFanCommentCompiler(),
 			SlimLineHtmlCommentCompiler(),
 			SlimLineTextCompiler(),

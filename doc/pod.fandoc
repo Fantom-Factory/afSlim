@@ -106,6 +106,7 @@ The first non-whitespace characters of each line defines the content of the line
 
 pre>
 doctype : <!DOCTYPE ... >
+    -?  : using statement
     --  : fantom code
     ==  : fantom eval
     //  : Slim comment
@@ -179,6 +180,19 @@ To print custom DOCTYPE declarations, use the '|' character to print a standard 
 
 
 
+Using Statements [#usingStatements]
+===================================
+Start any line with '-?' to add a fantom using statement.
+
+  -? using afSlim
+
+The 'using statement' prevents you from having to use fully qualified class names:
+
+  -? using concurrent
+  == Actor.locals("my.value")
+
+
+
 Elements [#elements]
 ====================
 Element lines are formatted as:
@@ -209,7 +223,7 @@ Use all the shortcuts together:
 
 pre>
   div#robert.juice.media (data-on="You Tube") Rap News
-  -->
+
   <div id="robert" class="juice media" data-on="You Tube">Rap News</div>
 <pre
 

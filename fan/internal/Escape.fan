@@ -14,7 +14,7 @@ internal mixin Escape {
 				code.add( regx.group(1)			)
 				code.add( "<%= ("				)
 				code.add( regx.group(3)			)
-				code.add( ").toStr.toXml %>"	)
+				code.add( ")?.toStr?.toXml %>"	)
 			}
 
 			if (regx.group(2) == "\\\${") {

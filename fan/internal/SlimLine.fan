@@ -1,5 +1,7 @@
+using afPlastic::SrcCodeSnippet
 
 internal abstract class SlimLine {
+	SrcCodeSnippet?	srcSnippet
 	Int 		slimLineNo
 	Int 		leadingWs
 	

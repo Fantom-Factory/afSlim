@@ -1,4 +1,3 @@
-using concurrent
 using afPlastic::SrcCodeSnippet
 
 ** Defines the ending style rendered tags should have: HTML, XHTML or XML. 
@@ -57,13 +56,7 @@ const abstract class TagEnding {
 		voidTags.contains(tag.lower)
 	}
 	
-	SrcCodeSnippet srcSnippet() {
-		srcLocation  := (Uri) (Actor.locals["slim.srcLocation"]  ?: ``)
-		slimTemplate := (Str) (Actor.locals["slim.slimTemplate"] ?: "")
-		return SrcCodeSnippet(srcLocation, slimTemplate)
-	}
-	
-	abstract Str startTag(Str tag, Bool isEmpty)
+	abstract Str startTag(Str tag, Bool isEmpty, SrcCodeSnippet? srcSnippet, Int lineNo)
 
 	abstract Str endTag(Str tag, Bool isEmpty)
 }
@@ -73,11 +66,12 @@ const abstract class TagEnding {
 const class TagEndingHtml : TagEnding {	
 	private static const Log log := TagEnding#.pod.log
 
-	override Str startTag(Str tag, Bool isEmpty) {
+	override Str startTag(Str tag, Bool isEmpty, SrcCodeSnippet? srcSnippet, Int lineNo) {
 		// log errors at the *start* so we pick up the Slim Line No.  
 		if (isVoid(tag) && !isEmpty) {
-			lineNo 	:= Int.fromStr(Actor.locals["slim.lineNo"] ?: "0")
-			warning	:= srcSnippet.srcCodeSnippet(lineNo, ErrMsgs.voidTagsMustNotHaveContent(tag))
+			// null check is just for test cases
+			msg		:= ErrMsgs.voidTagsMustNotHaveContent(tag)
+			warning	:= srcSnippet?.srcCodeSnippet(lineNo, msg) ?: msg
 			log.warn(warning) 
 		}
 		return ">"
@@ -94,12 +88,13 @@ const class TagEndingHtml : TagEnding {
 const class TagEndingXhtml : TagEnding {
 	private static const Log log := TagEnding#.pod.log
 	
-	override Str startTag(Str tag, Bool isEmpty) {
+	override Str startTag(Str tag, Bool isEmpty, SrcCodeSnippet? srcSnippet, Int lineNo) {
 		if (isVoid(tag) && isEmpty)
 			return " />"
 		if (isVoid(tag) && !isEmpty) {
-			lineNo 	:= Int.fromStr(Actor.locals["slim.lineNo"] ?: "0")
-			warning	:= srcSnippet.srcCodeSnippet(lineNo, ErrMsgs.voidTagsMustNotHaveContent(tag))
+			// null check is just for test cases
+			msg		:= ErrMsgs.voidTagsMustNotHaveContent(tag)
+			warning	:= srcSnippet?.srcCodeSnippet(lineNo, msg) ?: msg
 			log.warn(warning) 
 		}
 		return ">"
@@ -114,7 +109,7 @@ const class TagEndingXhtml : TagEnding {
 
 @NoDoc
 const class TagEndingXml : TagEndingXhtml {
-	override Str startTag(Str tag, Bool isEmpty) {
+	override Str startTag(Str tag, Bool isEmpty, SrcCodeSnippet? srcSnippet, Int lineNo) {
 		isEmpty ? " />" : ">"
 	}
 

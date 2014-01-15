@@ -2,6 +2,10 @@ using concurrent
 
 internal class TestTagEndings : SlimTest {
 
+	override Void setup() {
+		Actor.locals.remove("slim.log")		
+	}
+	
 	Void testHtmlVoid() {
 		slim := Slim(TagStyle.html)
 		text := slim.parseFromStr("meta (dude)")
@@ -15,7 +19,6 @@ internal class TestTagEndings : SlimTest {
 	}
 
 	Void testHtmlNonVoidWarning() {
-		Actor.locals.remove("slim.log")
 		handler := |LogRec rec| { Actor.locals["slim.log"] = rec.msg }
 		Log.addHandler(handler)
 		
@@ -24,13 +27,13 @@ internal class TestTagEndings : SlimTest {
 		Log.removeHandler(handler)
 
 		verify(text.splitLines[0].startsWith("<meta>"))		
-		verify(text.splitLines[-1].endsWith ("</meta>"))	
+		verify(text.splitLines[-1].endsWith ("</meta>"))
 		
 		verify(Actor.locals["slim.log"].toStr.contains(ErrMsgs.voidTagsMustNotHaveContent("meta")))
+		verify(Actor.locals["slim.log"].toStr.contains(": Line 1"))
 	}
 
 	Void testHtmlNonVoidWarning2() {
-		Actor.locals.remove("slim.log")
 		handler := |LogRec rec| { Actor.locals["slim.log"] = rec.msg }
 		Log.addHandler(handler)
 		
@@ -42,6 +45,7 @@ internal class TestTagEndings : SlimTest {
 		verify(text.splitLines[-1].endsWith ("</meta>"), text)
 		
 		verify(Actor.locals["slim.log"].toStr.contains(ErrMsgs.voidTagsMustNotHaveContent("meta")))
+		verify(Actor.locals["slim.log"].toStr.contains(": Line 1"))
 	}
 	
 	
@@ -59,7 +63,6 @@ internal class TestTagEndings : SlimTest {
 	}
 
 	Void testXhtmlNonVoidWarning() {
-		Actor.locals.remove("slim.log")
 		handler := |LogRec rec| { Actor.locals["slim.log"] = rec.msg }
 		Log.addHandler(handler)
 		
@@ -71,10 +74,10 @@ internal class TestTagEndings : SlimTest {
 		verify(text.splitLines[-1].endsWith ("</meta>"), text)
 
 		verify(Actor.locals["slim.log"].toStr.contains(ErrMsgs.voidTagsMustNotHaveContent("meta")))
+		verify(Actor.locals["slim.log"].toStr.contains(": Line 1"))
 	}
 	
 	Void testXhtmlNonVoidWarning2() {
-		Actor.locals.remove("slim.log")
 		handler := |LogRec rec| { Actor.locals["slim.log"] = rec.msg }
 		Log.addHandler(handler)
 		
@@ -86,6 +89,7 @@ internal class TestTagEndings : SlimTest {
 		verify(text.splitLines[-1].endsWith ("</meta>"), text)
 		
 		verify(Actor.locals["slim.log"].toStr.contains(ErrMsgs.voidTagsMustNotHaveContent("meta")))
+		verify(Actor.locals["slim.log"].toStr.contains(": Line 1"))
 	}
 
 
@@ -103,7 +107,6 @@ internal class TestTagEndings : SlimTest {
 	}
 
 	Void testXmlNonVoidWarning() {
-		Actor.locals.remove("slim.log")
 		handler := |LogRec rec| { Actor.locals["slim.log"] = rec.msg }
 		Log.addHandler(handler)
 		
@@ -118,7 +121,6 @@ internal class TestTagEndings : SlimTest {
 	}
 
 	Void testXmlNonVoidWarning2() {
-		Actor.locals.remove("slim.log")
 		handler := |LogRec rec| { Actor.locals["slim.log"] = rec.msg }
 		Log.addHandler(handler)
 		

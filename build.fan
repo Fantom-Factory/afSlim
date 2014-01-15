@@ -20,7 +20,7 @@ class Build : BuildPod {
 		depends = [
 			"sys 1.0", 
 			"concurrent 1.0", 
-			"afEfan 1.3.6+", 
+			"afEfan 1.3.6.2+", 
 			"afPlastic 1.0.4+"
 		]
 		
@@ -29,9 +29,23 @@ class Build : BuildPod {
 
 		docApi = true
 		docSrc = true
-
-		// exclude test code when building the pod
-//		srcDirs = srcDirs.exclude { it.toStr.startsWith("test/") }
-//		resDirs = resDirs.exclude { it.toStr.startsWith("test/") }
 	}
+	
+	@Target { help = "Compile to pod file and associated natives" }
+	override Void compile() {
+		// exclude test code when building the pod
+		srcDirs = srcDirs.exclude { it.toStr.startsWith("test/") }
+		resDirs = resDirs.exclude { it.toStr.startsWith("test/") }
+		
+		super.compile
+		
+		destDir := Env.cur.homeDir.plus(`src/${podName}/`)
+		destDir.delete
+		destDir.create		
+		`fan/`.toFile.copyInto(destDir)
+		
+		log.indent
+		log.info("Copied `fan/` to ${destDir.normalize}")
+		log.unindent
+	}	
 }

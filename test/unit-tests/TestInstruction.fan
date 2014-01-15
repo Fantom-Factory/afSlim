@@ -12,9 +12,8 @@ internal class TestInstruction : SlimTest {
 	}
 
 	Void testUsage() {
-		concurrent::Actor.locals["test"] = "Rubbish!"
-		text := slim.renderFromStr("== Actor.locals[\"test\"]\n-? using concurrent")
-		verifyEq(text, "Rubbish!")
+		text := slim.renderFromStr("== Dude.fromStr(\"69\") \n-? using sys::Int as Dude")
+		verifyEq(text, "69")
 	}
 }
 

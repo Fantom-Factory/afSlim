@@ -186,7 +186,7 @@ Start any line with '-?' to add a fantom using statement.
 
   -? using afSlim
 
-The 'using statement' prevents you from having to use fully qualified class names:
+The 'using statement' means you don't have to use fully qualified class names:
 
   -? using concurrent
   == Actor.locals("my.value")
@@ -209,14 +209,14 @@ pre>
 Whitespace around the attributes is optional:
 
 pre>
-  a (href="http://fantom.org.") Fantom
-  a(href="http://fantom.org.") Fantom
+  a (href="http://www.fantomfactory.org") Fantom
+  a(href="http://www.fantomfactory.org") Fantom
 <pre
 
-Attributes may also be enclosed in square brackets. Handy when using Fantom interpolation:
+Attributes may also be enclosed in square brackets. Handy when calling methods using Fantom interpolation:
 
 pre>
-   div[data-type="${ calculateWombat() }"]
+   div[data-type="${calculateWombat()}"]
 <pre
 
 Use all the shortcuts together:
@@ -263,7 +263,7 @@ Due to indentation, Slim works out where they should be.
   -- else
     ul
       -- ctx.doughnuts.each |nut|
-        li ${nut.filling}
+        li Mmm... ${nut.filling}!
 
 
 

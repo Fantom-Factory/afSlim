@@ -5,7 +5,7 @@ class Build : BuildPod {
 	new make() {
 		podName = "afSlim"
 		summary = "A library for generating HTML from concise, lightweight templates"
-		version = Version("1.1.2")
+		version = Version("1.1.3")
 
 		meta	= [	
 			"org.name"		: "Alien-Factory",
@@ -14,7 +14,7 @@ class Build : BuildPod {
 			"proj.uri"		: "http://www.fantomfactory.org/pods/afSlim",
 			"vcs.uri"		: "https://bitbucket.org/AlienFactory/afslim",
 			"license.name"	: "BSD 2-Clause License",
-			"repo.private"	: "false"
+			"repo.private"	: "true"
 		]
 
 		depends = [

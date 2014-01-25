@@ -64,6 +64,16 @@ s := """		p |	And so was born Gundam v2.
 		verifyEq(text, "<p>And so was born Gundam v2.\nMaybe there'll be a v3?</p>")
 	}
 
+	// this is how I do it!...
+	Void testHowMultilineUsage3() {
+s := """		p |	etc/
+        		     |--web.fan
+        """
+		renderer := slim.compileFromStr(s)
+		text 	 := renderer.render(null)
+		verifyEq(text, "<p>etc/\n  |--web.fan</p>")
+	}
+
 	Void testAddingLeadingSpacesToText() {
 s := """a wot
         |  ever

@@ -57,9 +57,6 @@ internal class SlimLineText : SlimLine, Escape {
 		if (leadingWs <= this.leadingWs)
 			return false
 		
-		if (textCompiler.matches(line.trimStart))
-			return false
-		
 		line 	= line[this.leadingWs..-1]
 		chomp 	:= optionalPadding.min(line.chars.findIndex { !it.isSpace } ?: 0)
 		line	= line[chomp..-1]

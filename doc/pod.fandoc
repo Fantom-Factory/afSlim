@@ -478,13 +478,17 @@ Use this style when Slim is to create pure XML documents.
 Release Notes [#releaseNotes]
 *****************************
 
+v1.1.2 [#v1.1.2]
+----------------
+ - Bug: Could not start a line with the '|' char, when printing multiline text.
+
 v1.1.0 [#v1.1.0]
 ----------------
  - New: Support for HTML, XHTML and XML style tag endings.
  - New: Support for multiple 'doctype' declarations.
  - New: '<%' and '%>' escaping means EJS can be embedded in 'Slim' templates!
  - Bug: Null values no longer thow an NPE but print 'null'.
- - Bug: Brackets in text could be mistaken for attributes.
+ - Bug: Brackets in text could be mistaken for attributes. (Potential breaking change)
 
 v1.0.2 [#v1.0.2]
 ----------------

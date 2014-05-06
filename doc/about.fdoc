@@ -5,7 +5,7 @@ Features include:
  - CSS shortcut notation for '#id' and '.class' attributes
  - '${...}' notation to interpolate Fantom code
  - Configurable HTML, XHTML or XML tag endings
- - [efan]`http://repo.status302.com/doc/afEfan/#overview` template generation
+ - [efan]`pod:afEfan` template generation
  - Template nesting with *Layout* pattern.
- - Create powerful components with [efanXtra]`afEfanXtra`!
+ - Create powerful components with [efanXtra]`pod:afEfanXtra`!
 

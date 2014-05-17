@@ -1,5 +1,5 @@
-using afEfan::EfanCompiler
-using afEfan::EfanRenderer
+using afPlastic
+using afEfan
 
 ** Non-caching service methods for parsing, compiling and rendering slim templates into HTML.
 ** 
@@ -10,7 +10,7 @@ const class Slim {
 	** The void tag ending style for compiled templates
 			const TagStyle tagStyle
 
-	private const EfanCompiler	efanCompiler	:= EfanCompiler()
+	private const EfanCompiler	efanCompiler	:= EfanCompiler(EfanEngine(PlasticCompiler()))
 	private const SlimParser	slimParser
 	
 	** Creates a 'Slim' instance, setting the ending style for tags.
@@ -46,33 +46,33 @@ const class Slim {
 	** Compiles a renderer from the given slim template.
 	** 
 	** 'srcLocation' may anything - used for meta information only.
-	EfanRenderer compileFromStr(Str slimTemplate, Type? ctxType := null, Type[]? viewHelpers := null, Uri? srcLocation := null) {
+	EfanTemplate compileFromStr(Str slimTemplate, Type? ctxType := null, Type[]? viewHelpers := null, Uri? srcLocation := null) {
 		srcLocation	=  srcLocation ?: `from/slim/template`
 		efan		:= this.parseFromStr(slimTemplate, srcLocation)
-		renderer	:= efanCompiler.compile(srcLocation, efan, ctxType, viewHelpers ?: Type#.emptyList)
-		return renderer
+		template	:= efanCompiler.compile(srcLocation, efan, ctxType, viewHelpers ?: Type#.emptyList)
+		return template
 	}
 
 	** Compiles a renderer from the given slim file.
-	EfanRenderer compileFromFile(File slimFile, Type? ctxType := null, Type[]? viewHelpers := null) {
+	EfanTemplate compileFromFile(File slimFile, Type? ctxType := null, Type[]? viewHelpers := null) {
 		srcLocation	:= slimFile.normalize.uri
 		efan		:= this.parseFromStr(slimFile.readAllStr, srcLocation)
-		renderer	:= efanCompiler.compile(srcLocation, efan, ctxType, viewHelpers ?: Type#.emptyList)
-		return renderer
+		template	:= efanCompiler.compile(srcLocation, efan, ctxType, viewHelpers ?: Type#.emptyList)
+		return template
 	}
 
 	** Renders the given slim template into HTML.
 	** 
 	** 'srcLocation' may anything - used for meta information only.
 	Str renderFromStr(Str slimTemplate, Obj? ctx := null, Type[]? viewHelpers := null, Uri? srcLocation := null) {
-		renderer	:= this.compileFromStr(slimTemplate, ctx?.typeof, viewHelpers, srcLocation)
-		return renderer.render(ctx)
+		template := this.compileFromStr(slimTemplate, ctx?.typeof, viewHelpers, srcLocation)
+		return template.render(ctx)
 	}
 
 	** Renders the given slim template file into HTML.
 	Str renderFromFile(File slimFile, Obj? ctx := null, Type[]? viewHelpers := null) {
-		renderer	:= this.compileFromFile(slimFile, ctx?.typeof, viewHelpers)
-		return renderer.render(ctx)
+		template := this.compileFromFile(slimFile, ctx?.typeof, viewHelpers)
+		return template.render(ctx)
 	}
 }
 

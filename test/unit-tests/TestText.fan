@@ -53,7 +53,7 @@ s := """a.link |
         	    link text"""	// tab + 4 spaces
 		text := slim.renderFromStr(s)
 		// we trim 2 leading whitespaces
-		verifyEq(text, "<a class=\"link\">\n   link text</a>")
+		verifyEq(text, "<a class=\"link\">   link text</a>")
 	}
 
 	Void testElementContainsText2() {
@@ -69,6 +69,6 @@ s := """script (type='text/javascript') |
 //%></script>
 		print(text)
 		// we trim the leading tab
-		verifyEq(text, "<script type='text/javascript'>\nalert();\nvar x = 3;</script><a>Dude</a>")
+		verifyEq(text, "<script type='text/javascript'>alert();\nvar x = 3;</script><a>Dude</a>")
 	}
 }

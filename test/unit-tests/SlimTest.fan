@@ -1,9 +1,10 @@
 using afEfan
+using afPlastic
 
 abstract internal class SlimTest : Test {
 	
 	Slim			slim		:= Slim(TagStyle.html)
-	EfanCompiler	efanComp	:= EfanCompiler()
+	EfanCompiler	efanComp	:= EfanCompiler(EfanEngine(PlasticCompiler()))
 	
 	Void verifySlimErrMsg(Str errMsg, |Obj| func) {
 		verifyErrTypeAndMsg(SlimErr#, errMsg, func)

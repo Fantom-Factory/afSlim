@@ -13,11 +13,11 @@ i := """p inner-start
         p inner-end"""
 		
 		// FIXME: mention the (null) thing
-		oo := slim.compileFromStr(o, EfanRenderer#)
+		oo := slim.compileFromStr(o, EfanTemplate#)
 		ii := slim.compileFromStr(i)
 		
-		print(oo.efanMetaData.efanTemplate)
-		print(ii.efanMetaData.efanTemplate)
+		print(oo.templateMeta.templateSrc)
+		print(ii.templateMeta.templateSrc)
 		
 		text := oo.render(ii)
 

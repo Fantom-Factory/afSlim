@@ -7,23 +7,29 @@ Features include:
  - CSS shortcut notation for '#id' and '.class' attributes
  - '${...}' notation to interpolate Fantom code
  - Configurable HTML, XHTML or XML tag endings
- - [efan]`http://www.fantomfactory.org/pods/afEfan` template generation
+ - [efan]`pod:afEfan` template generation
  - Template nesting with *Layout* pattern.
 
 .
- > **ALIEN-AID:** Turn 'Slim' templates into powerful HTML components with [efanXtra]`http://www.fantomfactory.org/pods/afEfan`!
+ > **ALIEN-AID:** Turn 'Slim' templates into powerful HTML components with [efanXtra]`pod:afEfan`!
 
 
 
-Install [#install]
+Install [#Install]
 ******************
-Install 'Slim' with the [Fantom Repository Manager]`http://fantom.org/doc/docFanr/Tool.html#install`:
+Install '@{project.name}' with the Fantom Repository Manager ( [fanr]`docFanr::Tool.install` ):
 
-  C:\> fanr install -r http://repo.status302.com/fanr/ afSlim
+  C:\> fanr install -r http://repo.status302.com/fanr/ @{pod.name}
 
-To use in a Fantom project, add a dependency to its 'build.fan':
+To use in a [Fantom]`http://fantom.org/` project, add a dependency to 'build.fan':
 
-  depends = ["sys 1.0", ..., "afSlim 1.1+"]
+  depends = ["sys 1.0", ..., "@{pod.name} @{pod.version}+"]
+
+
+
+Documentation [#documentation]
+******************************
+Full API & fandocs are available on the [Status302 repository]`http://repo.status302.com/doc/@{pod.name}/`.
 
 
 
@@ -73,6 +79,8 @@ html
 
 2). Create a text file called 'Example.fan':
 pre>
+syntax: fantom
+
 using afSlim
 
 class Example {
@@ -86,6 +94,8 @@ class Example {
 
 3). Run 'Example.fan' as a Fantom script from the command line:
 pre>
+syntax: html
+
 C:\> fan Example.fan
 <!DOCTYPE html>
 <html>
@@ -395,6 +405,8 @@ Code to run the above example:
 
 Index.fan:
 pre>
+syntax: fantom
+
 using afSlim
 
 class Index {
@@ -409,6 +421,8 @@ class Index {
 This produces an amalgamation of the two templates:
 
 pre>
+syntax: html
+
 <html>
 <head>
   <title>Cranberry Whips</title>
@@ -477,6 +491,9 @@ Use this style when Slim is to create pure XML documents.
 
 Release Notes [#releaseNotes]
 *****************************
+v1.1.4 [#v1.1.4]
+----------------
+ - Chg: Updated to [efan 1.4.0]`pod:afEfan`.
 
 v1.1.2 [#v1.1.2]
 ----------------

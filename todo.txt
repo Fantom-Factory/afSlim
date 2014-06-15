@@ -1,12 +1,4 @@
 
-For 1.1.2
-=========
-Have slim comments effect all nested elements, e.g.
- 
-	// div
-		span this is a comment too!
-
-
 For Future
 ==========
 Have pretty print option, remove <%#\n    %>

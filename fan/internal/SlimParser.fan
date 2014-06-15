@@ -12,6 +12,7 @@ internal const class SlimParser {
 			SlimLineInstructionCompiler(),
 			SlimLineFanCommentCompiler(),
 			SlimLineHtmlCommentCompiler(),
+			SlimLineBlockCommentCompiler(),
 			SlimLineTextCompiler(),
 			SlimLineElementCompiler(tagStyle)
 		]
@@ -30,7 +31,7 @@ internal const class SlimParser {
 				// this allows TextLines to consume / span across multiple lines
 				if (!current.consume(leadingWs, line)) {
 					lineCompiler	:= compilers.find { it.matches(source) }
-					slimLine		:= lineCompiler.compile(source) { it.srcSnippet = srcSnippet; it.slimLineNo = lineNo; it.leadingWs = leadingWs }				
+					slimLine		:= lineCompiler.compile(source) { it.srcSnippet = srcSnippet; it.slimLineNo = lineNo; it.leadingWs = leadingWs }
 					current 		= current.add(slimLine)
 					
 					// fudge for: script (type="text/javascript") | 

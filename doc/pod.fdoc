@@ -37,6 +37,7 @@ Quick Start [#quickStart]
 *************************
 1). Create a text file called 'Example.slim':
 pre>
+-? using concurrent
 doctype html
 html
   head
@@ -57,7 +58,10 @@ html
       Text may also be spanned
       across multiple lines!
 
-    // This is a Slim comment
+    // This is a single line comment
+
+    /* This is a block...
+       .. or multiline comment
 
     /! This is a HTML comment
 
@@ -119,8 +123,9 @@ doctype : <!DOCTYPE ... >
     -?  : using statement
     --  : fantom code
     ==  : fantom eval
-    //  : Slim comment
-    /!  : HTML comment
+    //  : Single line comment
+    /*  : Block comment
+    /!  : HTML comment (single line only)
    a-Z  : HTML element
      |  : plain text
 <pre
@@ -239,13 +244,25 @@ pre>
 
 
 
-Slim Comments [#slimComments]
-=============================
-Start any line with '//' to add a slim comment.
+Single Line Comments [#singleLineComments]
+==========================================
+Start any line with '//' to add a comment.
 
-  // This is a Slim comment
+  // This is a comment
 
-Slim comments *do not* appear in the generated html, but *do* appear in the efan template.
+Comments *do not* appear in the generated html, but *do* appear in the efan template.
+
+
+
+Block Comments [#blockComments]
+===============================
+Start any line with '/*' to add a block comment.
+
+  /* This is a Block comment
+       Block comments span multiple lines
+         And are great for temporarily removing chunks of HTML
+
+Block comments *do not* appear in the generated html, but *do* appear in the efan template.
 
 
 
@@ -491,6 +508,11 @@ Use this style when Slim is to create pure XML documents.
 
 Release Notes [#releaseNotes]
 *****************************
+v1.1.6 [#v1.1.6]
+----------------
+ - New: Added block comments, specify with '/*'
+ - Bug: Single line comments weren't escaped.
+
 v1.1.4 [#v1.1.4]
 ----------------
  - Chg: Updated to [efan 1.4.0]`pod:afEfan`.

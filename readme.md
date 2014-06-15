@@ -34,6 +34,7 @@ Full API & fandocs are available on the [Status302 repository](http://repo.statu
 1). Create a text file called `Example.slim`:
 
 ```
+-? using concurrent
 doctype html
 html
   head
@@ -54,7 +55,10 @@ html
       Text may also be spanned
       across multiple lines!
 
-    // This is a Slim comment
+    // This is a single line comment
+
+    /* This is a block...
+       .. or multiline comment
 
     /! This is a HTML comment
 
@@ -113,8 +117,9 @@ doctype : <!DOCTYPE ... >
     -?  : using statement
     --  : fantom code
     ==  : fantom eval
-    //  : Slim comment
-    /!  : HTML comment
+    //  : Single line comment
+    /*  : Block comment
+    /!  : HTML comment (single line only)
    a-Z  : HTML element
      |  : plain text
 ```
@@ -223,13 +228,23 @@ div#robert.juice.media (data-on="You Tube") Rap News
 <div id="robert" class="juice media" data-on="You Tube">Rap News</div>
 ```
 
-### Slim Comments 
+### Single Line Comments 
 
-Start any line with `//` to add a slim comment.
+Start any line with `//` to add a comment.
 
-    // This is a Slim comment
+    // This is a comment
 
-Slim comments *do not* appear in the generated html, but *do* appear in the efan template.
+Comments *do not* appear in the generated html, but *do* appear in the efan template.
+
+### Block Comments 
+
+Start any line with `/*` to add a block comment.
+
+    /* This is a Block comment
+         Block comments span multiple lines
+           And are great for temporarily removing chunks of HTML
+
+Block comments *do not* appear in the generated html, but *do* appear in the efan template.
 
 ### HTML Comments 
 

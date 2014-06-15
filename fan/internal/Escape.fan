@@ -47,7 +47,7 @@ internal mixin Escape {
 		return code.toStr
 	}
 	
-	private Str escapeEfan(Str efan) {
+	Str escapeEfan(Str efan) {
 		efan.replace("<%", "<%%").replace("%>", "%%>")
 	}
 }

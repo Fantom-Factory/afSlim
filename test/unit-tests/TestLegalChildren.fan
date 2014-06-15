@@ -2,10 +2,10 @@
 internal class TestLegalChildren : SlimTest {
 	
 	Void testBugFromGundamIndex() {
-s := """	// coment
+s := """	-? using
         		-- illegal nested comment"""
 		
-		verifySlimErrMsg(ErrMsgs.slimLineCanNotNest(SlimLineFanComment#, SlimLineFanCode#)) {
+		verifySlimErrMsg(ErrMsgs.slimLineCanNotNest(SlimLineInstruction#, SlimLineFanCode#)) {
 			slim.parseFromStr(s)
 		}		
 	}

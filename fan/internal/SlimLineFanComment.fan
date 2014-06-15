@@ -10,7 +10,7 @@ internal const class SlimLineFanCommentCompiler : SlimLineCompiler {
 	}
 }
 
-internal class SlimLineFanComment : SlimLine {
+internal class SlimLineFanComment : SlimLine, Escape {
 
 	Str comment
 	
@@ -20,9 +20,13 @@ internal class SlimLineFanComment : SlimLine {
 	
 	override Void onEntry(StrBuf buf) {
 		indent(buf)
-		buf.add("<%# ${comment} %>")
+		buf.add("<%# ${escapeEfan(comment)} %>")
 		newLine(buf)
 	}
 
 	override Void onExit(StrBuf buf) { }
+	
+	override Type[] legalChildren() {
+		[SlimLine#]	// ALL SlimLines
+	}
 }

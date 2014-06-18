@@ -27,6 +27,6 @@ internal class SlimLineFanComment : SlimLine, Escape {
 	override Void onExit(StrBuf buf) { }
 	
 	override Type[] legalChildren() {
-		[SlimLine#]	// ALL SlimLines
+		parent.legalChildren	// whatever we're embedded in
 	}
 }

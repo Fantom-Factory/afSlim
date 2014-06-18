@@ -35,8 +35,4 @@ internal class SlimLineBlockComment : SlimLine, Escape {
 	}
 	
 	override Void onExit(StrBuf buf) { }
-	
-	override Type[] legalChildren() {
-		[SlimLine#]	// ALL SlimLines
-	}
 }

@@ -37,6 +37,6 @@ internal class SlimLineFanEval : SlimLine {
 	}
 
 	override Type[] legalChildren() {
-		[SlimLineElement#, SlimLineFanCode#, SlimLineFanComment#, SlimLineFanEval#, SlimLineHtmlComment#, SlimLineText#]
+		[SlimLineElement#, SlimLineFanCode#, SlimLineFanComment#, SlimLineFanEval#, SlimLineBlockComment#, SlimLineHtmlComment#, SlimLineText#]
 	}
 }

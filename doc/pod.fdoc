@@ -508,6 +508,10 @@ Use this style when Slim is to create pure XML documents.
 
 Release Notes [#releaseNotes]
 *****************************
+v1.1.8 [#v1.1.8]
+----------------
+ - Bug: Could not nest block comments in code or eval statements.
+
 v1.1.6 [#v1.1.6]
 ----------------
  - New: Added block comments, specify with '/*'

@@ -22,14 +22,14 @@ internal const class SlimParser {
 		srcSnippet := SrcCodeSnippet(srcLocation, slimTemplate)
 		slimTemplate.splitLines.each |line, lineNo| {
 			try {
-				if (line.trim.isEmpty)
-					return
-
 				leadingWs 	:= line.chars.findIndex { !it.isSpace } ?: 0
 				source		:= line.trimStart
 				
 				// this allows TextLines to consume / span across multiple lines
 				if (!current.consume(leadingWs, line)) {
+					if (line.trim.isEmpty)
+						return
+
 					lineCompiler	:= compilers.find { it.matches(source) }
 					slimLine		:= lineCompiler.compile(source) { it.srcSnippet = srcSnippet; it.slimLineNo = lineNo; it.leadingWs = leadingWs }
 					current 		= current.add(slimLine)

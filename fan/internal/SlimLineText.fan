@@ -54,8 +54,16 @@ internal class SlimLineText : SlimLine, Escape {
 		
 	override Bool consume(Int leadingWs, Str line) {
 		// consume all children!
-		if (leadingWs <= this.leadingWs)
+		if (leadingWs <= this.leadingWs) {
+			
+			// allow blank lines through
+			if (line.trim.isEmpty) {
+				text += "\n"
+				return true
+			}
+			
 			return false
+		}
 		
 		line 	= line[this.leadingWs..-1]
 		chomp 	:= optionalPadding.min(line.chars.findIndex { !it.isSpace } ?: 0)

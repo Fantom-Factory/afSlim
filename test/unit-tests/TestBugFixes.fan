@@ -27,7 +27,7 @@ s := """
         """
 		renderer := slim.compileFromStr(s)
 		text 	 := renderer.render(null)
-		verifyEq(text, "<p>More recently re-writing Gundam in Fantom.</p><p>And so was born Gundam v2.</p>")
+		verifyEq(text, "<p>More recently re-writing Gundam in Fantom.</p><p>And so was born Gundam v2.\n</p>")
 	}
 	
 	// Fook this - I discovered that *I* want text on multilines - it just looks better!
@@ -51,7 +51,7 @@ s := """		p	| More recently
         """
 		renderer := slim.compileFromStr(s)
 		text 	 := renderer.render(null)
-		verifyEq(text, "<p>More recently re-writing Gundam in Fantom.</p>")
+		verifyEq(text, "<p>More recently re-writing Gundam in Fantom.\n</p>")
 	}
 
 	// this is how I do it!...
@@ -61,7 +61,7 @@ s := """		p |	And so was born Gundam v2.
         """
 		renderer := slim.compileFromStr(s)
 		text 	 := renderer.render(null)
-		verifyEq(text, "<p>And so was born Gundam v2.\nMaybe there'll be a v3?</p>")
+		verifyEq(text, "<p>And so was born Gundam v2.\nMaybe there'll be a v3?\n</p>")
 	}
 
 	// this is how I do it!...
@@ -71,7 +71,7 @@ s := """		p |	etc/
         """
 		renderer := slim.compileFromStr(s)
 		text 	 := renderer.render(null)
-		verifyEq(text, "<p>etc/\n  |--web.fan</p>")
+		verifyEq(text, "<p>etc/\n  |--web.fan\n</p>")
 	}
 
 	Void testAddingLeadingSpacesToText() {
@@ -80,7 +80,7 @@ s := """a wot
         """
 		renderer := slim.compileFromStr(s)
 		text 	 := renderer.render(null)
-		verifyEq(text, "<a>wot</a> ever")
+		verifyEq(text, "<a>wot</a> ever\n")
 	}
 
 	Void testMutilineTextIsInterpolated() {
@@ -89,7 +89,7 @@ s := """| line 1 \${ctx}
         """
 		renderer := slim.compileFromStr(s)
 		text 	 := renderer.render("HaHa!")
-		verifyEq(text, "line 1 HaHa!\nline 2 HaHa!")
+		verifyEq(text, "line 1 HaHa!\nline 2 HaHa!\n")
 	}
 	
 	// ---- Slim v1.1 --------------------------------------------------------------------------------------------------

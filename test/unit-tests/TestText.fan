@@ -71,4 +71,14 @@ s := """script (type='text/javascript') |
 		// we trim the leading tab
 		verifyEq(text, "<script type='text/javascript'>alert();\nvar x = 3;</script><a>Dude</a>")
 	}
+
+	Void testTextCanContainBlankLines() {
+s := """script (type='text/javascript') |
+        		alert();
+        
+        		var x = 3;
+        a Dude"""
+		text := slim.renderFromStr(s)
+		verifyEq(text, "<script type='text/javascript'>alert();\n\nvar x = 3;</script><a>Dude</a>")
+	}
 }

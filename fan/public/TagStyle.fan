@@ -80,7 +80,7 @@ const class TagEndingHtml : TagEnding {
 	override Str endTag(Str tag, Bool isEmpty) {
 		if (isVoid(tag) && isEmpty)
 			return ""
-		return "</${tag}>"
+		return "</${tag.toXml}>"
 	}
 }
 
@@ -103,7 +103,7 @@ const class TagEndingXhtml : TagEnding {
 	override Str endTag(Str tag, Bool isEmpty) {
 		if (isVoid(tag) && isEmpty)
 			return ""
-		return "</${tag}>"
+		return "</${tag.toXml}>"
 	}
 }
 
@@ -114,6 +114,6 @@ const class TagEndingXml : TagEndingXhtml {
 	}
 
 	override Str endTag(Str tag, Bool isEmpty) {
-		isEmpty ? "" : "</${tag}>"
+		isEmpty ? "" : "</${tag.toXml}>"
 	}
 }

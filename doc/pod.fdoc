@@ -242,6 +242,13 @@ pre>
   <div id="robert" class="juice media" data-on="You Tube">Rap News</div>
 <pre
 
+If the text of an element needs to start with a bracket, then use empty attribute notation to avoid confusion:
+pre>
+  div() (In Brackets)
+
+  <div>(In Brackets)</div>
+<pre
+
 
 
 Single Line Comments [#singleLineComments]
@@ -270,7 +277,11 @@ HTML Comments [#htmlComments]
 =============================
 Start any line with '/!' to add a HTML comment.
 
-  /! This is a HTML comment   -->   <!-- This is a HTML comment -->
+  /! This is a HTML comment
+
+becomes
+
+  <!-- This is a HTML comment -->
 
 HTML comments *do* appear in the generated HTML.
 
@@ -286,7 +297,7 @@ Note because Slim does not have end tags, you do not specify opening or closing 
 Due to indentation, Slim works out where they should be.
 
   -- if (ctx.doughnuts.isEmpty)
-    | You're not a *real* policeman!
+    p You're not a *real* policeman!
   -- else
     ul
       -- ctx.doughnuts.each |nut|
@@ -494,6 +505,13 @@ XHTML documents should be served up with a MimeType of:
 Note that Internet Explorer versions 8 and below are reported not to accept this MimeType, resulting in a download dialogue box
 shown to the user.
 
+> Note that XHTML files **must** declare the xhtml namespace in the html tag or browsers will **not** render the page. Example:
+
+  <!DOCTYPE html>
+  <html xmlns="http://www.w3.org/1999/xhtml">
+    ...
+  </html>
+
 XML [#xml]
 ==========
 If you create `Slim` with a `TagStyle` of 'xml' then *ALL* empty tags are self-closing and void tags have no special meaning.
@@ -508,6 +526,10 @@ Use this style when Slim is to create pure XML documents.
 
 Release Notes [#releaseNotes]
 *****************************
+v1.1.10 [#v1.1.10]
+------------------
+ - Bug: Text elements could not contain empty lines; important for '<pre>' tags.
+
 v1.1.8 [#v1.1.8]
 ----------------
  - Bug: Could not nest block comments in code or eval statements.

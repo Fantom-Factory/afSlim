@@ -1,4 +1,4 @@
-## Overview
+## Overview 
 
 `Slim` is a library for generating HTML from concise, lightweight templates. `Slim` is based on [Jade](http://jade-lang.com/) for javascript and [Slim](http://slim-lang.com/) for Ruby.
 
@@ -15,7 +15,7 @@ Features include:
 
 > **ALIEN-AID:** Turn `Slim` templates into powerful HTML components with [efanXtra](http://www.fantomfactory.org/pods/afEfan)!
 
-## Install
+## Install 
 
 Install `Slim` with the Fantom Repository Manager ( [fanr](http://fantom.org/doc/docFanr/Tool.html#install) ):
 
@@ -25,11 +25,11 @@ To use in a [Fantom](http://fantom.org/) project, add a dependency to `build.fan
 
     depends = ["sys 1.0", ..., "afSlim 1.1+"]
 
-## Documentation
+## Documentation 
 
 Full API & fandocs are available on the [Status302 repository](http://repo.status302.com/doc/afSlim/).
 
-## Quick Start
+## Quick Start 
 
 1). Create a text file called `Example.slim`:
 
@@ -108,7 +108,7 @@ C:\> fan Example.fan
     ....
 ```
 
-## Syntax
+## Syntax 
 
 The first non-whitespace characters of each line defines the content of the line:
 
@@ -126,7 +126,7 @@ doctype : <!DOCTYPE ... >
 
 > **ALIEN-AID:** Whitespace indentation is *very* important! If your HTML looks wrong, click `Show Whitespace` in your editor / IDE and make sure you are not mixing up tabs and spaces.
 
-### Doctype
+### Doctype 
 
 Start a line with `doctype` to print a document type. The common type would be `html`:
 
@@ -183,7 +183,7 @@ To print custom DOCTYPE declarations, use the `|` character to print a standard 
 
     | <!DOCTYPE wotever PUBLIC "http://www.wotever.com">
 
-### Using Statements
+### Using Statements 
 
 Start any line with `-?` to add a fantom using statement.
 
@@ -194,7 +194,7 @@ The `using statement` means you don't have to use fully qualified class names:
     -? using concurrent
     == Actor.locals("my.value")
 
-### Elements
+### Elements 
 
 Element lines are formatted as:
 
@@ -214,7 +214,7 @@ a (href="http://www.fantomfactory.org") Fantom
 a(href="http://www.fantomfactory.org") Fantom
 ```
 
-Attributes may also be enclosed in square brackets. Handy when calling methods using Fantom interpolation:
+Attributes may also be enclosed in square brackets:
 
 ```
 div[data-type="${calculateWombat()}"]
@@ -236,15 +236,16 @@ div() (In Brackets)
 <div>(In Brackets)</div>
 ```
 
-### Single Line Comments
+### Single Line Comments 
 
 Start any line with `//` to add a comment.
 
     // This is a comment
+        div This is still rendered
 
 Comments *do not* appear in the generated html, but *do* appear in the efan template.
 
-### Block Comments
+### Block Comments 
 
 Start any line with `/*` to add a block comment.
 
@@ -254,7 +255,7 @@ Start any line with `/*` to add a block comment.
 
 Block comments *do not* appear in the generated html, but *do* appear in the efan template.
 
-### HTML Comments
+### HTML Comments 
 
 Start any line with `/!` to add a HTML comment.
 
@@ -266,7 +267,7 @@ becomes
 
 HTML comments *do* appear in the generated HTML.
 
-### Fantom Code
+### Fantom Code 
 
 Start any line with `--` to write Fantom code. Use to call efan helper methods.
 
@@ -281,7 +282,7 @@ Note because Slim does not have end tags, you do not specify opening or closing 
         -- ctx.doughnuts.each |nut|
           li Mmm... ${nut.filling}!
 
-### Fantom Eval
+### Fantom Eval 
 
 Start any line with `==` to evaluate a line of Fantom code and print it out in the template
 
@@ -289,7 +290,7 @@ Start any line with `==` to evaluate a line of Fantom code and print it out in t
 
 The resulting string is printed raw and is *not* HTML escaped.
 
-### Plain Text
+### Plain Text 
 
 Any line starting with a `|` denotes plain text and is printed raw. You can even embed HTML:
 
@@ -356,7 +357,7 @@ and not
 
     <a href="http://fantom.org/">Fantom</a>a niffty pragmatic language --> Fantoma niffty pragmatic language
 
-### HTML Escaping
+### HTML Escaping 
 
 Similar to [Fantom Str interpolation](http://fantom.org/doc/docLang/Literals.html#interpolation), you can output Fantom expressions *anywhere* in the template using the standard `${...}` notation;
 
@@ -374,7 +375,7 @@ To summarise:
 \$${...} : ignored
 ```
 
-## Layout Pattern / Nesting Templates
+## Layout Pattern / Nesting Templates 
 
 Just like efan, Slim templates may be nested inside one another, effectively allowing you to componentise your templates. This is accomplished by passing body functions to the efan `render()` method and calling `renderBody()` to invoke it.
 
@@ -426,9 +427,9 @@ This produces an amalgamation of the two templates:
 </html>
 ```
 
-## HTML vs XHTML vs XML
+## HTML vs XHTML vs XML 
 
-### HTML
+### HTML 
 
 By default `Slim` renders tags as HTML5 elements; that is, all tags representing [void elements](http://www.w3.org/html/wg/drafts/html/master/syntax.html#void-elements) such as `meta`, `br` and `input` are printed without an end tag:
 
@@ -443,7 +444,7 @@ HTML5 documents should be served up (from a web / app server such as [BedSheet](
 
 While HTML is nice for browsers, this format doesn't lend itself to XML parsing; should you wish to use [Sizzle](http://www.fantomfactory.org/pods/afSizzle) for instance. So `Slim` offers alternative renderings of tag endings.
 
-### XHTML
+### XHTML 
 
 By creating [Slim](http://repo.status302.com/doc/afSlim/Slim.html) with a [TagStyle](http://repo.status302.com/doc/afSlim/TagStyle.html) of `xhtml` all [void elements](http://www.w3.org/html/wg/drafts/html/master/syntax.html#void-elements) are rendered as a self-closing tags. Warnings are logged should a void element NOT be empty.
 
@@ -467,7 +468,7 @@ Note that Internet Explorer versions 8 and below are reported not to accept this
       ...
     </html>
 
-### XML
+### XML 
 
 If you create [Slim](http://repo.status302.com/doc/afSlim/Slim.html) with a [TagStyle](http://repo.status302.com/doc/afSlim/TagStyle.html) of `xml` then *ALL* empty tags are self-closing and void tags have no special meaning. Use this style when Slim is to create pure XML documents.
 

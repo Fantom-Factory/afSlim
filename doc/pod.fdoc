@@ -228,7 +228,7 @@ pre>
   a(href="http://www.fantomfactory.org") Fantom
 <pre
 
-Attributes may also be enclosed in square brackets. Handy when calling methods using Fantom interpolation:
+Attributes may also be enclosed in square brackets:
 
 pre>
    div[data-type="${calculateWombat()}"]
@@ -256,6 +256,7 @@ Single Line Comments [#singleLineComments]
 Start any line with '//' to add a comment.
 
   // This is a comment
+      div This is still rendered
 
 Comments *do not* appear in the generated html, but *do* appear in the efan template.
 
@@ -526,6 +527,11 @@ Use this style when Slim is to create pure XML documents.
 
 Release Notes [#releaseNotes]
 *****************************
+v1.1.12 [#v1.1.12]
+------------------
+ - Chg: Brackets in attributes may now be nested: 'div (class="${wotever()}")'
+ - Chg: Now uses [Pegger]`pod:afPegger`.
+
 v1.1.10 [#v1.1.10]
 ------------------
  - Bug: Text elements could not contain empty lines; important for '<pre>' tags.

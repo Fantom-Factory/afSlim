@@ -1,3 +1,4 @@
+using afPegger
 
 internal const class SlimLineElementCompiler : SlimLineCompiler {
 
@@ -16,28 +17,9 @@ internal const class SlimLineElementCompiler : SlimLineCompiler {
 	
 	override SlimLine compile(Str line) {
 		// I know, I'll use Regular Expressions! ...
-		
-		// match name (attr) text
-		regx := Regex<|^([^\s^\[]+)\s*\((.+?)\)(.*)$|>.matcher(line)
-		if (regx.find)
-			return match(regx.group(1), regx.group(2), regx.group(3))
-
-		// match name [attr] text
-		regx = Regex<|^([^\s^\[]+)\s*\[(.+?)\](.*)$|>.matcher(line)
-		if (regx.find)
-			return match(regx.group(1), regx.group(2), regx.group(3))
-		
-//		{ curly } brackets not allowed 'cos it messes with ${interpolation}
-//		regx = Regex<|^([^\s^\[^\{]+)\s*\{(.+)\}(.*)$|>.matcher(line)
-//		if (regx.find)
-//			return match(regx.group(1), regx.group(2), regx.group(3))
-		
-		// match name text
-		regx = Regex<|^([^\s]+)\s*(.*)$|>.matcher(line)
-		if (regx.find)
-			return match(regx.group(1), "", regx.group(2))
-		
-		throw SlimErr(ErrMsgs.elementCompilerNoMatch(line))
+		// Actually, I've got enough problems so I'll use Pegger instead!
+		attrs := AttributeParser().parseAttributes(line)
+		return match(attrs.name, attrs.attr, attrs.text)
 	}
 	
 	SlimLine match(Str tag, Str attr, Str text) {
@@ -138,3 +120,38 @@ internal class SlimLineElement : SlimLine {
 		[SlimLineElement#, SlimLineFanCode#, SlimLineFanComment#, SlimLineFanEval#, SlimLineBlockComment#, SlimLineHtmlComment#, SlimLineText#]
 	}
 }
+
+internal class AttributeParser : Rules {
+	Str?	name
+	Str		attr	:= Str.defVal
+	Str		text	:= Str.defVal
+	
+	AttributeParser parseAttributes(Str line) {
+		if (Parser(rules).parse(line.in) == null)
+			throw SlimErr(ErrMsgs.elementCompilerNoMatch(line))
+		return this
+	}
+	
+	Rule rules() {
+		rules 			:= NamedRules()
+		tagName			:= rules["tagName"]
+		attributes		:= rules["attributes"]
+		roundBrackets	:= rules["roundBrackets"]
+		squareBrackets	:= rules["squareBrackets"]
+		content			:= rules["content"]
+
+		// { curly } brackets not allowed 'cos it messes with ${interpolation} in ID and class names.
+		
+		rules["tagName"]		= oneOrMore(anyCharNotOf(" \t\n\r\f([".chars)).withAction { name = it }
+		rules["attributes"]		= optional(firstOf { roundBrackets, squareBrackets })
+		rules["roundBrackets"]	= sequence { char('('), zeroOrMore(firstOf { anyCharNotOf("()".chars), roundBrackets }).withAction { attr = it }, char(')'), }
+		rules["squareBrackets"]	= sequence { char('['), zeroOrMore(firstOf { anyCharNotOf("[]".chars), squareBrackets}).withAction { attr = it }, char(']'), }
+		rules["content"]		= zeroOrMore(anyChar).withAction { text = it }
+		return sequence { tagName, zeroOrMore(anySpaceChar), attributes, zeroOrMore(anySpaceChar), content }
+	}
+	
+	Void pushAttributes(Str attr) {
+		this.attr = attr
+	}
+}
+

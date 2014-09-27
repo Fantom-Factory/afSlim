@@ -90,4 +90,22 @@ s := """tag.\$\${id} (data="wot") ever"""
 		text := slim.parseFromStr(s)
 		verifyEq(text, "<tag class=\"<%= id %>\" data=\"wot\">ever</tag>")
 	}
+
+	Void testNestedRoundBrackets() {
+s := """tag (data="wot()") ever"""
+		text := slim.parseFromStr(s)
+		verifyEq(text, "<tag data=\"wot()\">ever</tag>")
+	}
+
+	Void testNestedSquareBrackets() {
+s := """tag[data="wot[0]"] ever"""
+		text := slim.parseFromStr(s)
+		verifyEq(text, "<tag data=\"wot[0]\">ever</tag>")
+	}
+
+	Void testLotsaNestedRoundBrackets() {
+s := """tag (data="wot(.(.(.(.(.).).).).)") ever"""
+		text := slim.parseFromStr(s)
+		verifyEq(text, "<tag data=\"wot(.(.(.(.(.).).).).)\">ever</tag>")
+	}
 }

@@ -16,12 +16,12 @@ class Build : BuildPod {
 		depends = [
 			"sys 1.0", 
 
-			"afEfan 1.4.0.1+", 
-			"afPlastic 1.0.14+",
-			"afPegger 0+",
+			"afEfan    1.4.2  - 1.4", 
+			"afPlastic 1.0.16 - 1.0",
+			"afPegger  0+",
 			
 			// for testing
-			"concurrent 1.0"
+			"concurrent 1.0.8 - 1.0"
 		]
 		
 		srcDirs = [`test/unit-tests/`, `fan/`, `fan/public/`, `fan/internal/`]

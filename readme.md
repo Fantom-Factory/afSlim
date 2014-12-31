@@ -31,7 +31,7 @@ Full API & fandocs are available on the [Status302 repository](http://repo.statu
 
 ## Quick Start 
 
-1). Create a text file called `Example.slim`:
+1). Create a text file called `Example.slim`
 
 ```
 -? using concurrent
@@ -62,10 +62,10 @@ html
 
     /! This is a HTML comment
 
-    | Use -- to execute Fantom code
+    // Use -- to execute Fantom code
     -- echo("Hello Pips!")
 
-    | Use == to print the result of a fantom expression
+    // Use == to print the result of a Fantom expression
     == "Hello " + ctx["name"] + "!"
 
     // Use $(...) notation to embed Fantom expressions
@@ -130,11 +130,12 @@ doctype : <!DOCTYPE ... >
 
 Start a line with `doctype` to print a document type. The common type would be `html`:
 
-    doctype html   -->   <!DOCTYPE html>
+    doctype html
+      <!DOCTYPE html>
 
 If you specify a doctype of `xml` then what follows is taken to be the charset and is printed with the XML processing instruction. (In this case, the directive `doctype` is a bit of a misnomer.)
 
-    doctype xml ISO-8859-1  -->
+    doctype xml ISO-8859-1
       <?xml version="1.0" encoding="ISO-8859-1" ?>
 
 Supported XHTML Doctypes:
@@ -185,7 +186,7 @@ To print custom DOCTYPE declarations, use the `|` character to print a standard 
 
 ### Using Statements 
 
-Start any line with `-?` to add a fantom using statement.
+Start any line with `-?` to add a Fantom using statement.
 
     -? using afSlim
 
@@ -438,7 +439,7 @@ By default `Slim` renders tags as HTML5 elements; that is, all tags representing
 
 Warnings are logged should a void element NOT be empty.
 
-HTML5 documents should be served up (from a web / app server such as [BedSheet](http://www.fantomfactory.org/pods/afBedSheet)) with a MimeType of:
+HTML5 documents should be served up (from a web / app server such as [BedSheet](http://www.fantomfactory.org/pods/afBedSheet)) with a `Content-Type` of:
 
     text/html
 
@@ -455,7 +456,7 @@ All non void elements are *NOT* rendered as self closing, even when empty.
 
     <script></script>
 
-XHTML documents should be served up with a MimeType of:
+XHTML documents should be served up with a `Content-Type` of:
 
     application/xhtml+xml
 
@@ -472,7 +473,7 @@ Note that Internet Explorer versions 8 and below are reported not to accept this
 
 If you create [Slim](http://repo.status302.com/doc/afSlim/Slim.html) with a [TagStyle](http://repo.status302.com/doc/afSlim/TagStyle.html) of `xml` then *ALL* empty tags are self-closing and void tags have no special meaning. Use this style when Slim is to create pure XML documents.
 
-[Depending on usage](http://stackoverflow.com/questions/4832357/whats-the-difference-between-text-xml-vs-application-xml-for-webservice-respons) XML documents may be served up with a MimeType of either:
+[Depending on usage](http://stackoverflow.com/questions/4832357/whats-the-difference-between-text-xml-vs-application-xml-for-webservice-respons) XML documents may be served up with a `Content-Type` of either:
 
     text/xml
     application/xml

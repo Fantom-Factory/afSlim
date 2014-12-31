@@ -208,7 +208,7 @@ div.wombat Text here    --> <div class="wombat">Text here</div>
 div(data-type="wombat") --> <div data-type="wombat"></div>
 ```
 
-Whitespace around the attributes is optional:
+Whitespace before the attribute brackets is optional:
 
 ```
 a (href="http://www.fantomfactory.org") Fantom
@@ -218,7 +218,7 @@ a(href="http://www.fantomfactory.org") Fantom
 Attributes may also be enclosed in square brackets:
 
 ```
-div[data-type="${calculateWombat()}"]
+div[data-type="wombat"]
 ```
 
 Use all the shortcuts together:
@@ -235,6 +235,15 @@ If the text of an element needs to start with a bracket, then use empty attribut
 div() (In Brackets)
 
 <div>(In Brackets)</div>
+```
+
+If an element has no text, then it may be immediatly followed by a semi-colon `;` to start a fresh line. This concise syntax prevents `<li>`, and other empty elements, from taking up a whole line of their own.
+
+```
+ul
+  li; a (href="#") home
+  li; span.highlight other page
+  li; == ctx.otherPage
 ```
 
 ### Single Line Comments 
@@ -426,6 +435,14 @@ This produces an amalgamation of the two templates:
     ...my cool page content...
 </body>
 </html>
+```
+
+Note that when using the raw efan `render()` method, you should always pass in a ctx, even if it is null. This prevents confusion between the ctx and the body method:
+
+```
+html
+  == ctx.layout.render(null)
+    ...my cool page content...
 ```
 
 ## HTML vs XHTML vs XML 

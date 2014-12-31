@@ -222,7 +222,7 @@ pre>
   div(data-type="wombat") --> <div data-type="wombat"></div>
 <pre
 
-Whitespace around the attributes is optional:
+Whitespace before the attribute brackets is optional:
 
 pre>
   a (href="http://www.fantomfactory.org") Fantom
@@ -232,7 +232,7 @@ pre>
 Attributes may also be enclosed in square brackets:
 
 pre>
-   div[data-type="${calculateWombat()}"]
+   div[data-type="wombat"]
 <pre
 
 Use all the shortcuts together:
@@ -244,10 +244,21 @@ pre>
 <pre
 
 If the text of an element needs to start with a bracket, then use empty attribute notation to avoid confusion:
+
 pre>
   div() (In Brackets)
 
   <div>(In Brackets)</div>
+<pre
+
+If an element has no text, then it may be immediatly followed by a semi-colon ';' to start a fresh line.
+This concise syntax prevents '<li>', and other empty elements, from taking up a whole line of their own.
+
+pre>
+  ul
+    li; a (href="#") home
+    li; span.highlight other page
+    li; == ctx.otherPage
 <pre
 
 
@@ -463,6 +474,15 @@ syntax: html
 </html>
 <pre
 
+Note that when using the raw efan 'render()' method, you should always pass in a ctx, even if it is null.
+This prevents confusion between the ctx and the body method:
+
+pre>
+html
+  == ctx.layout.render(null)
+    ...my cool page content...
+<pre
+
 
 
 HTML vs XHTML vs XML [#htmlVsXhtmlVsXml]
@@ -528,6 +548,11 @@ Use this style when Slim is to create pure XML documents.
 
 Release Notes [#releaseNotes]
 *****************************
+v1.1.14 [#v1.1.14]
+------------------
+ - New: Empty elements may immeditatly be followed by ';' to put multiple lines on one, e.g. 'li; a(href="#"); span.highlight Hello!'
+ - Bug: Dot seperated statements in interpolation may now be used in id and class shortcut notation, e.g. 'div#${wot.ever}.${wot.ever}'
+
 v1.1.12 [#v1.1.12]
 ------------------
  - Chg: Brackets in attributes may now be nested: 'div (class="${wotever()}")'

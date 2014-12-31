@@ -12,7 +12,7 @@ i := """p inner-start
         == renderBody
         p inner-end"""
 		
-		// FIXME: mention the (null) thing
+		// see 'Layout Pattern' in poddoc for the (null) thing
 		oo := slim.compileFromStr(o, EfanTemplate#)
 		ii := slim.compileFromStr(i)
 		

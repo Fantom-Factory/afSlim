@@ -22,39 +22,21 @@ internal const class SlimLineElementCompiler : SlimLineCompiler {
 	
 	SlimLine match(Str tag, Str attr, Str text, Bool multi) {
 		attrs	:= Str[,]
-		name	:= ""
-		id		:= ""
-		classes	:= ""
-		
-		// match name#id.class.class
-		regx := Regex<|^(.+?)(#.+?)?(\..+)*$|>.matcher(tag)
-		regx.find
-		for (i := 1; i <= regx.groupCount; i++) {
-			group := regx.group(i)
-			if (group == null)
-				continue
-			if (group.startsWith("#")) {
-				id = group[1..-1].trim
-				continue
-			}
-			if (group.startsWith(".")) {
-				classes = group[1..-1].split('.').join(" ")
-				continue
-			}
-			name = group.trim
-		}
+		vals	:= TagIdClassParser().parse(tag)
 
-		if (!id.isEmpty)
-			attrs.add("id=\"${id}\"")
+		if (!vals.id.isEmpty)
+			attrs.add("id=\"${vals.id}\"")
 		
-		if (!classes.isEmpty)
-			attrs.add("class=\"${classes}\"")
+		if (!vals.classes.isEmpty) {
+			css := vals.classes.join(" ")
+			attrs.add("class=\"${css}\"")
+		}
 		
 		if (!attr.isEmpty)
 			attrs.add(attr.trim)		
 		
 		text = text.trimStart	// very important!
-		element	:= SlimLineElement(tagStyle, escape(name), escape(attrs.join(" ")), escape(text))
+		element	:= SlimLineElement(tagStyle, escape(vals.name), escape(attrs.join(" ")), escape(text))
 
 		if (multi) {
 			element.nextLine = text
@@ -73,7 +55,6 @@ internal const class SlimLineElementCompiler : SlimLineCompiler {
 }
 
 internal class SlimLineElement : SlimLine {
-	
 	TagStyle tagStyle
 	Str name
 	Str attr
@@ -148,6 +129,7 @@ internal class AttributeParser : Rules {
 		content			:= rules["content"]
 
 		// { curly } brackets not allowed 'cos it messes with ${interpolation} in ID and class names.
+		// TODO: allow { curly } brackets now that we're using Pegger - needed?
 		
 		rules["tagName"]		= oneOrMore(anyCharNotOf(" \t\n\r\f([;".chars)).withAction { name = it }
 		rules["attributes"]		= sequence { zeroOrMore(anySpaceChar), firstOf { roundBrackets, squareBrackets } }
@@ -156,6 +138,33 @@ internal class AttributeParser : Rules {
 		rules["multiLine"]		= char(';').withAction { multi = true }
 		rules["content"]		= zeroOrMore(anyChar).withAction { text = it }
 		return sequence { tagName, optional(attributes), optional(multiLine), content }
+	}	
+}
+
+internal class TagIdClassParser : Rules {
+	Str		name	:= Str.defVal
+	Str?	id		:= Str.defVal
+	Str[]	classes	:= Str[,]
+	
+	TagIdClassParser parse(Str line) {
+		if (Parser(rules).parse(line.in) == null)
+			throw SlimErr(ErrMsgs.elementCompilerNoMatch(line))
+		return this
+	}
+	
+	Rule rules() {
+		rules 		:= NamedRules()
+		interpol	:= rules["interpol"]
+		tagRule		:= rules["tagRule"]
+		idRule		:= rules["idRule"]
+		classRule	:= rules["classRule"]
+
+		// TODO: maybe allow nested interpolation here...
+		rules["interpol"]	= sequence { char('$'), char('{'), zeroOrMore(anyCharNot('}')), char('}') }
+		rules["tagRule"]	= oneOrMore( anyCharNotOf("#.".chars) ).withAction { name = it }
+		rules["idRule"]		= sequence { char('#'), zeroOrMore( firstOf { interpol, anyCharNotOf(".".chars) } ).withAction { id = it } }
+		rules["classRule"]	= sequence { char('.'), zeroOrMore( firstOf { interpol, anyCharNotOf(".".chars) } ).withAction { classes.push(it) } }
+		return sequence { tagRule, optional(idRule), zeroOrMore(classRule) }
 	}	
 }
 

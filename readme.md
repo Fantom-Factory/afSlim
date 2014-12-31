@@ -117,8 +117,8 @@ doctype : <!DOCTYPE ... >
     -?  : using statement
     --  : fantom code
     ==  : fantom eval
-    //  : Single line comment
-    /*  : Block comment
+    //  : single line comment
+    /*  : block comment
     /!  : HTML comment (single line only)
    a-Z  : HTML element
      |  : plain text

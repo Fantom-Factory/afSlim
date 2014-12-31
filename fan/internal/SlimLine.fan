@@ -15,10 +15,10 @@ internal abstract class SlimLine {
 
 	new make() { }
 
-	virtual SlimLine add(SlimLine slimLine) {
+	virtual SlimLine add(SlimLine slimLine, Bool multiLine) {
 		// back out
-		if (slimLine.leadingWs <= leadingWs)
-			return parent.add(slimLine)
+		if (slimLine.leadingWs <= leadingWs && !multiLine)
+			return parent.add(slimLine, multiLine)
 		
 		return addChild(slimLine)
 	}

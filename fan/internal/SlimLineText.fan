@@ -38,11 +38,11 @@ internal class SlimLineText : SlimLine, Escape {
 		this.optionalPadding = optionalPadding
 	}
 	
-	override SlimLine add(SlimLine slimLine) {
+	override SlimLine add(SlimLine slimLine, Bool multiLine) {
 		// back out so we don't add text to text
 		if (slimLine is SlimLineText)
-			return parent.add(slimLine)
-		return super.add(slimLine)
+			return parent.add(slimLine, multiLine)
+		return super.add(slimLine, multiLine)
 	}
 	
 	override Void addSibling(SlimLine slimLine) {

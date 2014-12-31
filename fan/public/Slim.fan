@@ -15,7 +15,7 @@ const class Slim {
 	
 	** Creates a 'Slim' instance, setting the ending style for tags.
 	** 
-	** Defaults to 'html'.
+	** Defaults to 'TagStyle.html'.
 	new make(TagStyle tagStyle := TagStyle.html) {
 		this.tagStyle	= tagStyle
 		this.slimParser	= SlimParser(tagStyle)

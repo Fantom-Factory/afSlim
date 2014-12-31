@@ -14,7 +14,7 @@ public enum class TagStyle {
 	** 
 	**   <script></script>
 	** 
-	** Serve up HTML documents with a MimeType of 'text/html'.
+	** HTML documents, when served up from a web server, should have a 'Content-Type' of 'text/html'.
 	html	(TagEndingHtml()),
 	
 
@@ -29,7 +29,7 @@ public enum class TagStyle {
 	** 
 	**   <script></script>
 	** 
-	** Serve up HTML documents with a MimeType of 'application/xhtml+xml'.
+	** XHTML documents, when served up from a web server, should have a 'Content-Type' of 'application/xhtml+xml'.
 	xhtml	(TagEndingXhtml()),
 
 	** Dictates that *ALL* empty tags are self-closing and void tags have no special meaning: 
@@ -37,7 +37,7 @@ public enum class TagStyle {
 	**   <input type="submit" />
 	**   <script />
 	** 
-	** Serve up XML documents with a MimeType of 'text/xml' or 'application/xml' 
+	** XML documents, when served up from a web server, should have a 'Content-Type' of 'text/xml' or 'application/xml' 
 	** [depending on usage]`http://stackoverflow.com/questions/4832357/whats-the-difference-between-text-xml-vs-application-xml-for-webservice-respons`
 	xml		(TagEndingXml());
 	

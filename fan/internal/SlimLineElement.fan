@@ -1,9 +1,6 @@
 using afPegger
 
 internal const class SlimLineElementCompiler : SlimLineCompiler {
-
-	private const SlimLineTextCompiler textCompiler	:= SlimLineTextCompiler()
-	
 	private const TagStyle tagStyle
 	
 	new make(TagStyle tagStyle) {
@@ -11,7 +8,8 @@ internal const class SlimLineElementCompiler : SlimLineCompiler {
 	}
 	
 	override Bool matches(Str line) {
-		// catch all / wotever's left 
+		// XML elements may have Unicode chars - the list is quite exhaustive, so just return true for ease of use
+		// see http://www.w3.org/TR/xml11/#sec-common-syn
 		true
 	}
 	
@@ -19,10 +17,10 @@ internal const class SlimLineElementCompiler : SlimLineCompiler {
 		// I know, I'll use Regular Expressions! ...
 		// Actually, I've got enough problems so I'll use Pegger instead!
 		attrs := AttributeParser().parseAttributes(line)
-		return match(attrs.name, attrs.attr, attrs.text)
+		return match(attrs.name, attrs.attr, attrs.text, attrs.multi)
 	}
 	
-	SlimLine match(Str tag, Str attr, Str text) {
+	SlimLine match(Str tag, Str attr, Str text, Bool multi) {
 		attrs	:= Str[,]
 		name	:= ""
 		id		:= ""
@@ -58,11 +56,18 @@ internal const class SlimLineElementCompiler : SlimLineCompiler {
 		text = text.trimStart	// very important!
 		element	:= SlimLineElement(tagStyle, escape(name), escape(attrs.join(" ")), escape(text))
 
-		// fudge for javascript type lines
-		if (textCompiler.isMultiLine(text)) {
-			element.multiLine	= textCompiler.compile(text)
-			element.text		= ""
+		if (multi) {
+			element.nextLine = text
+			element.text	 = ""
 		}
+
+		// fudge for javascript type lines
+		if (SlimLineTextCompiler.isMultiLine(text)) {
+			element.nextLine = text
+			element.text	 = ""
+			element.multiLineTextFudge = true
+		}
+
 		return element
 	}
 }
@@ -125,6 +130,7 @@ internal class AttributeParser : Rules {
 	Str?	name
 	Str		attr	:= Str.defVal
 	Str		text	:= Str.defVal
+	Bool	multi	:= false
 	
 	AttributeParser parseAttributes(Str line) {
 		if (Parser(rules).parse(line.in) == null)
@@ -138,20 +144,18 @@ internal class AttributeParser : Rules {
 		attributes		:= rules["attributes"]
 		roundBrackets	:= rules["roundBrackets"]
 		squareBrackets	:= rules["squareBrackets"]
+		multiLine		:= rules["multiLine"]
 		content			:= rules["content"]
 
 		// { curly } brackets not allowed 'cos it messes with ${interpolation} in ID and class names.
 		
-		rules["tagName"]		= oneOrMore(anyCharNotOf(" \t\n\r\f([".chars)).withAction { name = it }
-		rules["attributes"]		= optional(firstOf { roundBrackets, squareBrackets })
+		rules["tagName"]		= oneOrMore(anyCharNotOf(" \t\n\r\f([;".chars)).withAction { name = it }
+		rules["attributes"]		= sequence { zeroOrMore(anySpaceChar), firstOf { roundBrackets, squareBrackets } }
 		rules["roundBrackets"]	= sequence { char('('), zeroOrMore(firstOf { anyCharNotOf("()".chars), roundBrackets }).withAction { attr = it }, char(')'), }
 		rules["squareBrackets"]	= sequence { char('['), zeroOrMore(firstOf { anyCharNotOf("[]".chars), squareBrackets}).withAction { attr = it }, char(']'), }
+		rules["multiLine"]		= char(';').withAction { multi = true }
 		rules["content"]		= zeroOrMore(anyChar).withAction { text = it }
-		return sequence { tagName, zeroOrMore(anySpaceChar), attributes, zeroOrMore(anySpaceChar), content }
-	}
-	
-	Void pushAttributes(Str attr) {
-		this.attr = attr
-	}
+		return sequence { tagName, optional(attributes), optional(multiLine), content }
+	}	
 }
 

@@ -108,4 +108,22 @@ s := """tag (data="wot(.(.(.(.(.).).).).)") ever"""
 		text := slim.parseFromStr(s)
 		verifyEq(text, "<tag data=\"wot(.(.(.(.(.).).).).)\">ever</tag>")
 	}
+	
+	Void testInterpolationInId() {
+		s := "tag#\${ctx.toStr} dude"
+		text := slim.renderFromStr(s, "wotever")
+		verifyEq(text, "<tag id=\"wotever\">dude</tag>")		
+	}
+
+	Void testInterpolationInClass() {
+		s := "tag.\${ctx.toStr} dude"
+		text := slim.renderFromStr(s, "wotever")
+		verifyEq(text, "<tag class=\"wotever\">dude</tag>")		
+	}
+
+	Void testInterpolationInClassAndId() {
+		s := "tag#\${ctx.toStr}.\${ctx.toStr} dude"
+		text := slim.renderFromStr(s, "wotever")
+		verifyEq(text, "<tag id=\"wotever\" class=\"wotever\">dude</tag>")		
+	}
 }

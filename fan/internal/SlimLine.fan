@@ -10,8 +10,9 @@ internal abstract class SlimLine {
 	
 	SlimLine[]	children	:= [,]
 
-	SlimLine? 	multiLine
-	
+	Str?		nextLine
+	Bool		multiLineTextFudge	:= false
+
 	new make() { }
 
 	virtual SlimLine add(SlimLine slimLine) {
@@ -41,10 +42,6 @@ internal abstract class SlimLine {
 	abstract Void onExit(StrBuf buf)
 
 	virtual Type[] legalChildren() { Type#.emptyList }
-	
-	Bool isMultiLine() {
-		multiLine != null
-	}
 	
 	StrBuf toEfan(StrBuf buf) {
 		onEntry(buf)

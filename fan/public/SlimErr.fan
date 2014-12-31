@@ -7,7 +7,8 @@ const class SlimErr : Err {
 }
 
 ** As thrown by Slim.
-const class SlimParserErr : SlimErr, SrcCodeErr {
+@NoDoc
+const class SlimParseErr : SlimErr, SrcCodeErr {
 	const override SrcCodeSnippet 	srcCode
 	const override Int 				errLineNo
 	private const  Int 				linesOfPadding

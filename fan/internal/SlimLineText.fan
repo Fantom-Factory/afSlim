@@ -21,7 +21,7 @@ internal const class SlimLineTextCompiler : SlimLineCompiler {
 		return SlimLineText(escape(text), optionalPadding + 1)
 	}
 	
-	Bool isMultiLine(Str line) {
+	static Bool isMultiLine(Str line) {
 		line.trimStart.startsWith("|")
 	}
 }

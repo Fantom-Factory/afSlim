@@ -27,11 +27,13 @@ internal const class SlimParser {
 				
 				// this allows TextLines to consume / span across multiple lines
 				if (!current.consume(leadingWs, line)) {
+					multiLine := false
 					while (!source.isEmpty) {
 						lineCompiler	:= compilers.find { it.matches(source) }
 						slimLine		:= lineCompiler.compile(source) { it.srcSnippet = srcSnippet; it.slimLineNo = lineNo; it.leadingWs = leadingWs }
-						current 		= current.add(slimLine)
 						source			= slimLine.nextLine ?: ""
+						current 		= current.add(slimLine, multiLine)
+						multiLine		= true
 
 						if (slimLine.multiLineTextFudge)
 							leadingWs++

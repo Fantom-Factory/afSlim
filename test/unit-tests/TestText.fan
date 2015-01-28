@@ -52,15 +52,15 @@ s := """|
 s := """a.link |
         	    link text"""	// tab + 4 spaces
 		text := slim.renderFromStr(s)
-		// we trim 2 leading whitespaces
-		verifyEq(text, "<a class=\"link\">   link text</a>")
+		// we trim the tab
+		verifyEq(text, "<a class=\"link\">    link text</a>")
 	}
 
 	Void testElementContainsText2() {
 		// NOTE 2 TABS!
 s := """script (type='text/javascript') |
-        		alert();
-        		var x = 3;
+        	alert();
+        	var x = 3;
         a Dude"""
 		text := slim.renderFromStr(s)
 //<script type='text/javascript'><%#
@@ -74,9 +74,9 @@ s := """script (type='text/javascript') |
 
 	Void testTextCanContainBlankLines() {
 s := """script (type='text/javascript') |
-        		alert();
+        	alert();
         
-        		var x = 3;
+        	var x = 3;
         a Dude"""
 		text := slim.renderFromStr(s)
 		verifyEq(text, "<script type='text/javascript'>alert();\n\nvar x = 3;</script><a>Dude</a>")

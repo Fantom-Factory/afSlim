@@ -47,10 +47,12 @@ s := """
 	// this is how I do it!...
 	Void testHowMultilineUsage1() {
 s := """		p	| More recently
-        			| re-writing Gundam in Fantom.
+        			  re-writing Gundam in Fantom.
+        			  Again.
         """
 		renderer := slim.compileFromStr(s)
 		text 	 := renderer.render(null)
+		echo("##################\n$text")
 		verifyEq(text, "<p>More recently re-writing Gundam in Fantom.\n</p>")
 	}
 
@@ -66,12 +68,12 @@ s := """		p |	And so was born Gundam v2.
 
 	// this is how I do it!...
 	Void testHowMultilineUsage3() {
-s := """		p |	etc/
-        		     |--web.fan
+s := """		p | etc/
+        			  |--web.fan
         """
 		renderer := slim.compileFromStr(s)
 		text 	 := renderer.render(null)
-		verifyEq(text, "<p>etc/\n  |--web.fan\n</p>")
+		verifyEq(text, "<p>etc/\n |--web.fan\n</p>")
 	}
 
 	Void testAddingLeadingSpacesToText() {

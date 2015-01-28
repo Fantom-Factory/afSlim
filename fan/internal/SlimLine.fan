@@ -11,7 +11,6 @@ internal abstract class SlimLine {
 	SlimLine[]	children	:= [,]
 
 	Str?		nextLine
-	Bool		multiLineTextFudge	:= false
 
 	new make() { }
 

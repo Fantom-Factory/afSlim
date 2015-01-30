@@ -238,13 +238,17 @@ div#robert.juice.media (data-on="You Tube") Rap News
 <div id="robert" class="juice media" data-on="You Tube">Rap News</div>
 ```
 
+Note that attribute contents are not parsed. Whatever is inbetween the `(` - `)` or `[` - `]` is rendered exactly as is. This means you should not mix `id` and `class` attributes with shortcut notation as this would result in two `id` and `class` attributes, which would be invalid.
+
+    div#top (id="bottom")
+    
+    <div id="top" id="bottom"></div>
+
 If the text of an element needs to start with a bracket, then use empty attribute notation to avoid confusion:
 
-```
-div() (In Brackets)
-
-<div>(In Brackets)</div>
-```
+    div() (In Brackets)
+    
+    <div>(In Brackets)</div>
 
 If an element has no text, then it may be immediatly followed by a semi-colon `;` to start a fresh line. This concise syntax prevents `<li>`, and other empty elements, from taking up a whole line of their own.
 
@@ -385,6 +389,10 @@ To summarise:
  $${...} : raw / unescaped
 \$${...} : ignored
 ```
+
+For simple expressions, the curly brackets may be omitted:
+
+    div Mmmm... $ctx.doughnut.filling is my favourite!
 
 ## Layout Pattern / Nesting Templates
 

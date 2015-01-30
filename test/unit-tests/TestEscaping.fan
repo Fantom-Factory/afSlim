@@ -94,15 +94,15 @@ internal class TestEscaping : SlimTest {
 	// ---- element shortcut escaping ----
 
 	Void testIdInterpolation() {
-		line := oneLine.compile(Str<|div#${ctx}|>)
+		line := oneLine.compile(Str<|div#${c.t.x}|>)
 		text := line.toEfan(StrBuf()).toStr
-		verifyEq(text, Str<|%><div id="<%= ((Obj?)(ctx))?.toStr?.toXml %>"></div><%#
+		verifyEq(text, Str<|%><div id="<%= ((Obj?)(c.t.x))?.toStr?.toXml %>"></div><%#
                             |>)
 	}
 	Void testClassInterpolation() {
-		line := oneLine.compile(Str<|div.dude.${ctx}|>)
+		line := oneLine.compile(Str<|div.dude.${c.t.x}|>)
 		text := line.toEfan(StrBuf()).toStr
-		verifyEq(text, Str<|%><div class="dude <%= ((Obj?)(ctx))?.toStr?.toXml %>"></div><%#
+		verifyEq(text, Str<|%><div class="dude <%= ((Obj?)(c.t.x))?.toStr?.toXml %>"></div><%#
                             |>)
 	}
 
@@ -133,4 +133,46 @@ internal class TestEscaping : SlimTest {
 		verifyEq(text, "There is <% NO %> escape !!!")
 	}
 
+	// ---- test no curly bracket interpolation -----
+
+	Void testEsc() {
+		text := oneLine.escape("\$wot.ever")
+		verifyEq(text, "<%= ((Obj?)(wot.ever))?.toStr?.toXml %>")
+	}
+
+	Void testUnesc() {
+		text := oneLine.escape("\$\$wot.ever")
+		verifyEq(text, "<%= wot.ever %>")
+	}
+
+	Void testIngoreEsc() {
+		text := oneLine.escape("\\\$wot.ever")
+		verifyEq(text, "\$wot.ever")
+	}
+
+	Void testIgnoreUnesc() {
+		text := oneLine.escape(Str<|\$$wot.ever|>)
+		verifyEq(text, Str<|$$wot.ever|>)
+	}
+			
+	Void testIdInterpol() {
+		line := oneLine.compile(Str<|div#$ctx|>)
+		text := line.toEfan(StrBuf()).toStr
+		verifyEq(text, Str<|%><div id="<%= ((Obj?)(ctx))?.toStr?.toXml %>"></div><%#
+                            |>)
+	}
+
+	Void testClassInterpol() {
+		line := oneLine.compile(Str<|div.dude.$ctx|>)
+		text := line.toEfan(StrBuf()).toStr
+		verifyEq(text, Str<|%><div class="dude <%= ((Obj?)(ctx))?.toStr?.toXml %>"></div><%#
+                            |>)
+	}
+
+	Void testClassInterpol2() {
+		line := oneLine.compile(Str<|div.dude.\$ctx|>)
+		text := line.toEfan(StrBuf()).toStr
+		verifyEq(text, Str<|%><div class="dude $ctx"></div><%#
+                            |>)
+	}
 }

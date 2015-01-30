@@ -12,11 +12,4 @@ convert compilation errs to Slim Src compilation errs
   - compilation errs
   - runtime errs 
 
-
- 
-Just a Bad Idea
-===============
- 
-use ; for multiline? NO! - ; is used for HTML entities! => &amp;
-	h1 Alien-Factory; small v${projectVersion}
-  
+Morphia - Converter doc to mention Converters.

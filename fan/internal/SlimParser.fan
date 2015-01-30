@@ -23,21 +23,18 @@ internal const class SlimParser {
 		slimTemplate.splitLines.each |line, lineNo| {
 			try {
 				leadingWs 	:= line.chars.findIndex { !it.isSpace } ?: 0
-				source		:= line.trimStart
 				
 				// this allows TextLines to consume / span across multiple lines
 				if (!current.consume(leadingWs, line)) {
-					multiLine := false
+					source		:= line.trimStart
+					multiLine	:= false
 					while (!source.isEmpty) {
 						lineCompiler	:= compilers.find { it.matches(source) }
 						slimLine		:= lineCompiler.compile(source) { it.srcSnippet = srcSnippet; it.slimLineNo = lineNo; it.leadingWs = leadingWs }
-						source			= slimLine.nextLine ?: ""
-						current 		= current.add(slimLine, multiLine)
-						multiLine		= true
-
-						if (slimLine.multiLineTextFudge)
-							leadingWs++
-					}					
+						source			 = slimLine.nextLine?.trimStart ?: ""
+						current 		 = current.add(slimLine, multiLine)
+						multiLine		 = true
+					}	
 				}
 			} catch (SlimErr slimErr) {
 				snippet := SrcCodeSnippet(srcLocation, slimTemplate)

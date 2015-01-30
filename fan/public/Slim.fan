@@ -1,7 +1,7 @@
 using afPlastic
 using afEfan
 
-** Non-caching service methods for parsing, compiling and rendering slim templates into HTML.
+** Non-caching service methods for parsing and compiling Slim templates efan templates, and for rendering HTML.
 ** 
 ** For further information on the 'ctx' parameter, see 
 ** [efan: Passing Data]`http://repo.status302.com/doc/afEfan/#ctx`

@@ -38,14 +38,12 @@ s := """|
 		verifyEq(text, "\n alert();\n   console.log;")
 	}
 
-	// NOT ANYMORE! See TestBugFixes.testHowMultilineUsage1()
-//	Void testNestedNestedIsIgnored() {
-//s := """| wot
-//           | ever"""
-//		text := slim.parseFromStr(s)
-//		print(text)
-//		verifyEq(text, "wot\n | ever")
-//	}
+	Void testNestedNestedIsIgnored() {
+s := """| wot
+           | ever"""
+		text := slim.parseFromStr(s)
+		verifyEq(text, "wot\n | ever")
+	}
 
 	// Advanced!!!
 	Void testElementContainsText() {
@@ -57,7 +55,6 @@ s := """a.link |
 	}
 
 	Void testElementContainsText2() {
-		// NOTE 2 TABS!
 s := """script (type='text/javascript') |
         	alert();
         	var x = 3;

@@ -35,7 +35,6 @@ internal const class SlimLineElementCompiler : SlimLineCompiler {
 		if (!attr.isEmpty)
 			attrs.add(attr.trim)		
 		
-		text = text.trimStart	// very important!
 		element	:= SlimLineElement(tagStyle, escape(vals.name), escape(attrs.join(" ")), escape(text))
 
 		if (multi) {
@@ -47,7 +46,6 @@ internal const class SlimLineElementCompiler : SlimLineCompiler {
 		if (SlimLineTextCompiler.isMultiLine(text)) {
 			element.nextLine = text
 			element.text	 = ""
-			element.multiLineTextFudge = true
 		}
 
 		return element
@@ -64,7 +62,7 @@ internal class SlimLineElement : SlimLine {
 		this.tagStyle = tagStyle
 		this.name = name
 		this.attr = attr
-		this.text = text
+		this.text = text.trimStart
 	}
 	
 	override Void onEntry(StrBuf buf) {
@@ -131,7 +129,7 @@ internal class AttributeParser : Rules {
 		// { curly } brackets not allowed 'cos it messes with ${interpolation} in ID and class names.
 		// TODO: allow { curly } brackets now that we're using Pegger - needed?
 		
-		rules["tagName"]		= oneOrMore(anyCharNotOf(" \t\n\r\f([;".chars)).withAction { name = it }
+		rules["tagName"]		= oneOrMore(anyCharNotOf(" \t\n\r\f([;|".chars)).withAction { name = it }
 		rules["attributes"]		= sequence { zeroOrMore(anySpaceChar), firstOf { roundBrackets, squareBrackets } }
 		rules["roundBrackets"]	= sequence { char('('), zeroOrMore(firstOf { anyCharNotOf("()".chars), roundBrackets }).withAction { attr = it }, char(')'), }
 		rules["squareBrackets"]	= sequence { char('['), zeroOrMore(firstOf { anyCharNotOf("[]".chars), squareBrackets}).withAction { attr = it }, char(']'), }

@@ -7,18 +7,8 @@ internal const class SlimLineTextCompiler : SlimLineCompiler {
 	
 	override SlimLineText compile(Str line) {
 		text := line.trimStart[1..-1]
-		
-		// count and note the leading whitespace
-		optionalPadding := text.chars.findIndex |char->Bool| { !char.isSpace } ?: 0
-		
-		// actually, limit optionalPadding to 1 so we can add leading spaces after elements
-		// see TestBugFixes.testAddingLeadingSpacesToText()
-		optionalPadding = optionalPadding.min(1) 
-		
-		text = text[optionalPadding..-1]
-		
-		// +1 for the | (leave it for multilines - it soaks up the leading tab)
-		return SlimLineText(escape(text), optionalPadding + 1)
+		text  = (text.chars.first?.isSpace ?: false) ? text[1..-1] : text
+		return SlimLineText(escape(text))
 	}
 	
 	static Bool isMultiLine(Str line) {
@@ -29,13 +19,12 @@ internal const class SlimLineTextCompiler : SlimLineCompiler {
 internal class SlimLineText : SlimLine, Escape {
 	private const SlimLineTextCompiler textCompiler	:= SlimLineTextCompiler()
 	
-	Str text
-	Bool fromMultiLine
-	Int	optionalPadding
+	Str 	text
+	Bool	textOnFirstLine
 
-	new make(Str text, Int optionalPadding) {
+	new make(Str text) {
 		this.text = text
-		this.optionalPadding = optionalPadding
+		textOnFirstLine = !text.trimStart.isEmpty
 	}
 	
 	override SlimLine add(SlimLine slimLine, Bool multiLine) {
@@ -59,6 +48,9 @@ internal class SlimLineText : SlimLine, Escape {
 			// allow blank lines through
 			if (line.trim.isEmpty) {
 				text += "\n"
+				// preserve and indented whitespace
+				if (line.size > this.leadingWs)
+					text += line[this.leadingWs..-1]
 				return true
 			}
 			
@@ -66,10 +58,27 @@ internal class SlimLineText : SlimLine, Escape {
 		}
 		
 		line 	= line[this.leadingWs..-1]
-		chomp 	:= optionalPadding.min(line.chars.findIndex { !it.isSpace } ?: 0)
-		line	= line[chomp..-1]
+		line 	= line.chars.first.isSpace ? line[1..-1] : line
+		nline	:= true
 		
-		text	+= "\n${escape(line)}"
+		if (textOnFirstLine)
+			if (line.chars.first == '|') {
+				// this section is to maintain backward compatibility - could be deleted
+
+				line = line[1..-1]	// chomp the |
+				// chomp the usual optional space after the | 
+				line = line.chars.first.isSpace ? line[1..-1] : line
+
+				// fake adding a sibling
+				if (!text.endsWith(" "))
+					text += " "
+				nline = false
+				
+			} else
+				// soak up a space for what would be the '|' char
+				line = line.chars.first.isSpace ? line[1..-1] : line
+
+		text	+= nline ? "\n${escape(line)}" : escape(line) 
 
 		return true
 	}

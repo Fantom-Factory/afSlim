@@ -3,13 +3,7 @@ For Future
 ==========
 Have pretty print option, remove <%#\n    %>
 
-maybe make {} optional with $, e.g. $uri
-maybe allow nested interpolation, e.g. ${"do${da}"}
- 
 convert compilation errs to Slim Src compilation errs
-
- afSlim
   - compilation errs
   - runtime errs 
 
-Morphia - Converter doc to mention Converters.

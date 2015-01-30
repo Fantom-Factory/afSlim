@@ -44,7 +44,6 @@ s := """
 //		verifyEq(text, "<p>| More recentlyre-writing Gundam in Fantom.</p><p>| And so was born Gundam v2.</p>")
 //	}
 
-	// this is how I do it!...
 	Void testHowMultilineUsage1() {
 s := """		p	| More recently
         			  re-writing Gundam in Fantom.
@@ -52,12 +51,20 @@ s := """		p	| More recently
         """
 		renderer := slim.compileFromStr(s)
 		text 	 := renderer.render(null)
-		echo("##################\n$text")
-		verifyEq(text, "<p>More recently re-writing Gundam in Fantom.\n</p>")
+		verifyEq(text, "<p>More recently\n re-writing Gundam in Fantom.\n Again.\n</p>")
 	}
 
-	// this is how I do it!...
 	Void testHowMultilineUsage2() {
+s := """		p|More recently
+        		  re-writing Gundam in Fantom.
+        		  Again.
+        """
+		renderer := slim.compileFromStr(s)
+		text 	 := renderer.render(null)
+		verifyEq(text, "<p>More recently\nre-writing Gundam in Fantom.\nAgain.\n</p>")
+	}
+
+	Void testHowMultilineUsage3() {
 s := """		p |	And so was born Gundam v2.
         		 	Maybe there'll be a v3?
         """
@@ -66,14 +73,34 @@ s := """		p |	And so was born Gundam v2.
 		verifyEq(text, "<p>And so was born Gundam v2.\nMaybe there'll be a v3?\n</p>")
 	}
 
-	// this is how I do it!...
-	Void testHowMultilineUsage3() {
+	Void testHowMultilineUsage4() {
 s := """		p | etc/
-        			  |--web.fan
+        		     |--web.fan
         """
 		renderer := slim.compileFromStr(s)
 		text 	 := renderer.render(null)
-		verifyEq(text, "<p>etc/\n |--web.fan\n</p>")
+		verifyEq(text, "<p>etc/\n   |--web.fan\n</p>")
+	}
+
+	Void testHowMultilineUsage5() {
+s := """		p | 
+        		    etc/
+        		     |--web.fan
+        """
+		renderer := slim.compileFromStr(s)
+		text 	 := renderer.render(null)
+		verifyEq(text, "<p>   etc/\n    |--web.fan\n</p>")
+	}
+
+	Void testHowMultilineUsage6() {
+s := """		p	| More recently
+        			| re-writing Gundam in Fantom.
+        			| Again.
+        """
+		renderer := slim.compileFromStr(s)
+		text 	 := renderer.render(null)
+		print(text)
+		verifyEq(text, "<p>More recently re-writing Gundam in Fantom. Again.\n</p>")
 	}
 
 	Void testAddingLeadingSpacesToText() {

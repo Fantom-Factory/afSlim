@@ -5,7 +5,7 @@ internal mixin Escape {
 	Str escape(Str line) {
 		// hmmm - I'm back in the dodgy world of escaping code (re: the medievil days of efan)
 		// I know, I'll use Regular Expressions! ...
-		code := StrBuf(line.size)		
+		code := StrBuf(line.size)
 		regx := Regex<|(.*?)(?:(?:(\\?\$?\$\{)(.+?)})|(\\?\$?\$)([a-zA-Z0-9\.]+))|>.matcher(line)
 		find := regx.find
 		last := 0

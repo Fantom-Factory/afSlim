@@ -126,4 +126,10 @@ s := """tag (data="wot(.(.(.(.(.).).).).)") ever"""
 		text := slim.renderFromStr(s, "wotever")
 		verifyEq(text, "<tag id=\"wotever\" class=\"wotever\">dude</tag>")		
 	}
+
+	Void testSpacesInInterpolationInClassAndId() {
+		s := "tag#\${ ctx.toStr }.\${ ctx.toStr } dude"
+		text := slim.renderFromStr(s, "wotever")
+		verifyEq(text, "<tag id=\"wotever\" class=\"wotever\">dude</tag>")		
+	}
 }

@@ -120,6 +120,7 @@ internal class AttributeParser : Rules {
 	Rule rules() {
 		rules 			:= NamedRules()
 		tagName			:= rules["tagName"]
+		interpol		:= rules["interpol"]
 		attributes		:= rules["attributes"]
 		roundBrackets	:= rules["roundBrackets"]
 		squareBrackets	:= rules["squareBrackets"]
@@ -129,7 +130,8 @@ internal class AttributeParser : Rules {
 		// { curly } brackets not allowed 'cos it messes with ${interpolation} in ID and class names.
 		// TODO: allow { curly } brackets now that we're using Pegger - needed?
 		
-		rules["tagName"]		= oneOrMore(anyCharNotOf(" \t\n\r\f([;|".chars)).withAction { name = it }
+		rules["tagName"]		= oneOrMore(firstOf { interpol, anyCharNotOf(" \t\n\r\f([;|".chars)}).withAction { name = it }
+		rules["interpol"]		= sequence { char('$'), char('{'), zeroOrMore(anyCharNot('}')), char('}') }
 		rules["attributes"]		= sequence { zeroOrMore(anySpaceChar), firstOf { roundBrackets, squareBrackets } }
 		rules["roundBrackets"]	= sequence { char('('), zeroOrMore(firstOf { anyCharNotOf("()".chars), roundBrackets }).withAction { attr = it }, char(')'), }
 		rules["squareBrackets"]	= sequence { char('['), zeroOrMore(firstOf { anyCharNotOf("[]".chars), squareBrackets}).withAction { attr = it }, char(']'), }

@@ -128,7 +128,6 @@ internal class AttributeParser : Rules {
 		content			:= rules["content"]
 
 		// { curly } brackets not allowed 'cos it messes with ${interpolation} in ID and class names.
-		// TODO: allow { curly } brackets now that we're using Pegger - needed?
 		
 		rules["tagName"]		= oneOrMore(firstOf { interpol, anyCharNotOf(" \t\n\r\f([;|".chars)}).withAction { name = it }
 		rules["interpol"]		= sequence { char('$'), char('{'), zeroOrMore(anyCharNot('}')), char('}') }

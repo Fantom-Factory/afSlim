@@ -5,12 +5,12 @@ class Build : BuildPod {
 	new make() {
 		podName = "afSlim"
 		summary = "A library for generating HTML from concise, lightweight templates"
-		version = Version("1.1.16")
+		version = Version("1.1.17")
 
 		meta = [	
 			"proj.name"		: "Slim",
 			"repo.tags"		: "templating, web",
-			"repo.public"	: "true"
+			"repo.public"	: "false"
 		]
 
 		depends = [
@@ -18,7 +18,7 @@ class Build : BuildPod {
 
 			"afEfan    1.4.2  - 1.4", 
 			"afPlastic 1.0.16 - 1.0",
-			"afPegger  0+",
+			"afPegger  0.0    - 1.0",
 			
 			// ---- Testing ----
 			"concurrent 1.0.8 - 1.0"

@@ -6,7 +6,7 @@
 
 ## Overview
 
-`Slim` is a library for generating HTML from concise, lightweight templates. `Slim` is based on [Jade](http://jade-lang.com/) for javascript and [Slim](http://slim-lang.com/) for Ruby.
+Slim is a library for generating HTML from concise, lightweight templates. `Slim` is based on [Jade](http://jade-lang.com/) for javascript and [Slim](http://slim-lang.com/) for Ruby.
 
 Features include:
 
@@ -14,12 +14,12 @@ Features include:
 - CSS shortcut notation for `#id` and `.class` attributes
 - `${...}` notation to interpolate Fantom code
 - Configurable HTML, XHTML or XML tag endings
-- [efan](http://www.fantomfactory.org/pods/afEfan) template generation
+- [efan](http://pods.fantomfactory.org/pods/afEfan) template generation
 - Template nesting with *Layout* pattern.
 
 .
 
-> **ALIEN-AID:** Turn `Slim` templates into powerful HTML components with [efanXtra](http://www.fantomfactory.org/pods/afEfan)!
+> **ALIEN-AID:** Turn `Slim` templates into powerful HTML components with [efanXtra](http://pods.fantomfactory.org/pods/afEfan)!
 
 ## Install
 
@@ -29,93 +29,91 @@ Install `Slim` with the Fantom Repository Manager ( [fanr](http://fantom.org/doc
 
 To use in a [Fantom](http://fantom.org/) project, add a dependency to `build.fan`:
 
-    depends = ["sys 1.0", ..., "afSlim 1.1+"]
+    depends = ["sys 1.0", ..., "afSlim 1.1"]
 
 ## Documentation
 
-Full API & fandocs are available on the [Status302 repository](http://repo.status302.com/doc/afSlim/).
+Full API & fandocs are available on the [Fantom Pod Repository](http://pods.fantomfactory.org/pods/afSlim/).
 
 ## Quick Start
 
-1). Create a text file called `Example.slim`
+1. Create a text file called `Example.slim`
 
-```
--? using concurrent
-doctype html
-html
-  head
-    title afSlim Example
-    meta (name="keywords" content="fantom html template language")
+        -? using concurrent
+        doctype html
+        html
+          head
+            title afSlim Example
+            meta (name="keywords" content="fantom html template language")
+        
+          body
+            h1 Slim Example
+        
+            h2 Element shortcut notation:
+        
+            div#slimer This div has an ID of 'slimer'
+            div.wombat This div has a class of 'wombat'
+            div (style="color: red;") Attributes are specified in brackets
+            div You can even embed <abbr>HTML</abbr> tags!
+        
+            | Use the pipe character for text
+              that may be spanned across
+              multiple lines!
+        
+            // This is a single line comment
+        
+            /* This is a block...
+               .. or multiline comment
+        
+            /! This is a HTML comment
+        
+            // Use -- to execute Fantom code
+            -- echo("Hello Pips!")
+        
+            // Use == to print the result of a Fantom expression
+            == "Hello " + ctx["name"] + "!"
+        
+            // Use $(...) notation to embed Fantom expressions
+            | Hello ${ ctx["name"] }!
+        
+            // Embedding Javascript is easy!
+            script (type="text/javascript") |
+              for (var i=0; i<3; i++) {
+                console.info("Greetings from Slim!");
+              }
+        
+            // Use ';' to condense elements onto one line
+            ul; li; a (href="#") One line!
 
-  body
-    h1 Slim Example
 
-    h2 Element shortcut notation:
+2. Create a text file called `Example.fan`
 
-    div#slimer This div has an ID of 'slimer'
-    div.wombat This div has a class of 'wombat'
-    div (style="color: red;") Attributes are specified in brackets
-    div You can even embed <abbr>HTML</abbr> tags!
+        using afSlim
+        
+        class Example {
+            Void main() {
+                ctx  := ["name":"Emma"]
+                html := Slim().renderFromFile(`Example.slim`.toFile, ctx)
+                echo(html)
+            }
+        }
 
-    | Use the pipe character for text
-      that may be spanned across
-      multiple lines!
 
-    // This is a single line comment
+3. Run `Example.fan` as a Fantom script from the command line:
 
-    /* This is a block...
-       .. or multiline comment
+        C:\> fan Example.fan
+        <!DOCTYPE html>
+        <html>
+            <head>
+                <title>afSlim Example</title>
+                <meta name="keywords" content="fantom html template language">
+            </head>
+            <body>
+                <h1>Slim Example</h1>
+            ....
+            ....
 
-    /! This is a HTML comment
 
-    // Use -- to execute Fantom code
-    -- echo("Hello Pips!")
-
-    // Use == to print the result of a Fantom expression
-    == "Hello " + ctx["name"] + "!"
-
-    // Use $(...) notation to embed Fantom expressions
-    | Hello ${ ctx["name"] }!
-
-    // Embedding Javascript is easy!
-    script (type="text/javascript") |
-      for (var i=0; i<3; i++) {
-        console.info("Greetings from Slim!");
-      }
-
-    // Use ';' to condense elements onto one line
-    ul; li; a (href="#") One line!
-```
-
-2). Create a text file called `Example.fan`:
-
-```
-using afSlim
-
-class Example {
-    Void main() {
-        ctx  := ["name":"Emma"]
-        html := Slim().renderFromFile(`Example.slim`.toFile, ctx)
-        echo(html)
-    }
-}
-```
-
-3). Run `Example.fan` as a Fantom script from the command line:
-
-```
-C:\> fan Example.fan
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>afSlim Example</title>
-        <meta name="keywords" content="fantom html template language">
-    </head>
-    <body>
-        <h1>Slim Example</h1>
-    ....
-    ....
-```
 
 ## Syntax
 
@@ -374,7 +372,7 @@ Slim trims 1 character of whitespace after a `|` and preserves trailing whitespa
 
 ### HTML Escaping
 
-Similar to [Fantom Str interpolation](http://fantom.org/doc/docLang/Literals.html#interpolation), you can output Fantom expressions *anywhere* in the template using the standard `${...}` notation;
+Similar to [Fantom Str interpolation](http://fantom.org/doc/docLang/Literals.html), you can output Fantom expressions *anywhere* in the template using the standard `${...}` notation;
 
     div Mmmm... ${ctx.doughnut.filling} is my favourite!
 
@@ -473,7 +471,7 @@ While HTML is nice for browsers, this format doesn't lend itself to XML parsing;
 
 ### XHTML
 
-By creating [Slim](http://repo.status302.com/doc/afSlim/Slim.html) with a [TagStyle](http://repo.status302.com/doc/afSlim/TagStyle.html) of `xhtml` all [void elements](http://www.w3.org/html/wg/drafts/html/master/syntax.html#void-elements) are rendered as a self-closing tags. Warnings are logged should a void element NOT be empty.
+By creating [Slim](http://pods.fantomfactory.org/pods/afSlim/api/Slim) with a [TagStyle](http://pods.fantomfactory.org/pods/afSlim/api/TagStyle) of `xhtml` all [void elements](http://www.w3.org/html/wg/drafts/html/master/syntax.html#void-elements) are rendered as a self-closing tags. Warnings are logged should a void element NOT be empty.
 
     <input type="submit" />
     <br />
@@ -497,7 +495,7 @@ Note that Internet Explorer versions 8 and below are reported not to accept this
 
 ### XML
 
-If you create [Slim](http://repo.status302.com/doc/afSlim/Slim.html) with a [TagStyle](http://repo.status302.com/doc/afSlim/TagStyle.html) of `xml` then *ALL* empty tags are self-closing and void tags have no special meaning. Use this style when Slim is to create pure XML documents.
+If you create [Slim](http://pods.fantomfactory.org/pods/afSlim/api/Slim) with a [TagStyle](http://pods.fantomfactory.org/pods/afSlim/api/TagStyle) of `xml` then *ALL* empty tags are self-closing and void tags have no special meaning. Use this style when Slim is to create pure XML documents.
 
 [Depending on usage](http://stackoverflow.com/questions/4832357/whats-the-difference-between-text-xml-vs-application-xml-for-webservice-respons) XML documents may be served up with a `Content-Type` of either:
 

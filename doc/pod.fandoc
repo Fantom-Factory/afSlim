@@ -1,6 +1,6 @@
-Overview [#overview]
-********************
-'Slim' is a library for generating HTML from concise, lightweight templates. 'Slim' is based on [Jade]`http://jade-lang.com/` for javascript and [Slim]`http://slim-lang.com/` for Ruby.
+Overview
+********
+Slim is a library for generating HTML from concise, lightweight templates. 'Slim' is based on [Jade]`http://jade-lang.com/` for javascript and [Slim]`http://slim-lang.com/` for Ruby.
 
 Features include:
  - indentation driven - closing tags not needed
@@ -15,111 +15,90 @@ Features include:
 
 
 
-Install [#Install]
-******************
-Install '@{project.name}' with the Fantom Repository Manager ( [fanr]`docFanr::Tool.install` ):
+Quick Start
+***********
+1. Create a text file called 'Example.slim'
 
-  C:\> fanr install -r http://repo.status302.com/fanr/ @{pod.name}
+    -? using concurrent
+    doctype html
+    html
+      head
+        title afSlim Example
+        meta (name="keywords" content="fantom html template language")
 
-To use in a [Fantom]`http://fantom.org/` project, add a dependency to 'build.fan':
+      body
+        h1 Slim Example
 
-  depends = ["sys 1.0", ..., "@{pod.name} @{pod.version}+"]
+        h2 Element shortcut notation:
 
+        div#slimer This div has an ID of 'slimer'
+        div.wombat This div has a class of 'wombat'
+        div (style="color: red;") Attributes are specified in brackets
+        div You can even embed <abbr>HTML</abbr> tags!
 
+        | Use the pipe character for text
+          that may be spanned across
+          multiple lines!
 
-Documentation [#documentation]
-******************************
-Full API & fandocs are available on the [Status302 repository]`http://repo.status302.com/doc/@{pod.name}/`.
+        // This is a single line comment
 
+        /* This is a block...
+           .. or multiline comment
 
+        /! This is a HTML comment
 
-Quick Start [#quickStart]
-*************************
-1). Create a text file called 'Example.slim'
-pre>
--? using concurrent
-doctype html
-html
-  head
-    title afSlim Example
-    meta (name="keywords" content="fantom html template language")
+        // Use -- to execute Fantom code
+        -- echo("Hello Pips!")
 
-  body
-    h1 Slim Example
+        // Use == to print the result of a Fantom expression
+        == "Hello " + ctx["name"] + "!"
 
-    h2 Element shortcut notation:
+        // Use $(...) notation to embed Fantom expressions
+        | Hello ${ ctx["name"] }!
 
-    div#slimer This div has an ID of 'slimer'
-    div.wombat This div has a class of 'wombat'
-    div (style="color: red;") Attributes are specified in brackets
-    div You can even embed <abbr>HTML</abbr> tags!
+        // Embedding Javascript is easy!
+        script (type="text/javascript") |
+          for (var i=0; i<3; i++) {
+            console.info("Greetings from Slim!");
+          }
 
-    | Use the pipe character for text
-      that may be spanned across
-      multiple lines!
+        // Use ';' to condense elements onto one line
+        ul; li; a (href="#") One line!
 
-    // This is a single line comment
+2. Create a text file called 'Example.fan'
 
-    /* This is a block...
-       .. or multiline comment
+    syntax: fantom
 
-    /! This is a HTML comment
+    using afSlim
 
-    // Use -- to execute Fantom code
-    -- echo("Hello Pips!")
-
-    // Use == to print the result of a Fantom expression
-    == "Hello " + ctx["name"] + "!"
-
-    // Use $(...) notation to embed Fantom expressions
-    | Hello ${ ctx["name"] }!
-
-    // Embedding Javascript is easy!
-    script (type="text/javascript") |
-      for (var i=0; i<3; i++) {
-        console.info("Greetings from Slim!");
-      }
-
-    // Use ';' to condense elements onto one line
-    ul; li; a (href="#") One line!
-<pre
-
-2). Create a text file called 'Example.fan':
-pre>
-syntax: fantom
-
-using afSlim
-
-class Example {
-    Void main() {
-        ctx  := ["name":"Emma"]
-        html := Slim().renderFromFile(`Example.slim`.toFile, ctx)
-        echo(html)
+    class Example {
+        Void main() {
+            ctx  := ["name":"Emma"]
+            html := Slim().renderFromFile(`Example.slim`.toFile, ctx)
+            echo(html)
+        }
     }
-}
-<pre
 
-3). Run 'Example.fan' as a Fantom script from the command line:
-pre>
-syntax: html
+3. Run 'Example.fan' as a Fantom script from the command line:
 
-C:\> fan Example.fan
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>afSlim Example</title>
-        <meta name="keywords" content="fantom html template language">
-    </head>
-    <body>
-        <h1>Slim Example</h1>
-    ....
-    ....
-<pre
+    syntax: html
+
+    C:\> fan Example.fan
+    <!DOCTYPE html>
+    <html>
+        <head>
+            <title>afSlim Example</title>
+            <meta name="keywords" content="fantom html template language">
+        </head>
+        <body>
+            <h1>Slim Example</h1>
+        ....
+        ....
 
 
 
-Syntax [#syntax]
-****************
+Syntax
+******
 The first non-whitespace characters of each line defines the content of the line:
 
 pre>
@@ -138,8 +117,8 @@ doctype : <!DOCTYPE ... >
 > IDE and make sure you are not mixing up tabs and spaces.
 
 
-Doctype [#doctype]
-==================
+Doctype
+=======
 Start a line with 'doctype' to print a document type. The common type would be 'html':
 
   doctype html
@@ -200,8 +179,8 @@ To print custom DOCTYPE declarations, use the '|' character to print a standard 
 
 
 
-Using Statements [#usingStatements]
-===================================
+Using Statements
+================
 Start any line with '-?' to add a Fantom using statement.
 
   -? using afSlim
@@ -213,8 +192,8 @@ The 'using statement' means you don't have to use fully qualified class names:
 
 
 
-Elements [#elements]
-====================
+Elements
+========
 Element lines are formatted as:
 
 pre>
@@ -271,8 +250,8 @@ pre>
 
 
 
-Single Line Comments [#singleLineComments]
-==========================================
+Single Line Comments
+====================
 Start any line with '//' to add a comment.
 
   // This is a comment
@@ -282,8 +261,8 @@ Comments *do not* appear in the generated html, but *do* appear in the efan temp
 
 
 
-Block Comments [#blockComments]
-===============================
+Block Comments
+==============
 Start any line with '/*' to add a block comment.
 
   /* This is a Block comment
@@ -294,8 +273,8 @@ Block comments *do not* appear in the generated html, but *do* appear in the efa
 
 
 
-HTML Comments [#htmlComments]
-=============================
+HTML Comments
+=============
 Start any line with '/!' to add a HTML comment.
 
   /! This is a HTML comment
@@ -308,8 +287,8 @@ HTML comments *do* appear in the generated HTML.
 
 
 
-Fantom Code [#fantomCode]
-=========================
+Fantom Code
+===========
 Start any line with '--' to write Fantom code. Use to call efan helper methods.
 
   -- echo("Hello Mum!")
@@ -326,8 +305,8 @@ Due to indentation, Slim works out where they should be.
 
 
 
-Fantom Eval [#fantomEval]
-=========================
+Fantom Eval
+===========
 Start any line with '==' to evaluate a line of Fantom code and print it out in the template
 
   == ctx.doughnut.filling
@@ -336,8 +315,8 @@ The resulting string is printed raw and is *not* HTML escaped.
 
 
 
-Plain Text [#plainText]
-=======================
+Plain Text
+==========
 Any line starting with a '|' denotes plain text and is printed raw. You can even embed HTML:
 
   | Look at how <small>BIG</small> I am!
@@ -397,9 +376,9 @@ Slim trims 1 character of whitespace after a '|' and preserves trailing whitespa
 
 
 
-HTML Escaping [#htmlEscaping]
-=============================
-Similar to [Fantom Str interpolation]`http://fantom.org/doc/docLang/Literals.html#interpolation`, you can output Fantom
+HTML Escaping
+=============
+Similar to [Fantom Str interpolation]`docLang::Literals#interpolation`, you can output Fantom
 expressions *anywhere* in the template using the standard '${...}' notation;
 
   div Mmmm... ${ctx.doughnut.filling} is my favourite!
@@ -422,10 +401,9 @@ For simple expressions, the curly brackets may be omitted:
 
 
 
-Layout Pattern / Nesting Templates [#nestingTemplates]
-******************************************************
-Just like efan, Slim templates may be nested inside one another, effectively allowing you to componentise your templates. This
-is accomplished by passing body functions to the efan 'render()' method and calling 'renderBody()' to invoke it.
+Layout Pattern / Nesting Templates
+**********************************
+Just like efan, Slim templates may be nested inside one another, effectively allowing you to componentise your templates. This is accomplished by passing body functions to the efan 'render()' method and calling 'renderBody()' to invoke it.
 
 This is best explained in an example. Here we will use the *layout pattern*:
 
@@ -487,15 +465,16 @@ html
 
 
 
-HTML vs XHTML vs XML [#htmlVsXhtmlVsXml]
-****************************************
+HTML vs XHTML vs XML
+********************
 
-HTML [#html]
-============
+HTML
+====
 By default 'Slim' renders tags as HTML5 elements; that is, all tags representing
 [void elements]`http://www.w3.org/html/wg/drafts/html/master/syntax.html#void-elements` such as 'meta', 'br' and 'input' are
 printed without an end tag:
 
+  syntax: html
   <input type="submit">
   <br>
 
@@ -509,17 +488,19 @@ with a 'Content-Type' of:
 While HTML is nice for browsers, this format doesn't lend itself to XML parsing; should you wish to use
 [Sizzle]`http://www.fantomfactory.org/pods/afSizzle` for instance. So 'Slim' offers alternative renderings of tag endings.
 
-XHTML [#xhtml]
-==============
+XHTML
+=====
 By creating `Slim` with a `TagStyle` of 'xhtml' all [void elements]`http://www.w3.org/html/wg/drafts/html/master/syntax.html#void-elements`
 are rendered as a self-closing tags.
 Warnings are logged should a void element NOT be empty.
 
+  syntax: html
   <input type="submit" />
   <br />
 
 All non void elements are *NOT* rendered as self closing, even when empty.
 
+  syntax: html
   <script></script>
 
 XHTML documents should be served up with a 'Content-Type' of:
@@ -531,13 +512,14 @@ shown to the user.
 
 > Note that XHTML files **must** declare the xhtml namespace in the html tag or browsers will **not** render the page. Example:
 
+  syntax: html
   <!DOCTYPE html>
   <html xmlns="http://www.w3.org/1999/xhtml">
     ...
   </html>
 
-XML [#xml]
-==========
+XML
+===
 If you create `Slim` with a `TagStyle` of 'xml' then *ALL* empty tags are self-closing and void tags have no special meaning.
 Use this style when Slim is to create pure XML documents.
 
@@ -546,85 +528,3 @@ Use this style when Slim is to create pure XML documents.
   text/xml
   application/xml
 
-
-
-Release Notes [#releaseNotes]
-*****************************
-v1.1.18 [#v1.1.18]
-==================
- - Bug: Code interpolation in #ID and .class shortcuts may now contain spaces, e.g. 'div#${ wot.ever }.${ wot.ever }'
-
-v1.1.16 [#v1.1.16]
-==================
- - Chg: Curly brackets may be omitted for simple interpolation expressions.
- - Chg: Javascript style text sections need only be indented by one space.
-
-v1.1.14 [#v1.1.14]
-==================
- - New: Empty elements may immeditatly be followed by ';' to put multiple lines on one, e.g. 'li; a(href="#"); span.highlight Hello!'
- - Bug: Dot seperated statements in interpolation may now be used in id and class shortcut notation, e.g. 'div#${wot.ever}.${wot.ever}'
-
-v1.1.12 [#v1.1.12]
-==================
- - Chg: Brackets in attributes may now be nested: 'div (class="${wotever()}")'
- - Chg: Now uses [Pegger]`pod:afPegger`.
-
-v1.1.10 [#v1.1.10]
-==================
- - Bug: Text elements could not contain empty lines; important for '<pre>' tags.
-
-v1.1.8 [#v1.1.8]
-==================
- - Bug: Could not nest block comments in code or eval statements.
-
-v1.1.6 [#v1.1.6]
-================
- - New: Added block comments, specify with '/*'
- - Bug: Single line comments weren't escaped.
-
-v1.1.4 [#v1.1.4]
-================
- - Chg: Updated to [efan 1.4.0]`pod:afEfan`.
-
-v1.1.2 [#v1.1.2]
-================
- - Bug: Could not start a line with the '|' char, when printing multiline text.
-
-v1.1.0 [#v1.1.0]
-================
- - New: Support for HTML, XHTML and XML style tag endings.
- - New: Support for multiple 'doctype' declarations.
- - New: '<%' and '%>' escaping means EJS can be embedded in 'Slim' templates!
- - Bug: Null values no longer thow an NPE but print 'null'.
- - Bug: Brackets in text could be mistaken for attributes. (Potential breaking change)
-
-v1.0.2 [#v1.0.2]
-================
- - Bug: Could not mix interpolated ID and class notation with attributes.
- - Bug: Multiline text was not being escaped / interpolated.
-
-v1.0.0 [#v1.0.0]
-================
- - Chg: Tweaked and changed the multiline text rules again and again... then updated the docs with the final(!) decision.
- - Chg: Attributes may no longer be wrapped in { curly } braces.
- - Chg: Text may have leading space to prevent them from butting up against previous elements.
- - Bug: Element ID and class shortcuts could not be interpolated.
-
-v0.0.8 [#v0.0.8]
-================
- - New: Illegal parent / child combinations now throw 'SlimParserErrs'.
- - Bug: Cleaned up an annoying niggle around element multilines.
-
-v0.0.6 [#v0.0.6]
-================
- - New: re-jigged the `Slim` API and merged in methods from 'SlimCompiler'.
- - New: Compressed needless whitespace from resulting HTML templates.
- - Chg: Updated to use [afEfan 1.3]`http://www.fantomfactory.org/pods/afEfan`
-
-v0.0.4 [#v0.0.4]
-================
- - Chg: Updated to use [afEfan 1.2]`http://www.fantomfactory.org/pods/afEfan`
-
-v0.0.2 [#v0.0.2]
-================
- - New: Preview Release

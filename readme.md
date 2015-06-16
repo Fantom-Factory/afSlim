@@ -1,12 +1,12 @@
-#Slim v1.1.16
+#Slim v1.1.18
 ---
 [![Written in: Fantom](http://img.shields.io/badge/written%20in-Fantom-lightgray.svg)](http://fantom.org/)
-[![pod: v1.1.16](http://img.shields.io/badge/pod-v1.1.16-yellow.svg)](http://www.fantomfactory.org/pods/afSlim)
+[![pod: v1.1.18](http://img.shields.io/badge/pod-v1.1.18-yellow.svg)](http://www.fantomfactory.org/pods/afSlim)
 ![Licence: MIT](http://img.shields.io/badge/licence-MIT-blue.svg)
 
 ## Overview
 
-Slim is a library for generating HTML from concise, lightweight templates. `Slim` is based on [Jade](http://jade-lang.com/) for javascript and [Slim](http://slim-lang.com/) for Ruby.
+Slim is a library for generating HTML from concise, lightweight templates. Slim is based on [Jade](http://jade-lang.com/) for javascript and [Slim](http://slim-lang.com/) for Ruby.
 
 Features include:
 

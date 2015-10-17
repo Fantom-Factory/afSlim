@@ -1,6 +1,10 @@
 Version
 *******
 
+v1.1.20
+=======
+- Chg: Added a non-invasive module for use with [IoC v3]`pod:afIoc`.
+
 v1.1.18
 =======
  - Bug: Code interpolation in '#ID' and '.class' shortcuts may now contain spaces, e.g. 'div#${ wot.ever }.${ wot.ever }'

@@ -1,10 +1,13 @@
 using afPlastic
 using afEfan
 
+** (Service) - 
 ** Non-caching service methods for parsing and compiling Slim templates efan templates, and for rendering HTML.
 ** 
 ** For further information on the 'ctx' parameter, see 
 ** [efan: Passing Data]`http://repo.status302.com/doc/afEfan/#ctx`
+** 
+** Note: This class is available as a service in IoC v3 under the 'root' scope with an ID of 'afSlim::Slim'.
 const class Slim {
 	
 	** The void tag ending style for compiled templates

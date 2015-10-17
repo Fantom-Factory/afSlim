@@ -9,6 +9,7 @@ class Build : BuildPod {
 
 		meta = [	
 			"proj.name"		: "Slim",
+			"afIoc.module"	: "afSlim::SlimModule",
 			"repo.tags"		: "templating, web",
 			"repo.public"	: "false"
 		]
@@ -17,8 +18,8 @@ class Build : BuildPod {
 			"sys 1.0", 
 
 			"afEfan    1.4.2  - 1.4", 
-			"afPlastic 1.0.16 - 1.0",
-			"afPegger  0.0    - 1.0",
+			"afPlastic 1.0.20 - 1.0",
+			"afPegger  0.0.4  - 1.0",
 			
 			// ---- Testing ----
 			"concurrent 1.0.8 - 1.0"

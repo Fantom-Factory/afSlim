@@ -2,7 +2,7 @@
 @NoDoc	// advanced use only
 const class SlimModule {
 	
-	Str:Obj defineModule() {
+	Str:Obj nonInvasiveIocModule() {
 		[
 			"services"	: [
 				[

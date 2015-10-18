@@ -10,6 +10,16 @@ const class SlimModule {
 					"type"	: Slim#,
 					"scopes": ["root"]
 				]
+			],
+
+			"contributions" : [
+				[
+					"serviceId"	: "afEfanXtra::TemplateConverters",
+					"key"		: "slim",
+					"valueFunc"	: |Slim slim -> Obj| {
+						|File file -> Str| { slim.parseFromFile(file) }
+					}
+				]
 			]
 		]
 	}

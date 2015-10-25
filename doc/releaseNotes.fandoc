@@ -1,0 +1,87 @@
+Version
+*******
+
+v1.1.20
+=======
+- Chg: Added a non-invasive module for use with [IoC v3]`pod:afIoc`.
+- Chg: Updated to use Pegger 0.0.6
+
+v1.1.18
+=======
+ - Bug: Code interpolation in '#ID' and '.class' shortcuts may now contain spaces, e.g. 'div#${ wot.ever }.${ wot.ever }'
+
+v1.1.16
+=======
+ - Chg: Curly brackets may be omitted for simple interpolation expressions.
+ - Chg: Javascript style text sections need only be indented by one space.
+
+v1.1.14
+=======
+ - New: Empty elements may immeditatly be followed by ';' to put multiple lines on one, e.g. 'li; a(href="#"); span.highlight Hello!'
+ - Bug: Dot seperated statements in interpolation may now be used in id and class shortcut notation, e.g. 'div#${wot.ever}.${wot.ever}'
+
+v1.1.12
+=======
+ - Chg: Brackets in attributes may now be nested: 'div (class="${wotever()}")'
+ - Chg: Now uses [Pegger]`pod:afPegger`.
+
+v1.1.10
+=======
+ - Bug: Text elements could not contain empty lines; important for '<pre>' tags.
+
+v1.1.8
+======
+ - Bug: Could not nest block comments in code or eval statements.
+
+v1.1.6
+======
+ - New: Added block comments, specify with '/*'
+ - Bug: Single line comments weren't escaped.
+
+v1.1.4
+======
+ - Chg: Updated to [efan 1.4.0]`pod:afEfan`.
+
+v1.1.2
+======
+ - Bug: Could not start a line with the '|' char, when printing multiline text.
+
+v1.1.0
+======
+ - New: Support for HTML, XHTML and XML style tag endings.
+ - New: Support for multiple 'doctype' declarations.
+ - New: '<%' and '%>' escaping means EJS can be embedded in 'Slim' templates!
+ - Bug: Null values no longer thow an NPE but print 'null'.
+ - Bug: Brackets in text could be mistaken for attributes. (Potential breaking change)
+
+v1.0.2
+======
+ - Bug: Could not mix interpolated ID and class notation with attributes.
+ - Bug: Multiline text was not being escaped / interpolated.
+
+v1.0.0
+======
+ - Chg: Tweaked and changed the multiline text rules again and again... then updated the docs with the final(!) decision.
+ - Chg: Attributes may no longer be wrapped in { curly } braces.
+ - Chg: Text may have leading space to prevent them from butting up against previous elements.
+ - Bug: Element ID and class shortcuts could not be interpolated.
+
+v0.0.8
+======
+ - New: Illegal parent / child combinations now throw 'SlimParserErrs'.
+ - Bug: Cleaned up an annoying niggle around element multilines.
+
+v0.0.6
+======
+ - New: re-jigged the `Slim` API and merged in methods from 'SlimCompiler'.
+ - New: Compressed needless whitespace from resulting HTML templates.
+ - Chg: Updated to use [afEfan 1.3]`http://www.fantomfactory.org/pods/afEfan`
+
+v0.0.4
+======
+ - Chg: Updated to use [afEfan 1.2]`http://www.fantomfactory.org/pods/afEfan`
+
+v0.0.2
+======
+ - New: Preview Release
+

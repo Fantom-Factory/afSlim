@@ -1,0 +1,9 @@
+
+For Future
+==========
+Have pretty print option, remove <%#\n    %>
+
+convert compilation errs to Slim Src compilation errs
+  - compilation errs
+  - runtime errs 
+

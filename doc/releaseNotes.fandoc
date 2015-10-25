@@ -4,6 +4,7 @@ Version
 v1.1.20
 =======
 - Chg: Added a non-invasive module for use with [IoC v3]`pod:afIoc`.
+- Chg: Updated to use Pegger 0.0.6
 
 v1.1.18
 =======

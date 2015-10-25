@@ -19,7 +19,7 @@ class Build : BuildPod {
 
 			"afEfan    1.4.2  - 1.4", 
 			"afPlastic 1.0.20 - 1.0",
-			"afPegger  0.0.4  - 1.0",
+			"afPegger  0.0.6+",
 			
 			// ---- Testing ----
 			"concurrent 1.0.8 - 1.0"

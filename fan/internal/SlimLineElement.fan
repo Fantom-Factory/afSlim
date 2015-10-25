@@ -112,7 +112,7 @@ internal class AttributeParser : Rules {
 	Bool	multi	:= false
 	
 	AttributeParser parseAttributes(Str line) {
-		if (Parser(rules).parse(line.in) == null)
+		if (!Parser(rules).matches(line.in))
 			throw SlimErr(ErrMsgs.elementCompilerNoMatch(line))
 		return this
 	}
@@ -146,7 +146,7 @@ internal class TagIdClassParser : Rules {
 	Str[]	classes	:= Str[,]
 	
 	TagIdClassParser parse(Str line) {
-		if (Parser(rules).parse(line.in) == null)
+		if (!Parser(rules).matches(line.in))
 			throw SlimErr(ErrMsgs.elementCompilerNoMatch(line))
 		return this
 	}

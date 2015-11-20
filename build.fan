@@ -17,7 +17,7 @@ class Build : BuildPod {
 		depends = [
 			"sys 1.0", 
 
-			"afEfan    1.4.2 - 1.4", 
+			"afEfan    1.4.3 - 1.4", 
 			"afPlastic 1.1.0 - 1.1",
 			"afPegger  0.0.6 - 1.0",
 			

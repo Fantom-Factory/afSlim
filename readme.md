@@ -1,7 +1,7 @@
-#Slim v1.1.18
+#Slim v1.2.0
 ---
 [![Written in: Fantom](http://img.shields.io/badge/written%20in-Fantom-lightgray.svg)](http://fantom.org/)
-[![pod: v1.1.18](http://img.shields.io/badge/pod-v1.1.18-yellow.svg)](http://www.fantomfactory.org/pods/afSlim)
+[![pod: v1.2.0](http://img.shields.io/badge/pod-v1.2.0-yellow.svg)](http://www.fantomfactory.org/pods/afSlim)
 ![Licence: MIT](http://img.shields.io/badge/licence-MIT-blue.svg)
 
 ## Overview
@@ -29,7 +29,7 @@ Install `Slim` with the Fantom Repository Manager ( [fanr](http://fantom.org/doc
 
 To use in a [Fantom](http://fantom.org/) project, add a dependency to `build.fan`:
 
-    depends = ["sys 1.0", ..., "afSlim 1.1"]
+    depends = ["sys 1.0", ..., "afSlim 1.2"]
 
 ## Documentation
 

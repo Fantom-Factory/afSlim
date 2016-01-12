@@ -25,7 +25,7 @@ class Build : BuildPod {
 			"concurrent 1.0.8 - 1.0"
 		]
 		
-		srcDirs = [`test/unit-tests/`, `fan/`, `fan/public/`, `fan/internal/`]
+		srcDirs = [`fan/`, `fan/internal/`, `fan/public/`, `test/unit-tests/`]
 		resDirs = [`doc/`]
 	}
 	

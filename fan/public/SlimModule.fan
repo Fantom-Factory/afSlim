@@ -17,7 +17,7 @@ const class SlimModule {
 					"serviceId"	: "afEfanXtra::TemplateConverters",
 					"key"		: "slim",
 					"valueFunc"	: |Slim slim -> Obj| {
-						|File file -> Str| { slim.parseFromFile(file) }
+						|Str src -> Str| { slim.parseFromStr(src) }
 					}
 				]
 			]

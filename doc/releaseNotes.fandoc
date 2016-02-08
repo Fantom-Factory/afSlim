@@ -4,7 +4,7 @@ Version
 v1.2.0
 ======
 - Chg: Added a non-invasive module for use with [IoC v3]`pod:afIoc`.
-- Chg: Updated to use [Pegger 0.1]`pod:afPegger` & [efan 1.5]`pod:afEfan`.
+- Chg: Updated to use [Pegger 0.1]`pod:afPegger`, [efanXtra 1.2]`pod:afEfanXtra`, & [efan 1.5]`pod:afEfan`.
 
 v1.1.18
 =======

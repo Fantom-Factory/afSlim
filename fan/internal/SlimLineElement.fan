@@ -62,7 +62,14 @@ internal class SlimLineElement : SlimLine {
 		this.tagStyle = tagStyle
 		this.name = name
 		this.attr = attr
-		this.text = text.trimStart
+		this.text = text
+		
+		// trim ONE character of whitespace
+		// useful for ensuring tags don't butt up against each other
+		// I could make it 2 chars, but I usually use a tab
+		// people could also use | for more control
+		if (this.text.size > 0 && this.text[0].isSpace)
+			this.text = this.text[1..-1]
 	}
 	
 	override Void onEntry(StrBuf buf) {

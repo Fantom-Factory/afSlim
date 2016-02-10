@@ -132,4 +132,16 @@ s := """tag (data="wot(.(.(.(.(.).).).).)") ever"""
 		text := slim.renderFromStr(s, "wotever")
 		verifyEq(text, "<tag id=\"wotever\" class=\"wotever\">dude</tag>")		
 	}
+
+	Void testSpacesAtStartOfElementAreRetained() {
+		// useful for ensuring tags don't butt up against each other
+		// see SlimLineElement.make(...)
+		s := "tag  dude"
+		text := slim.renderFromStr(s, "wotever")
+		verifyEq(text, "<tag> dude</tag>")		
+
+		s = "tag#\${ ctx.toStr }.\${ ctx.toStr }  dude"
+		text = slim.renderFromStr(s, "wotever")
+		verifyEq(text, "<tag id=\"wotever\" class=\"wotever\"> dude</tag>")		
+	}
 }

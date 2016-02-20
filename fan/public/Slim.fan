@@ -49,7 +49,7 @@ const class Slim {
 	** Compiles a renderer from the given slim template.
 	** 
 	** 'srcLocation' may anything - used for meta information only.
-	EfanTemplate compileFromStr(Str slimTemplate, Type? ctxType := null, Type[]? viewHelpers := null, Uri? srcLocation := null) {
+	EfanTemplateMeta compileFromStr(Str slimTemplate, Type? ctxType := null, Type[]? viewHelpers := null, Uri? srcLocation := null) {
 		srcLocation	=  srcLocation ?: `from/slim/template`
 		efan		:= this.parseFromStr(slimTemplate, srcLocation)
 		template	:= efanCompiler.compile(srcLocation, efan, ctxType, viewHelpers ?: Type#.emptyList)
@@ -57,7 +57,7 @@ const class Slim {
 	}
 
 	** Compiles a renderer from the given slim file.
-	EfanTemplate compileFromFile(File slimFile, Type? ctxType := null, Type[]? viewHelpers := null) {
+	EfanTemplateMeta compileFromFile(File slimFile, Type? ctxType := null, Type[]? viewHelpers := null) {
 		srcLocation	:= slimFile.normalize.uri
 		efan		:= this.parseFromStr(slimFile.readAllStr, srcLocation)
 		template	:= efanCompiler.compile(srcLocation, efan, ctxType, viewHelpers ?: Type#.emptyList)

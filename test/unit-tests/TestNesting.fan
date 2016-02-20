@@ -13,11 +13,11 @@ i := """p inner-start
         p inner-end"""
 		
 		// see 'Layout Pattern' in poddoc for the (null) thing
-		oo := slim.compileFromStr(o, EfanTemplate#)
+		oo := slim.compileFromStr(o, EfanTemplateMeta#)
 		ii := slim.compileFromStr(i)
 		
-		print(oo.templateMeta.templateSrc)
-		print(ii.templateMeta.templateSrc)
+		print(oo.templateSrc)
+		print(ii.templateSrc)
 		
 		text := oo.render(ii)
 

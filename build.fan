@@ -1,4 +1,5 @@
 using build
+using afBuild
 
 class Build : BuildPod {
 
@@ -9,6 +10,7 @@ class Build : BuildPod {
 
 		meta = [	
 			"proj.name"		: "Slim",
+			"testPods"		: "concurrent",
 			"afIoc.module"	: "afSlim::SlimModule",
 			"repo.tags"		: "templating, web",
 			"repo.public"	: "false"
@@ -31,9 +33,11 @@ class Build : BuildPod {
 	
 	@Target { help = "Compile to pod file and associated natives" }
 	override Void compile() {
-		// remove test pods from final build
-		testPods := "concurrent".split
-		depends = depends.exclude { testPods.contains(it.split.first) }
-		super.compile
+		BuildTask(this).run
+	}
+
+	@Target { help = "Builds, publishes, and Hg tags a new pod release" }
+	Void release() {
+		ReleaseTask(this).run
 	}
 }

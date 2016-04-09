@@ -9,14 +9,13 @@ class Build : BuildPod {
 
 		meta = [	
 			"proj.name"		: "Slim",
-			"testPods"		: "concurrent",
 			"afIoc.module"	: "afSlim::SlimModule",
 			"repo.tags"		: "templating, web",
-			"repo.public"	: "false"
+			"repo.public"	: "true"
 		]
 
 		depends = [
-			"sys 1.0", 
+			"sys 1.0.68 - 1.0", 
 
 			"afEfan    1.5.0 - 1.5", 
 			"afPlastic 1.1.0 - 1.1",
@@ -28,5 +27,7 @@ class Build : BuildPod {
 		
 		srcDirs = [`fan/`, `fan/internal/`, `fan/public/`, `test/unit-tests/`]
 		resDirs = [`doc/`]
+		
+		meta["afBuild.testPods"]	= "concurrent"
 	}
 }

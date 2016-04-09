@@ -5,13 +5,13 @@ class Build : BuildPod {
 	new make() {
 		podName = "afSlim"
 		summary = "A library for generating HTML from concise, lightweight templates"
-		version = Version("1.2.0")
+		version = Version("1.2.1")
 
 		meta = [	
 			"proj.name"		: "Slim",
 			"afIoc.module"	: "afSlim::SlimModule",
 			"repo.tags"		: "templating, web",
-			"repo.public"	: "true"
+			"repo.public"	: "false"
 		]
 
 		depends = [

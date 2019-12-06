@@ -1,4 +1,4 @@
-using afEfan
+using afEfan::EfanMeta
 
 internal class TestNesting2 : SlimTest { 
 
@@ -24,6 +24,8 @@ i := """p inner-start
 e := """<p>outer-start</p><p>inner-start</p><p>outer-body</p><p>inner-end</p><p>outer-end</p>"""
 
 		print(text)
+
+		// FIXME there is no "renderBody()" in efan anymore - it got moved to efanXtra! 
 		verifyEq(text, e)
 	}
 	

@@ -4,7 +4,7 @@ using afPlastic
 abstract internal class SlimTest : Test {
 	
 	Slim			slim		:= Slim(TagStyle.html)
-	EfanCompiler	efanComp	:= EfanCompiler(EfanEngine(PlasticCompiler()))
+	EfanCompiler	efanComp	:= EfanCompiler()
 	
 	Void verifySlimErrMsg(Str errMsg, |Obj| func) {
 		verifyErrTypeAndMsg(SlimErr#, errMsg, func)

@@ -13,7 +13,7 @@ const class Slim {
 	** The void tag ending style for compiled templates
 			const TagStyle tagStyle
 
-	private const EfanCompiler	efanCompiler	:= EfanCompiler(EfanEngine(PlasticCompiler()))
+	private const EfanCompiler	efanCompiler	:= EfanCompiler()
 	private const SlimParser	slimParser
 	
 	** Creates a 'Slim' instance, setting the ending style for tags.
@@ -49,7 +49,7 @@ const class Slim {
 	** Compiles a renderer from the given slim template.
 	** 
 	** 'srcLocation' may anything - used for meta information only.
-	EfanTemplateMeta compileFromStr(Str slimTemplate, Type? ctxType := null, Type[]? viewHelpers := null, Uri? srcLocation := null) {
+	EfanMeta compileFromStr(Str slimTemplate, Type? ctxType := null, Type[]? viewHelpers := null, Uri? srcLocation := null) {
 		srcLocation	=  srcLocation ?: `from/slim/template`
 		efan		:= this.parseFromStr(slimTemplate, srcLocation)
 		template	:= efanCompiler.compile(srcLocation, efan, ctxType, viewHelpers ?: Type#.emptyList)
@@ -57,7 +57,7 @@ const class Slim {
 	}
 
 	** Compiles a renderer from the given slim file.
-	EfanTemplateMeta compileFromFile(File slimFile, Type? ctxType := null, Type[]? viewHelpers := null) {
+	EfanMeta compileFromFile(File slimFile, Type? ctxType := null, Type[]? viewHelpers := null) {
 		srcLocation	:= slimFile.normalize.uri
 		efan		:= this.parseFromStr(slimFile.readAllStr, srcLocation)
 		template	:= efanCompiler.compile(srcLocation, efan, ctxType, viewHelpers ?: Type#.emptyList)

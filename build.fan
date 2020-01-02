@@ -8,21 +8,21 @@ class Build : BuildPod {
 		version = Version("2.0.0")
 
 		meta = [	
-			"proj.name"		: "Slim",
+			"pod.dis"		: "Slim",
 			"afIoc.module"	: "afSlim::SlimModule",
 			"repo.tags"		: "templating, web",
 			"repo.public"	: "true"
 		]
 
 		depends = [
-			"sys        1.0.73 - 1.0", 
+			"sys        1.0.71 - 1.0", 
 
-			"afEfan     2.0.0  - 2.0", 
+			"afEfan     2.0.4  - 2.0", 
 			"afPlastic  1.1.6  - 1.1",
 			"afPegger   0.1.0  - 0.1",
-			
+
 			// ---- Testing ----
-			"concurrent 1.0.73 - 1.0"
+			"concurrent 1.0.71 - 1.0"
 		]
 		
 		srcDirs = [`fan/`, `fan/internal/`, `fan/public/`, `test/unit-tests/`]

@@ -1,8 +1,9 @@
-#Slim v1.2.0
+# Slim v2.0.0
 ---
-[![Written in: Fantom](http://img.shields.io/badge/written%20in-Fantom-lightgray.svg)](http://fantom.org/)
-[![pod: v1.2.0](http://img.shields.io/badge/pod-v1.2.0-yellow.svg)](http://www.fantomfactory.org/pods/afSlim)
-![Licence: MIT](http://img.shields.io/badge/licence-MIT-blue.svg)
+
+[![Written in: Fantom](http://img.shields.io/badge/written%20in-Fantom-lightgray.svg)](https://fantom-lang.org/)
+[![pod: v2.0.0](http://img.shields.io/badge/pod-v2.0.0-yellow.svg)](http://eggbox.fantomfactory.org/pods/afSlim)
+[![Licence: ISC](http://img.shields.io/badge/licence-ISC-blue.svg)](https://choosealicense.com/licenses/isc/)
 
 ## Overview
 
@@ -10,108 +11,109 @@ Slim is a library for generating HTML from concise, lightweight templates. Slim 
 
 Features include:
 
-- indentation driven - closing tags not needed
-- CSS shortcut notation for `#id` and `.class` attributes
-- `${...}` notation to interpolate Fantom code
-- Configurable HTML, XHTML or XML tag endings
-- [efan](http://pods.fantomfactory.org/pods/afEfan) template generation
-- Template nesting with *Layout* pattern.
+* indentation driven - closing tags not needed
+* CSS shortcut notation for `#id` and `.class` attributes
+* `${...}` notation to interpolate Fantom code
+* Configurable HTML, XHTML or XML tag endings
+* [efan](http://eggbox.fantomfactory.org/pods/afEfan) template generation
+* Template nesting with *Layout* pattern.
+
 
 .
 
-> **ALIEN-AID:** Turn `Slim` templates into powerful HTML components with [efanXtra](http://pods.fantomfactory.org/pods/afEfan)!
+> **ALIEN-AID:** Turn `Slim` templates into powerful HTML components with [efanXtra](http://eggbox.fantomfactory.org/pods/afEfan)!
 
-## Install
 
-Install `Slim` with the Fantom Repository Manager ( [fanr](http://fantom.org/doc/docFanr/Tool.html#install) ):
+## <a name="Install"></a>Install
 
-    C:\> fanr install -r http://pods.fantomfactory.org/fanr/ afSlim
+Install `Slim` with the Fantom Pod Manager ( [FPM](http://eggbox.fantomfactory.org/pods/afFpm) ):
 
-To use in a [Fantom](http://fantom.org/) project, add a dependency to `build.fan`:
+    C:\> fpm install afSlim
 
-    depends = ["sys 1.0", ..., "afSlim 1.2"]
+Or install `Slim` with [fanr](https://fantom.org/doc/docFanr/Tool.html#install):
 
-## Documentation
+    C:\> fanr install -r http://eggbox.fantomfactory.org/fanr/ afSlim
 
-Full API & fandocs are available on the [Fantom Pod Repository](http://pods.fantomfactory.org/pods/afSlim/).
+To use in a [Fantom](https://fantom-lang.org/) project, add a dependency to `build.fan`:
+
+    depends = ["sys 1.0", ..., "afSlim 2.0"]
+
+## <a name="documentation"></a>Documentation
+
+Full API & fandocs are available on the [Eggbox](http://eggbox.fantomfactory.org/pods/afSlim/) - the Fantom Pod Repository.
 
 ## Quick Start
 
-1. Create a text file called `Example.slim`
-
-        -? using concurrent
-        doctype html
-        html
-          head
-            title afSlim Example
-            meta (name="keywords" content="fantom html template language")
-        
-          body
-            h1 Slim Example
-        
-            h2 Element shortcut notation:
-        
-            div#slimer This div has an ID of 'slimer'
-            div.wombat This div has a class of 'wombat'
-            div (style="color: red;") Attributes are specified in brackets
-            div You can even embed <abbr>HTML</abbr> tags!
-        
-            | Use the pipe character for text
-              that may be spanned across
-              multiple lines!
-        
-            // This is a single line comment
-        
-            /* This is a block...
-               .. or multiline comment
-        
-            /! This is a HTML comment
-        
-            // Use -- to execute Fantom code
-            -- echo("Hello Pips!")
-        
-            // Use == to print the result of a Fantom expression
-            == "Hello " + ctx["name"] + "!"
-        
-            // Use $(...) notation to embed Fantom expressions
-            | Hello ${ ctx["name"] }!
-        
-            // Embedding Javascript is easy!
-            script (type="text/javascript") |
-              for (var i=0; i<3; i++) {
-                console.info("Greetings from Slim!");
-              }
-        
-            // Use ';' to condense elements onto one line
-            ul; li; a (href="#") One line!
+1. Create a text file called `Example.slim`    -? using concurrent
+    doctype html
+    html
+      head
+        title afSlim Example
+        meta (name="keywords" content="fantom html template language")
+    
+      body
+        h1 Slim Example
+    
+        h2 Element shortcut notation:
+    
+        div#slimer This div has an ID of 'slimer'
+        div.wombat This div has a class of 'wombat'
+        div (style="color: red;") Attributes are specified in brackets
+        div You can even embed <abbr>HTML</abbr> tags!
+    
+        | Use the pipe character for text
+          that may be spanned across
+          multiple lines!
+    
+        // This is a single line comment
+    
+        /* This is a block...
+           .. or multiline comment
+    
+        /! This is a HTML comment
+    
+        // Use -- to execute Fantom code
+        -- echo("Hello Pips!")
+    
+        // Use == to print the result of a Fantom expression
+        == "Hello " + ctx["name"] + "!"
+    
+        // Use $(...) notation to embed Fantom expressions
+        | Hello ${ ctx["name"] }!
+    
+        // Embedding Javascript is easy!
+        script (type="text/javascript") |
+          for (var i=0; i<3; i++) {
+            console.info("Greetings from Slim!");
+          }
+    
+        // Use ';' to condense elements onto one line
+        ul; li; a (href="#") One line!
 
 
-2. Create a text file called `Example.fan`
-
-        using afSlim
-        
-        class Example {
-            Void main() {
-                ctx  := ["name":"Emma"]
-                html := Slim().renderFromFile(`Example.slim`.toFile, ctx)
-                echo(html)
-            }
+2. Create a text file called `Example.fan`    using afSlim
+    
+    class Example {
+        Void main() {
+            ctx  := ["name":"Emma"]
+            html := Slim().renderFromFile(`Example.slim`.toFile, ctx)
+            echo(html)
         }
+    }
 
 
-3. Run `Example.fan` as a Fantom script from the command line:
+3. Run `Example.fan` as a Fantom script from the command line:    C:\> fan Example.fan
+    <!DOCTYPE html>
+    <html>
+        <head>
+            <title>afSlim Example</title>
+            <meta name="keywords" content="fantom html template language">
+        </head>
+        <body>
+            <h1>Slim Example</h1>
+        ....
+        ....
 
-        C:\> fan Example.fan
-        <!DOCTYPE html>
-        <html>
-            <head>
-                <title>afSlim Example</title>
-                <meta name="keywords" content="fantom html template language">
-            </head>
-            <body>
-                <h1>Slim Example</h1>
-            ....
-            ....
 
 
 
@@ -119,19 +121,19 @@ Full API & fandocs are available on the [Fantom Pod Repository](http://pods.fant
 
 The first non-whitespace characters of each line defines the content of the line:
 
-```
-doctype : <!DOCTYPE ... >
-    -?  : using statement
-    --  : fantom code
-    ==  : fantom eval
-    //  : single line comment
-    /*  : block comment
-    /!  : HTML comment (single line only)
-   a-Z  : HTML element
-     |  : plain text
-```
+    doctype : <!DOCTYPE ... >
+        -?  : using statement
+        --  : fantom code
+        ==  : fantom eval
+        //  : single line comment
+        /*  : block comment
+        /!  : HTML comment (single line only)
+       a-Z  : HTML element
+         |  : plain text
+    
 
 > **ALIEN-AID:** Whitespace indentation is *very* important! If your HTML looks wrong, click `Show Whitespace` in your editor / IDE and make sure you are not mixing up tabs and spaces.
+
 
 ### Doctype
 
@@ -206,35 +208,31 @@ The `using statement` means you don't have to use fully qualified class names:
 
 Element lines are formatted as:
 
-```
-element[#id][.class][.class] [(attributes)] [text]
-
-div Text here           --> <div>Text here</div>
-div#wombat Text here    --> <div id="wombat">Text here</div>
-div.wombat Text here    --> <div class="wombat">Text here</div>
-div(data-type="wombat") --> <div data-type="wombat"></div>
-```
+    element[#id][.class][.class] [(attributes)] [text]
+    
+    div Text here           --> <div>Text here</div>
+    div#wombat Text here    --> <div id="wombat">Text here</div>
+    div.wombat Text here    --> <div class="wombat">Text here</div>
+    div(data-type="wombat") --> <div data-type="wombat"></div>
+    
 
 Whitespace before the attribute brackets is optional:
 
-```
-a (href="http://www.fantomfactory.org") Fantom
-a(href="http://www.fantomfactory.org") Fantom
-```
+    a (href="http://www.fantomfactory.org") Fantom
+    a(href="http://www.fantomfactory.org") Fantom
+    
 
 Attributes may also be enclosed in square brackets:
 
-```
-div[data-type="wombat"]
-```
+    div[data-type="wombat"]
+    
 
 Use all the shortcuts together:
 
-```
-div#robert.juice.media (data-on="You Tube") Rap News
-
-<div id="robert" class="juice media" data-on="You Tube">Rap News</div>
-```
+    div#robert.juice.media (data-on="You Tube") Rap News
+    
+    <div id="robert" class="juice media" data-on="You Tube">Rap News</div>
+    
 
 Note that attribute contents are not parsed. Whatever is inbetween the `(` - `)` or `[` - `]` is rendered exactly as is. This means you should not mix `id` and `class` attributes with shortcut notation as this would result in two `id` and `class` attributes, which would be invalid.
 
@@ -250,12 +248,11 @@ If the text of an element needs to start with a bracket, then use empty attribut
 
 If an element has no text, then it may be immediatly followed by a semi-colon `;` to start a fresh line. This concise syntax prevents `<li>`, and other empty elements, from taking up a whole line of their own.
 
-```
-ul
-  li; a (href="#") home
-  li; span.highlight other page
-  li; == ctx.otherPage
-```
+    ul
+      li; a (href="#") home
+      li; span.highlight other page
+      li; == ctx.otherPage
+    
 
 ### Single Line Comments
 
@@ -319,46 +316,41 @@ Any line starting with a `|` denotes plain text and is printed raw. You can even
 
 Unlike other line types, text may flow / span multiple lines.
 
-```
-| Use the pipe character for text.
-  It also lets text be spanned
-  across multiple lines!
-```
+    | Use the pipe character for text.
+      It also lets text be spanned
+      across multiple lines!
+    
 
 You can use `|` as the first character of an element. So the following:
 
-```
-p
-  | More recently, I discovered
-    Fantom
-    a niffty pragmatic language
-```
+    p
+      | More recently, I discovered
+        Fantom
+        a niffty pragmatic language
+    
 
 May be re-written as:
 
-```
-p | More recently, I discovered
-    Fantom
-    a niffty pragmatic language
-```
+    p | More recently, I discovered
+        Fantom
+        a niffty pragmatic language
+    
 
 This is handy for writing `<script>` tags:
 
-```
-script (type="text/javascript") |
-  console.info("Hello...");
-  console.info("     ...Pips!");
-```
+    script (type="text/javascript") |
+      console.info("Hello...");
+      console.info("     ...Pips!");
+    
 
 Text may be mixed with elements:
 
-```
-p
-  | More recently, I discovered
-  a (href="http://fantom.org/") FANTOM
-  |  a niffty pragmatic language (*)
-  | which runs on Java and .NET
-```
+    p
+      | More recently, I discovered
+      a (href="http://fantom.org/") FANTOM
+      |  a niffty pragmatic language (*)
+      | which runs on Java and .NET
+    
 
 (*) Note the extra leading space at the start of the line. This prevents it from butting up against the previous `<a>` tag:
 
@@ -372,7 +364,7 @@ Slim trims 1 character of whitespace after a `|` and preserves trailing whitespa
 
 ### HTML Escaping
 
-Similar to [Fantom Str interpolation](http://fantom.org/doc/docLang/Literals.html), you can output Fantom expressions *anywhere* in the template using the standard `${...}` notation;
+Similar to [Fantom Str interpolation](https://fantom.org/doc/docLang/Literals.html), you can output Fantom expressions *anywhere* in the template using the standard `${...}` notation;
 
     div Mmmm... ${ctx.doughnut.filling} is my favourite!
 
@@ -380,13 +372,12 @@ By default all text rendered via `${...}` is XML escaped. To print raw / unescap
 
 To summarise:
 
-```
-.
-  ${...} : XML escaped
- \${...} : ignored
- $${...} : raw / unescaped
-\$${...} : ignored
-```
+    .
+      ${...} : XML escaped
+     \${...} : ignored
+     $${...} : raw / unescaped
+    \$${...} : ignored
+    
 
 For simple expressions, the curly brackets may be omitted:
 
@@ -400,57 +391,52 @@ This is best explained in an example. Here we will use the *layout pattern*:
 
 layout.slim:
 
-```
-head
-  title ${ctx}
-body
-  == renderBody()
-```
+    head
+      title ${ctx}
+    body
+      == renderBody()
+    
 
 index.slim:
 
-```
-html
-  == ctx.layout.render("Cranberry Whips")
-    ...my cool page content...
-```
+    html
+      == ctx.layout.render("Cranberry Whips")
+        ...my cool page content...
+    
 
 Code to run the above example:
 
 Index.fan:
 
-```
-using afSlim
-
-class Index {
-  Str renderIndex() {
-    index  := Slim().compileFromFile(`index.slim` .toFile, EfanRenderer#)
-    layout := Slim().compileFromFile(`layout.slim`.tofile, Str#)
-    return index.render(layout)
-  }
-}
-```
+    using afSlim
+    
+    class Index {
+      Str renderIndex() {
+        index  := Slim().compileFromFile(`index.slim` .toFile, EfanRenderer#)
+        layout := Slim().compileFromFile(`layout.slim`.tofile, Str#)
+        return index.render(layout)
+      }
+    }
+    
 
 This produces an amalgamation of the two templates:
 
-```
-<html>
-<head>
-  <title>Cranberry Whips</title>
-</head>
-<body>
-    ...my cool page content...
-</body>
-</html>
-```
+    <html>
+    <head>
+      <title>Cranberry Whips</title>
+    </head>
+    <body>
+        ...my cool page content...
+    </body>
+    </html>
+    
 
 Note that when using the raw efan `render()` method, you should always pass in a ctx, even if it is null. This prevents confusion between the ctx and the body method:
 
-```
-html
-  == ctx.layout.render(null)
-    ...my cool page content...
-```
+    html
+      == ctx.layout.render(null)
+        ...my cool page content...
+    
 
 ## HTML vs XHTML vs XML
 
@@ -471,7 +457,7 @@ While HTML is nice for browsers, this format doesn't lend itself to XML parsing;
 
 ### XHTML
 
-By creating [Slim](http://pods.fantomfactory.org/pods/afSlim/api/Slim) with a [TagStyle](http://pods.fantomfactory.org/pods/afSlim/api/TagStyle) of `xhtml` all [void elements](http://www.w3.org/html/wg/drafts/html/master/syntax.html#void-elements) are rendered as a self-closing tags. Warnings are logged should a void element NOT be empty.
+By creating [Slim](http://eggbox.fantomfactory.org/pods/afSlim/api/Slim) with a [TagStyle](http://eggbox.fantomfactory.org/pods/afSlim/api/TagStyle) of `xhtml` all [void elements](http://www.w3.org/html/wg/drafts/html/master/syntax.html#void-elements) are rendered as a self-closing tags. Warnings are logged should a void element NOT be empty.
 
     <input type="submit" />
     <br />
@@ -488,6 +474,7 @@ Note that Internet Explorer versions 8 and below are reported not to accept this
 
 > Note that XHTML files **must** declare the xhtml namespace in the html tag or browsers will **not** render the page. Example:
 
+
     <!DOCTYPE html>
     <html xmlns="http://www.w3.org/1999/xhtml">
       ...
@@ -495,7 +482,7 @@ Note that Internet Explorer versions 8 and below are reported not to accept this
 
 ### XML
 
-If you create [Slim](http://pods.fantomfactory.org/pods/afSlim/api/Slim) with a [TagStyle](http://pods.fantomfactory.org/pods/afSlim/api/TagStyle) of `xml` then *ALL* empty tags are self-closing and void tags have no special meaning. Use this style when Slim is to create pure XML documents.
+If you create [Slim](http://eggbox.fantomfactory.org/pods/afSlim/api/Slim) with a [TagStyle](http://eggbox.fantomfactory.org/pods/afSlim/api/TagStyle) of `xml` then *ALL* empty tags are self-closing and void tags have no special meaning. Use this style when Slim is to create pure XML documents.
 
 [Depending on usage](http://stackoverflow.com/questions/4832357/whats-the-difference-between-text-xml-vs-application-xml-for-webservice-respons) XML documents may be served up with a `Content-Type` of either:
 

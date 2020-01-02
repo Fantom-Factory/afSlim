@@ -1,11 +1,22 @@
-Version
-*******
+v2.0
+****
+ - Chg: Updated to use [efan 2.0]`pod:afEfan`.
+
+
+
+v1.2
+****
 
 v1.2.0
 ======
  - Chg: Added a non-invasive module for use with [IoC v3]`pod:afIoc`.
  - Chg: Updated to use [Pegger 0.1]`pod:afPegger`, [efanXtra 1.2]`pod:afEfanXtra`, & [efan 1.5]`pod:afEfan`.
  - Chg: Only 1 char of whitespace is trimmed from the start of element text.
+
+
+
+v1.1
+****
 
 v1.1.20
 =======
@@ -59,6 +70,11 @@ v1.1.0
  - Bug: Null values no longer thow an NPE but print 'null'.
  - Bug: Brackets in text could be mistaken for attributes. (Potential breaking change)
 
+
+
+v1.0
+****
+
 v1.0.2
 ======
  - Bug: Could not mix interpolated ID and class notation with attributes.
@@ -70,6 +86,11 @@ v1.0.0
  - Chg: Attributes may no longer be wrapped in { curly } braces.
  - Chg: Text may have leading space to prevent them from butting up against previous elements.
  - Bug: Element ID and class shortcuts could not be interpolated.
+
+
+
+v0.0
+****
 
 v0.0.8
 ======

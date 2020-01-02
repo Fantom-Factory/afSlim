@@ -5,7 +5,7 @@ class Build : BuildPod {
 	new make() {
 		podName = "afSlim"
 		summary = "A concise and lightweight templating language for generating HTML"
-		version = Version("2.0.0")
+		version = Version("1.3.0")
 
 		meta = [	
 			"pod.dis"		: "Slim",

@@ -16,7 +16,7 @@ internal const class SlimLineTextCompiler : SlimLineCompiler {
 	}
 }
 
-internal class SlimLineText : SlimLine, Escape {
+internal class SlimLineText : SlimLine, SlimEscape {
 	private const SlimLineTextCompiler textCompiler	:= SlimLineTextCompiler()
 	
 	Str 	text

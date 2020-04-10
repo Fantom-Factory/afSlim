@@ -1,5 +1,5 @@
 
-internal mixin SlimLineCompiler : Escape {
+internal mixin SlimLineCompiler : SlimEscape {
 	
 	abstract Bool matches(Str line)
 	

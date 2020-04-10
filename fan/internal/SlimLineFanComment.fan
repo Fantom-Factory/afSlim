@@ -10,7 +10,7 @@ internal const class SlimLineFanCommentCompiler : SlimLineCompiler {
 	}
 }
 
-internal class SlimLineFanComment : SlimLine, Escape {
+internal class SlimLineFanComment : SlimLine, SlimEscape {
 
 	Str comment
 	

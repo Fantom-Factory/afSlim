@@ -1,5 +1,5 @@
 
-internal mixin Escape {
+internal mixin SlimEscape {
 	
 	Str escape(Str line) {
 		// hmmm - I'm back in the dodgy world of escaping code (re: the medievil days of efan)

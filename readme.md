@@ -1,8 +1,8 @@
-# Slim v1.3.0
+# Slim v1.3.2
 ---
 
 [![Written in: Fantom](http://img.shields.io/badge/written%20in-Fantom-lightgray.svg)](https://fantom-lang.org/)
-[![pod: v1.3.0](http://img.shields.io/badge/pod-v1.3.0-yellow.svg)](http://eggbox.fantomfactory.org/pods/afSlim)
+[![pod: v1.3.2](http://img.shields.io/badge/pod-v1.3.2-yellow.svg)](http://eggbox.fantomfactory.org/pods/afSlim)
 [![Licence: ISC](http://img.shields.io/badge/licence-ISC-blue.svg)](https://choosealicense.com/licenses/isc/)
 
 ## Overview
@@ -382,61 +382,6 @@ To summarise:
 For simple expressions, the curly brackets may be omitted:
 
     div Mmmm... $ctx.doughnut.filling is my favourite!
-
-## Layout Pattern / Nesting Templates
-
-Just like efan, Slim templates may be nested inside one another, effectively allowing you to componentise your templates. This is accomplished by passing body functions to the efan `render()` method and calling `renderBody()` to invoke it.
-
-This is best explained in an example. Here we will use the *layout pattern*:
-
-layout.slim:
-
-    head
-      title ${ctx}
-    body
-      == renderBody()
-    
-
-index.slim:
-
-    html
-      == ctx.layout.render("Cranberry Whips")
-        ...my cool page content...
-    
-
-Code to run the above example:
-
-Index.fan:
-
-    using afSlim
-    
-    class Index {
-      Str renderIndex() {
-        index  := Slim().compileFromFile(`index.slim` .toFile, EfanRenderer#)
-        layout := Slim().compileFromFile(`layout.slim`.tofile, Str#)
-        return index.render(layout)
-      }
-    }
-    
-
-This produces an amalgamation of the two templates:
-
-    <html>
-    <head>
-      <title>Cranberry Whips</title>
-    </head>
-    <body>
-        ...my cool page content...
-    </body>
-    </html>
-    
-
-Note that when using the raw efan `render()` method, you should always pass in a ctx, even if it is null. This prevents confusion between the ctx and the body method:
-
-    html
-      == ctx.layout.render(null)
-        ...my cool page content...
-    
 
 ## HTML vs XHTML vs XML
 

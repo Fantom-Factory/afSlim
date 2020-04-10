@@ -5,6 +5,7 @@ New code base that uses the re-written [efan 2.0]`pod:afEfan` library.
 v1.3.2
 ======
  - Chg: Updated to use the awesome [Pegger 1.1]`pod:afPegger`.
+ - Chg: Removed referenced to 'renderBody()' since this feature moved out from efan, into efanXtra.
 
 v1.3.0
 ======

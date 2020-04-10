@@ -70,7 +70,7 @@ const class TagEndingHtml : TagEnding {
 		// log errors at the *start* so we pick up the Slim Line No.  
 		if (isVoid(tag) && !isEmpty) {
 			// null check is just for test cases
-			msg		:= ErrMsgs.voidTagsMustNotHaveContent(tag)
+			msg		:= "Void tag '${tag}' *MUST NOT* have content!"
 			warning	:= srcSnippet?.srcCodeSnippet(lineNo, msg) ?: msg
 			log.warn(warning) 
 		}
@@ -93,7 +93,7 @@ const class TagEndingXhtml : TagEnding {
 			return " />"
 		if (isVoid(tag) && !isEmpty) {
 			// null check is just for test cases
-			msg		:= ErrMsgs.voidTagsMustNotHaveContent(tag)
+			msg		:= "Void tag '${tag}' *MUST NOT* have content!"
 			warning	:= srcSnippet?.srcCodeSnippet(lineNo, msg) ?: msg
 			log.warn(warning) 
 		}

@@ -32,7 +32,7 @@ internal class TestDoctype : SlimTest {
 	}
 
 	Void testUnknown() {
-		verifySlimErrMsg(ErrMsgs.unknownDoctype("wibble")) {
+		verifySlimErrMsg("Unknown Doctype: wibble") {
 			slim.parseFromStr("doctype wibble")
 		}
 	}

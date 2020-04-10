@@ -29,7 +29,7 @@ internal class TestTagEndings : SlimTest {
 		verify(text.splitLines[0].startsWith("<meta>"))		
 		verify(text.splitLines[-1].endsWith ("</meta>"))
 		
-		verify(Actor.locals["slim.log"].toStr.contains(ErrMsgs.voidTagsMustNotHaveContent("meta")))
+		verify(Actor.locals["slim.log"].toStr.contains("Void tag 'meta' *MUST NOT* have content!"))
 		verify(Actor.locals["slim.log"].toStr.contains(": Line 1"))
 	}
 
@@ -44,7 +44,7 @@ internal class TestTagEndings : SlimTest {
 		verify(text.splitLines[0].startsWith("<meta>"), text)
 		verify(text.splitLines[-1].endsWith ("</meta>"), text)
 		
-		verify(Actor.locals["slim.log"].toStr.contains(ErrMsgs.voidTagsMustNotHaveContent("meta")))
+		verify(Actor.locals["slim.log"].toStr.contains("Void tag 'meta' *MUST NOT* have content!"))
 		verify(Actor.locals["slim.log"].toStr.contains(": Line 1"))
 	}
 	
@@ -73,7 +73,7 @@ internal class TestTagEndings : SlimTest {
 		verify(text.splitLines[0].startsWith("<meta>"), text)
 		verify(text.splitLines[-1].endsWith ("</meta>"), text)
 
-		verify(Actor.locals["slim.log"].toStr.contains(ErrMsgs.voidTagsMustNotHaveContent("meta")))
+		verify(Actor.locals["slim.log"].toStr.contains("Void tag 'meta' *MUST NOT* have content!"))
 		verify(Actor.locals["slim.log"].toStr.contains(": Line 1"))
 	}
 	
@@ -88,7 +88,7 @@ internal class TestTagEndings : SlimTest {
 		verify(text.splitLines[0].startsWith("<meta>"), text)
 		verify(text.splitLines[-1].endsWith ("</meta>"), text)
 		
-		verify(Actor.locals["slim.log"].toStr.contains(ErrMsgs.voidTagsMustNotHaveContent("meta")))
+		verify(Actor.locals["slim.log"].toStr.contains("Void tag 'meta' *MUST NOT* have content!"))
 		verify(Actor.locals["slim.log"].toStr.contains(": Line 1"))
 	}
 

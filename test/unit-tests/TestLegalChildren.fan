@@ -5,7 +5,7 @@ internal class TestLegalChildren : SlimTest {
 s := """	-? using
         		-- illegal nested comment"""
 		
-		verifySlimErrMsg(ErrMsgs.slimLineCanNotNest(SlimLineInstruction#, SlimLineFanCode#)) {
+		verifySlimErrMsg("Can not nest a Fan Code in a Instruction") {
 			slim.parseFromStr(s)
 		}		
 	}

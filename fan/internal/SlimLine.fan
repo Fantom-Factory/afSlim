@@ -24,7 +24,7 @@ internal abstract class SlimLine {
 
 	SlimLine addChild(SlimLine slimLine) {
 		if (!legalChildren.any { slimLine.typeof.fits(it) })
-			throw SlimErr(ErrMsgs.slimLineCanNotNest(typeof, slimLine.typeof))
+			throw SlimErr(slimLineCanNotNest(typeof, slimLine.typeof))
 		
 		children.getSafe(-1)?.addSibling(slimLine)
 		children.add(slimLine)
@@ -60,5 +60,11 @@ internal abstract class SlimLine {
 	
 	override Str toStr() {
 		toEfan(StrBuf()).toStr
+	}
+	
+	private Str slimLineCanNotNest(Type parent, Type child) {
+		pName := parent.name[8..-1].toDisplayName
+		cName := child.name[8..-1].toDisplayName
+		return "Can not nest a ${cName} in a ${pName}"
 	}
 }

@@ -40,7 +40,7 @@ internal class SlimLineDoctype : SlimLine {
 			doctype = "xml"
 		}
 		
-		this.doctype = doctypes[doctype] ?: throw SlimErr(ErrMsgs.unknownDoctype(doctype))
+		this.doctype = doctypes[doctype] ?: throw SlimErr("Unknown Doctype: ${doctype}")
 		if (xmlCharset != null) 
 			this.doctype = this.doctype[0..-3] + "encoding=\"${xmlCharset}\" ?>" 
 	}

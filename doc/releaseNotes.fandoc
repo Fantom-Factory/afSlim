@@ -1,6 +1,14 @@
-v2.0
+v1.3
 ****
- - Chg: Updated to use [efan 2.0]`pod:afEfan`.
+New code base that uses the re-written [efan 2.0]`pod:afEfan` library.
+
+v1.3.2
+======
+ - Chg: Updated to use the awesome [Pegger 1.1]`pod:afPegger`.
+
+v1.3.0
+======
+ - Chg: Updated to use the amazing [efan 2.0]`pod:afEfan`.
 
 
 
@@ -10,7 +18,7 @@ v1.2
 v1.2.0
 ======
  - Chg: Added a non-invasive module for use with [IoC v3]`pod:afIoc`.
- - Chg: Updated to use [Pegger 0.1]`pod:afPegger`, [efanXtra 1.2]`pod:afEfanXtra`, & [efan 1.5]`pod:afEfan`.
+ - Chg: Updated to use [Pegger 0.1]`pod:afPegger` and [efan 1.5]`pod:afEfan`.
  - Chg: Only 1 char of whitespace is trimmed from the start of element text.
 
 

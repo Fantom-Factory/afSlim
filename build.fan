@@ -19,14 +19,14 @@ class Build : BuildPod {
 
 			"afEfan     2.0.4  - 2.0", 
 			"afPlastic  1.1.6  - 1.1",
-			"afPegger   0.1.0  - 0.1",
+			"afPegger   1.1.0  - 1.1",
 
 			// ---- Testing ----
 			"concurrent 1.0.71 - 1.0"
 		]
 		
 		srcDirs = [`fan/`, `fan/internal/`, `fan/public/`, `test/unit-tests/`]
-		resDirs = [`doc/`]
+		resDirs = [`doc/`, `res/`]
 		
 		meta["afBuild.testPods"]	= "concurrent"
 	}

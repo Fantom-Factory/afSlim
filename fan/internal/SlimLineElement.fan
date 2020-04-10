@@ -1,12 +1,18 @@
-using afPegger
+using afPegger::Peg
+using afPegger::Grammar
+using afPegger::PegGrammar
 
-internal const class SlimLineElementCompiler : SlimLineCompiler {
+internal class SlimLineElementCompiler : SlimLineCompiler {
 	private const TagStyle tagStyle
+	private Grammar	attrGrammar
+	private Grammar	tagGrammar
 	
 	new make(TagStyle tagStyle) {
-		this.tagStyle = tagStyle
+		this.tagStyle	 = tagStyle
+		this.attrGrammar = Peg.parseGrammar(`fan://afSlim/res/tagAttributes.peg.txt`.toFile.readAllStr)
+		this.tagGrammar	 = Peg.parseGrammar(`fan://afSlim/res/tagIdClass.peg.txt`	.toFile.readAllStr)
 	}
-	
+
 	override Bool matches(Str line) {
 		// XML elements may have Unicode chars - the list is quite exhaustive, so just return true for ease of use
 		// see http://www.w3.org/TR/xml11/#sec-common-syn
@@ -16,26 +22,28 @@ internal const class SlimLineElementCompiler : SlimLineCompiler {
 	override SlimLine compile(Str line) {
 		// I know, I'll use Regular Expressions! ...
 		// Actually, I've got enough problems so I'll use Pegger instead!
-		attrs := AttributeParser().parseAttributes(line)
-		return match(attrs.name, attrs.attr, attrs.text, attrs.multi)
+		pegged := attrGrammar.firstRule.match(line)
+		return match(pegged["tagName"]?.toStr ?: "", pegged["attributes"]?.toStr ?: "", pegged["content"]?.toStr ?: "", pegged["multiLine"] != null)
 	}
 	
 	SlimLine match(Str tag, Str attr, Str text, Bool multi) {
 		attrs	:= Str[,]
-		vals	:= TagIdClassParser().parse(tag)
+		vals	:= tagGrammar.firstRule.match(tag) 
 
-		if (!vals.id.isEmpty)
-			attrs.add("id=\"${vals.id}\"")
+		id		:= vals["id"]?.toStr?.trimToNull
+		if (id != null)
+			attrs.add("id=\"${id}\"")
 		
-		if (!vals.classes.isEmpty) {
-			css := vals.classes.join(" ")
+		classes := vals.matches.findAll { it.name == "class" }
+		if (classes.size > 0) {
+			css := classes.join(" ")
 			attrs.add("class=\"${css}\"")
 		}
 		
 		if (!attr.isEmpty)
 			attrs.add(attr.trim)		
 		
-		element	:= SlimLineElement(tagStyle, escape(vals.name), escape(attrs.join(" ")), escape(text))
+		element	:= SlimLineElement(tagStyle, escape(vals["tag"]?.toStr ?: ""), escape(attrs.join(" ")), escape(text))
 
 		if (multi) {
 			element.nextLine = text
@@ -111,66 +119,3 @@ internal class SlimLineElement : SlimLine {
 		[SlimLineElement#, SlimLineFanCode#, SlimLineFanComment#, SlimLineFanEval#, SlimLineBlockComment#, SlimLineHtmlComment#, SlimLineText#]
 	}
 }
-
-internal class AttributeParser : Rules {
-	Str?	name
-	Str		attr	:= Str.defVal
-	Str		text	:= Str.defVal
-	Bool	multi	:= false
-	
-	AttributeParser parseAttributes(Str line) {
-		if (!Parser(rules).matches(line.in))
-			throw SlimErr(ErrMsgs.elementCompilerNoMatch(line))
-		return this
-	}
-	
-	Rule rules() {
-		rules 			:= NamedRules()
-		tagName			:= rules["tagName"]
-		interpol		:= rules["interpol"]
-		attributes		:= rules["attributes"]
-		roundBrackets	:= rules["roundBrackets"]
-		squareBrackets	:= rules["squareBrackets"]
-		multiLine		:= rules["multiLine"]
-		content			:= rules["content"]
-
-		// { curly } brackets not allowed 'cos it messes with ${interpolation} in ID and class names.
-		
-		rules["tagName"]		= oneOrMore(firstOf { interpol, anyCharNotOf(" \t\n\r\f([;|".chars)}).withAction { name = it }
-		rules["interpol"]		= sequence { char('$'), char('{'), zeroOrMore(anyCharNot('}')), char('}') }
-		rules["attributes"]		= sequence { zeroOrMore(anySpaceChar), firstOf { roundBrackets, squareBrackets } }
-		rules["roundBrackets"]	= sequence { char('('), zeroOrMore(firstOf { anyCharNotOf("()".chars), roundBrackets }).withAction { attr = it }, char(')'), }
-		rules["squareBrackets"]	= sequence { char('['), zeroOrMore(firstOf { anyCharNotOf("[]".chars), squareBrackets}).withAction { attr = it }, char(']'), }
-		rules["multiLine"]		= char(';').withAction { multi = true }
-		rules["content"]		= zeroOrMore(anyChar).withAction { text = it }
-		return sequence { tagName, optional(attributes), optional(multiLine), content }
-	}	
-}
-
-internal class TagIdClassParser : Rules {
-	Str		name	:= Str.defVal
-	Str?	id		:= Str.defVal
-	Str[]	classes	:= Str[,]
-	
-	TagIdClassParser parse(Str line) {
-		if (!Parser(rules).matches(line.in))
-			throw SlimErr(ErrMsgs.elementCompilerNoMatch(line))
-		return this
-	}
-	
-	Rule rules() {
-		rules 		:= NamedRules()
-		interpol	:= rules["interpol"]
-		tagRule		:= rules["tagRule"]
-		idRule		:= rules["idRule"]
-		classRule	:= rules["classRule"]
-
-		// TODO: maybe allow nested interpolation here...
-		rules["interpol"]	= sequence { char('$'), char('{'), zeroOrMore(anyCharNot('}')), char('}') }
-		rules["tagRule"]	= oneOrMore( anyCharNotOf("#.".chars) ).withAction { name = it }
-		rules["idRule"]		= sequence { char('#'), zeroOrMore( firstOf { interpol, anyCharNotOf(".".chars) } ).withAction { id = it } }
-		rules["classRule"]	= sequence { char('.'), zeroOrMore( firstOf { interpol, anyCharNotOf(".".chars) } ).withAction { classes.push(it) } }
-		return sequence { tagRule, optional(idRule), zeroOrMore(classRule) }
-	}	
-}
-

@@ -1,0 +1,9 @@
+
+grammar			= tagName attributes? multiLine? content
+tagName			= (interpol / [^ \t\n\r\f(\[;|] )+
+-interpol		= "${" [^}]* "}"
+-attributes		= [ \t\n]* (roundBrackets / squareBrackets)
+-roundBrackets	= "(" attributes:(([^()]  / roundBrackets)*)  ")"
+-squareBrackets	= "[" attributes:(([^[\]] / squareBrackets)*) "]"
+multiLine		= ";"
+content			= .*

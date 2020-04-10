@@ -1,0 +1,6 @@
+
+grammar		= tag id? class*
+-interpol	= "${" [^}]* "}"
+tag			= [^#.]+
+-id			= "#"    id:((interpol / [^.])*)
+-class		= "." class:((interpol / [^.])*)

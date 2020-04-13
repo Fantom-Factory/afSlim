@@ -394,11 +394,11 @@ By default `Slim` renders tags as HTML5 elements; that is, all tags representing
 
 Warnings are logged should a void element NOT be empty.
 
-HTML5 documents should be served up (from a web / app server such as [BedSheet](http://www.fantomfactory.org/pods/afBedSheet)) with a `Content-Type` of:
+HTML5 documents should be served up (from a web / app server such as [BedSheet](http://eggbox.fantomfactory.org/pods/afBedSheet)) with a `Content-Type` of:
 
     text/html
 
-While HTML is nice for browsers, this format doesn't lend itself to XML parsing; should you wish to use [Sizzle](http://www.fantomfactory.org/pods/afSizzle) for instance. So `Slim` offers alternative renderings of tag endings.
+While HTML is nice for browsers, this format doesn't lend itself to XML parsing; should you wish to use [Sizzle](http://eggbox.fantomfactory.org/pods/afSizzle) for instance. So `Slim` offers alternative renderings of tag endings.
 
 ### XHTML
 
@@ -433,4 +433,14 @@ If you create [Slim](http://eggbox.fantomfactory.org/pods/afSlim/api/Slim) with 
 
     text/xml
     application/xml
+
+## IoC
+
+Slim makes use of the non-invasive module feature of IoC 3.
+
+When Slim is added as a dependency to an IoC enabled application, such as [BedSheet](http://eggbox.fantomfactory.org/pods/afBedSheet) or [Reflux](http://eggbox.fantomfactory.org/pods/afReflux), then:
+
+* [Slim](http://eggbox.fantomfactory.org/pods/afSlim/api/Slim) becomes an injectable service
+* [efan Xtra](http://eggbox.fantomfactory.org/pods/afEfanXtra) becomes aware of, and can parse, slim templates and `.slim` files.
+
 

@@ -416,13 +416,13 @@ printed without an end tag:
 
 Warnings are logged should a void element NOT be empty.
 
-HTML5 documents should be served up (from a web / app server such as [BedSheet]`http://www.fantomfactory.org/pods/afBedSheet`)
+HTML5 documents should be served up (from a web / app server such as [BedSheet]`pod:afBedSheet`)
 with a 'Content-Type' of:
 
   text/html
 
 While HTML is nice for browsers, this format doesn't lend itself to XML parsing; should you wish to use
-[Sizzle]`http://www.fantomfactory.org/pods/afSizzle` for instance. So 'Slim' offers alternative renderings of tag endings.
+[Sizzle]`pod:afSizzle` for instance. So 'Slim' offers alternative renderings of tag endings.
 
 XHTML
 =====
@@ -463,4 +463,15 @@ Use this style when Slim is to create pure XML documents.
 
   text/xml
   application/xml
+
+
+
+IoC
+***
+Slim makes use of the non-invasive module feature of IoC 3.
+
+When Slim is added as a dependency to an IoC enabled application, such as [BedSheet]`pod:afBedSheet` or [Reflux]`pod:afReflux`, then:
+
+ - `Slim` becomes an injectable service
+ - [efan Xtra]`pod:afEfanXtra` becomes aware of, and can parse, slim templates and '.slim' files.
 

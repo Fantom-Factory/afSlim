@@ -5,7 +5,7 @@ using afEfan
 ** Non-caching service methods for parsing and compiling Slim templates efan templates, and for rendering HTML.
 ** 
 ** For further information on the 'ctx' parameter, see 
-** [efan: Passing Data]`http://repo.status302.com/doc/afEfan/#ctx`
+** [efan: Template Context]`http://eggbox.fantomfactory.org/pods/afEfan/doc#templateContext`
 ** 
 ** Note: This class is available as a service in IoC v3 under the 'root' scope with an ID of 'afSlim::Slim'.
 const class Slim {
@@ -13,15 +13,22 @@ const class Slim {
 	** The void tag ending style for compiled templates
 			const TagStyle tagStyle
 
-	private const EfanCompiler	efanCompiler	:= EfanCompiler()
-	private const SlimParser	slimParser
+	private const EfanCompiler		efanCompiler	:= EfanCompiler()
+	private const SlimParser		slimParser
+	private const SlimComponent[]	components
 	
 	** Creates a 'Slim' instance, setting the ending style for tags.
 	** 
-	** Defaults to 'TagStyle.html'.
-	new make(TagStyle tagStyle := TagStyle.html) {
+	** 'tagStyle' defaults to 'TagStyle.html'.
+	new make(SlimComponent[]? components := null, TagStyle tagStyle := TagStyle.html) {
 		this.tagStyle	= tagStyle
-		this.slimParser	= SlimParser(tagStyle)
+		this.components	= components ?: SlimComponent#.emptyList
+		this.slimParser	= SlimParser(tagStyle, this.components)
+	}
+	
+	@NoDoc @Deprecated
+	static new makeLegacy(TagStyle tagStyle) {
+		Slim(null, tagStyle)
 	}
 	
 	** Parses the given slim template into an efan template.
@@ -48,7 +55,7 @@ const class Slim {
 
 	** Compiles a renderer from the given slim template.
 	** 
-	** 'srcLocation' may anything - used for meta information only.
+	** 'srcLocation' may be anything - it is used for meta information only.
 	EfanMeta compileFromStr(Str slimTemplate, Type? ctxType := null, Type[]? viewHelpers := null, Uri? srcLocation := null) {
 		srcLocation	=  srcLocation ?: `from/slim/template`
 		efan		:= this.parseFromStr(slimTemplate, srcLocation)

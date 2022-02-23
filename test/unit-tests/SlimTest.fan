@@ -3,7 +3,7 @@ using afPlastic
 
 abstract internal class SlimTest : Test {
 	
-	Slim			slim		:= Slim(TagStyle.html)
+	Slim			slim		:= Slim()
 	EfanCompiler	efanComp	:= EfanCompiler()
 	
 	Void verifySlimErrMsg(Str errMsg, |Obj| func) {

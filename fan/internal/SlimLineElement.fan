@@ -3,14 +3,19 @@ using afPegger::Grammar
 using afPegger::PegGrammar
 
 internal class SlimLineElementCompiler : SlimLineCompiler {
-	private const TagStyle tagStyle
-	private Grammar	attrGrammar
-	private Grammar	tagGrammar
+	private const	TagStyle			tagStyle
+	private const	Str:SlimComponent	components
+	private			Grammar				attrGrammar
+	private 		Grammar				tagGrammar
 	
-	new make(TagStyle tagStyle) {
+	new make(TagStyle tagStyle, SlimComponent[] components) {
 		this.tagStyle	 = tagStyle
 		this.attrGrammar = Peg.parseGrammar(`fan://afSlim/res/tagAttributes.peg.txt`.toFile.readAllStr)
 		this.tagGrammar	 = Peg.parseGrammar(`fan://afSlim/res/tagIdClass.peg.txt`	.toFile.readAllStr)
+		
+		comMap	 := Str:SlimComponent[:]
+		components.each { comMap[it.tagName] = it }
+		this.components	= comMap
 	}
 
 	override Bool matches(Str line) {
@@ -27,14 +32,18 @@ internal class SlimLineElementCompiler : SlimLineCompiler {
 	}
 	
 	SlimLine match(Str tag, Str attr, Str text, Bool multi) {
-		attrs	:= Str[,]
-		vals	:= tagGrammar.firstRule.match(tag) 
+		attrs		:= Str[,]
+		vals		:= tagGrammar.firstRule.match(tag) 
 
-		id		:= vals["id"]?.toStr?.trimToNull
+		tagName		:= vals["tag"]?.toStr ?: ""
+		component	:= components[tagName]
+		comCtx		:= null as SlimComponentCtx
+		
+		id			:= vals["id"]?.toStr?.trimToNull
 		if (id != null)
 			attrs.add("id=\"${id}\"")
 		
-		classes := vals.matches.findAll { it.name == "class" }
+		classes 	:= vals.matches.findAll { it.name == "class" }
 		if (classes.size > 0) {
 			css := classes.join(" ")
 			attrs.add("class=\"${css}\"")
@@ -43,7 +52,18 @@ internal class SlimLineElementCompiler : SlimLineCompiler {
 		if (!attr.isEmpty)
 			attrs.add(attr.trim)		
 		
-		element	:= SlimLineElement(tagStyle, escape(vals["tag"]?.toStr ?: ""), escape(attrs.join(" ")), escape(text))
+		if (component != null) {
+			comCtx	= SlimComponentCtx {
+				it.tagStyle	= this.tagStyle
+				it.tagName	= tagName
+				it.id		= id
+				it.classes	= classes.map { it.toStr }
+				it.attrs	= attr
+				it.text		= text	
+			}
+		}
+	
+		element		:= SlimLineElement(tagStyle, escape(tagName), escape(attrs.join(" ")), escape(text), component, comCtx)
 
 		if (multi) {
 			element.nextLine = text
@@ -61,16 +81,20 @@ internal class SlimLineElementCompiler : SlimLineCompiler {
 }
 
 internal class SlimLineElement : SlimLine {
-	TagStyle tagStyle
-	Str name
-	Str attr
-	Str text
-	
-	new make(TagStyle tagStyle, Str name, Str attr, Str text) {
-		this.tagStyle = tagStyle
-		this.name = name
-		this.attr = attr
-		this.text = text
+	SlimComponent?		component
+	SlimComponentCtx?	componentCtx
+	TagStyle			tagStyle
+	Str					name
+	Str					attr
+	Str					text
+
+	new make(TagStyle tagStyle, Str name, Str attr, Str text, SlimComponent? component, SlimComponentCtx? ctx) {
+		this.component		= component
+		this.componentCtx	= ctx
+		this.tagStyle		= tagStyle
+		this.name			= name
+		this.attr			= attr
+		this.text			= text
 		
 		// trim ONE character of whitespace
 		// useful for ensuring tags don't butt up against each other
@@ -82,14 +106,20 @@ internal class SlimLineElement : SlimLine {
 	
 	override Void onEntry(StrBuf buf) {
 		indent(buf)
-		buf.addChar('<')
-		buf.add(name)
-		if (!attr.isEmpty) {
-			buf.addChar(' ')
-			buf.add(attr)
-		}
 
-		buf.add(tagStyle.tagEnding.startTag(name, children.isEmpty && text.isEmpty, srcSnippet, slimLineNo+1))
+		if (component != null)
+			component.onEntry(buf, componentCtx)
+
+		else {
+			buf.addChar('<')
+			buf.add(name)
+			if (!attr.isEmpty) {
+				buf.addChar(' ')
+				buf.add(attr)
+			}
+
+			buf.add(tagStyle.tagEnding.startTag(name, children.isEmpty && text.isEmpty, srcSnippet, slimLineNo+1))
+		}
 		
 		if (!children.isEmpty) {
 			newLine(buf)
@@ -110,7 +140,10 @@ internal class SlimLineElement : SlimLine {
 			indent(buf)
 		}
 		
-		buf.add(tagStyle.tagEnding.endTag(name, children.isEmpty && text.isEmpty))
+		if (component != null)
+			component.onExit(buf, componentCtx)
+		else
+			buf.add(tagStyle.tagEnding.endTag(name, children.isEmpty && text.isEmpty))
 		
 		newLine(buf)
 	}

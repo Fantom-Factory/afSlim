@@ -3,10 +3,12 @@ using afPlastic::SrcCodeSnippet
 internal const class SlimParser {
 	private const TagStyle				tagStyle
 	private const SlimLineCompiler[]	compilers
+	private const SlimComponent[]		components
 
-	new make(TagStyle tagStyle) {
-		this.tagStyle  = tagStyle
-		this.compilers = [
+	new make(TagStyle tagStyle, SlimComponent[] components) {
+		this.tagStyle	= tagStyle
+		this.components	= components
+		this.compilers	= [
 			SlimLineDoctypeCompiler(),
 			SlimLineFanCodeCompiler(),
 			SlimLineFanEvalCompiler(),
@@ -19,7 +21,7 @@ internal const class SlimParser {
 	}
 
 	Void parse(Uri srcLocation, Str slimTemplate, SlimLine current) {
-		compilers  := compilers.rw.add(SlimLineElementCompiler(tagStyle))
+		compilers  := compilers.rw.add(SlimLineElementCompiler(tagStyle, components))
 		srcSnippet := SrcCodeSnippet(srcLocation, slimTemplate)
 		slimTemplate.splitLines.each |line, lineNo| {
 			try {

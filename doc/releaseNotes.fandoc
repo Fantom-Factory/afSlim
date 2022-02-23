@@ -6,7 +6,7 @@ v1.3.2
 ======
  - Chg: Updated to use the awesome [Pegger 1.1]`pod:afPegger`.
  - Chg: Removed internal 'ErrMsgs' class.
- - Chg: Removed referenced to 'renderBody()' since this feature moved out from efan, into efanXtra.
+ - Chg: Removed references to 'renderBody()' since this feature moved out from efan, into efanXtra.
 
 v1.3.0
 ======

@@ -1,7 +1,7 @@
 
 internal class TestEscaping : SlimTest {
 	
-	SlimLineElementCompiler oneLine	:= SlimLineElementCompiler(TagStyle.html)
+	SlimLineElementCompiler oneLine	:= SlimLineElementCompiler(TagStyle.html, SlimComponent[,])
 
 	// ---- Escaped Text ----
 	

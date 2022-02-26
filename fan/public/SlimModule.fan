@@ -8,7 +8,7 @@ const class SlimModule {
 				[
 					"id"	: Slim#.qname,
 					"type"	: Slim#,
-					"scopes": ["root"],
+//					"scopes": ["root"],
 				]
 			],
 

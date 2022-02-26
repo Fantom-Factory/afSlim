@@ -15,13 +15,15 @@ class Build : BuildPod {
 		]
 
 		depends = [
+			// ---- Fantom Core -----------------
 			"sys        1.0.71 - 1.0", 
 
+			// ---- Fantom Factory --------------
 			"afEfan     2.0.4  - 2.0", 
 			"afPlastic  1.1.6  - 1.1",
 			"afPegger   1.1.0  - 1.1",
 
-			// ---- Testing ----
+			// ---- Testing ---------------------
 			"concurrent 1.0.71 - 1.0"
 		]
 		

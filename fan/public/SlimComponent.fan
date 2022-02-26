@@ -4,38 +4,38 @@
 ** Implement and pass instances to the 'Slim' ctor.
 const mixin SlimComponent {
 	
-	** The tag that this component overrides.
-	abstract Str tagName()	
+	** The tag that this component overrides. May be a *regex glob*. 
+	abstract Str name()	
 	
 	** Called when the component is to render its opening tags. Write HTML to the given 'buf'.
-	abstract Void onEntry(StrBuf buf, SlimComponentCtx ctx)
+	abstract Void onEntry(StrBuf out, SlimComponentCtx ctx)
 	
 	** Called when the component is to render its closing tags. Write HTML to the given 'buf'.
-	abstract Void onExit(StrBuf buf, SlimComponentCtx ctx)
+	abstract Void onExit(StrBuf out, SlimComponentCtx ctx)
 	
 	** Create a new 'SlimComponent' from the given func. Use for simple components.
 	** 
 	** 'entryExit' is 'true' when 'onEntry()' is invoked, and 'false' when 'onExit()' is invoked.
-	static new fromFn(Str tagName, |Bool entryExit, StrBuf buf, SlimComponentCtx ctx| fn) {
+	static new fromFn(Str tagName, |Bool entryExit, StrBuf out, SlimComponentCtx ctx| fn) {
 		SlimComponentImpl(tagName, fn)
 	}
 }
 
 internal const class SlimComponentImpl : SlimComponent {
-	override const Str	tagName
+	override const Str	name
 	private	 const Func	func
 	
-	override Void onEntry(StrBuf buf, SlimComponentCtx ctx) {
-		func(true, buf, ctx)
+	override Void onEntry(StrBuf out, SlimComponentCtx ctx) {
+		func(true, out, ctx)
 	}
 	
-	override Void onExit(StrBuf buf, SlimComponentCtx ctx) {
-		func(false, buf, ctx)
+	override Void onExit(StrBuf out, SlimComponentCtx ctx) {
+		func(false, out, ctx)
 	}
 	
-	new make(Str tagName, Func func) {
-		this.tagName	= tagName
-		this.func		= func
+	new make(Str name, Func func) {
+		this.name	= name
+		this.func	= func
 	}
 }
 
@@ -47,6 +47,9 @@ const class SlimComponentCtx {
 	
 	** The tag name.
 	const	Str			tagName
+	
+	** The component name.
+	const	Str			comName
 	
 	** The ID of the element.
 	const	Str?		id
@@ -64,8 +67,11 @@ const class SlimComponentCtx {
 	new make(|This| fn) {
 		fn(this)
 		
+		if (this.classes == null)
+			this.classes = Str#.emptyList
+		
 		// duplicate the functionality of the SlimLineElement ctor
-		if (this.text.size > 0 && this.text[0].isSpace)
+		if (this.text != null && this.text.size > 0 && this.text[0].isSpace)
 			this.text = this.text[1..-1]
 	}
 }

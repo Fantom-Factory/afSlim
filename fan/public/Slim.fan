@@ -85,4 +85,3 @@ const class Slim {
 		return template.render(ctx)
 	}
 }
-

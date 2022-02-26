@@ -14,7 +14,7 @@ internal class SlimLineElementCompiler : SlimLineCompiler {
 		this.tagGrammar	 = Peg.parseGrammar(`fan://afSlim/res/tagIdClass.peg.txt`	.toFile.readAllStr)
 		
 		comMap	 := Str:SlimComponent[:]
-		components.each { comMap[it.tagName] = it }
+		components.each { comMap[it.name] = it }
 		this.components	= comMap
 	}
 
@@ -35,10 +35,24 @@ internal class SlimLineElementCompiler : SlimLineCompiler {
 		attrs		:= Str[,]
 		vals		:= tagGrammar.firstRule.match(tag) 
 
+		// allow "tag:component" syntax
 		tagName		:= vals["tag"]?.toStr ?: ""
-		component	:= components[tagName]
-		comCtx		:= null as SlimComponentCtx
+		comName		:= null as Str
+		if (tagName.contains(":")) {
+			noms	:= tagName.split(':')
+			if (noms.size > 2)
+				throw UnsupportedErr("Only ONE Slim component may be defined: $tagName")
+			tagName	= noms[0]
+			comName = noms[1]
+		}
 		
+		component	:= components[comName ?: tagName]
+		if (component != null && comName == null) {
+			comName = tagName
+			tagName	= "div"
+		}
+		
+		comCtx		:= null as SlimComponentCtx
 		id			:= vals["id"]?.toStr?.trimToNull
 		if (id != null)
 			attrs.add("id=\"${id}\"")
@@ -48,7 +62,7 @@ internal class SlimLineElementCompiler : SlimLineCompiler {
 			css := classes.join(" ")
 			attrs.add("class=\"${css}\"")
 		}
-		
+
 		if (!attr.isEmpty)
 			attrs.add(attr.trim)		
 		
@@ -56,10 +70,11 @@ internal class SlimLineElementCompiler : SlimLineCompiler {
 			comCtx	= SlimComponentCtx {
 				it.tagStyle	= this.tagStyle
 				it.tagName	= tagName
+				it.comName	= comName
 				it.id		= id
 				it.classes	= classes.map { it.toStr }
-				it.attrs	= attr
-				it.text		= text	
+				it.attrs	= attr.trimToNull
+				it.text		= text.trimToNull
 			}
 		}
 	
@@ -113,10 +128,8 @@ internal class SlimLineElement : SlimLine {
 		else {
 			buf.addChar('<')
 			buf.add(name)
-			if (!attr.isEmpty) {
-				buf.addChar(' ')
-				buf.add(attr)
-			}
+			if (!attr.isEmpty)
+				buf.join(attr, " ")
 
 			buf.add(tagStyle.tagEnding.startTag(name, children.isEmpty && text.isEmpty, srcSnippet, slimLineNo+1))
 		}

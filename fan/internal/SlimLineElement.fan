@@ -32,13 +32,12 @@ internal class SlimLineElementCompiler : SlimLineCompiler {
 	}
 	
 	SlimLine match(Str tag, Str attr, Str text, Bool multi) {
-		attrs		:= Str[,]
 		vals		:= tagGrammar.firstRule.match(tag) 
 
 		// allow "tag:component" syntax
-		tagName		:= vals["tag"]?.toStr ?: ""
+		tagName		:= escape(vals["tag"].matched)
 		comName		:= null as Str
-		if (tagName.contains(":")) {
+		if (tagName.contains(":") && !tagName.contains("\$")) {
 			noms	:= tagName.split(':')
 			if (noms.size > 2)
 				throw UnsupportedErr("Only ONE Slim component may be defined: $tagName")
@@ -52,19 +51,11 @@ internal class SlimLineElementCompiler : SlimLineCompiler {
 			tagName	= "div"
 		}
 		
+		id			:= escape(vals["id"]?.toStr?.trimToNull)
+		classes 	:= vals.matches.findAll { it.name == "class" }.map { escape(it.matched) }
+		eAttr		:= escape(attr.trimToNull)
+		eText		:= escape(text.trimToNull == null ? null : text)	// don't trim extra space
 		comCtx		:= null as SlimComponentCtx
-		id			:= vals["id"]?.toStr?.trimToNull
-		if (id != null)
-			attrs.add("id=\"${id}\"")
-		
-		classes 	:= vals.matches.findAll { it.name == "class" }
-		if (classes.size > 0) {
-			css := classes.join(" ")
-			attrs.add("class=\"${css}\"")
-		}
-
-		if (!attr.isEmpty)
-			attrs.add(attr.trim)		
 		
 		if (component != null) {
 			comCtx	= SlimComponentCtx {
@@ -72,13 +63,22 @@ internal class SlimLineElementCompiler : SlimLineCompiler {
 				it.tagName	= tagName
 				it.comName	= comName
 				it.id		= id
-				it.classes	= classes.map { it.toStr }
-				it.attrs	= attr.trimToNull
-				it.text		= text.trimToNull
+				it.classes	= classes
+				it.attrs	= eAttr
+				it.text		= eText
 			}
 		}
 	
-		element		:= SlimLineElement(tagStyle, escape(tagName), escape(attrs.join(" ")), escape(text), component, comCtx)
+		attrs		:= Str[,]
+		if (id != null)
+			attrs.add("id=\"${id}\"")
+		if (classes.size > 0) {
+			css := classes.join(" ")
+			attrs.add("class=\"${css}\"")
+		}
+		if (eAttr != null)
+			attrs.add(eAttr)		
+		element		:= SlimLineElement(tagStyle, tagName, attrs.join(" "), eText ?: "", component, comCtx)
 
 		if (multi) {
 			element.nextLine = text

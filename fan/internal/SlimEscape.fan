@@ -1,7 +1,10 @@
 
+** Interpolates fantom "$fantom.code" into "<%= efan.code %>".
 internal mixin SlimEscape {
 	
-	Str escape(Str line) {
+	Str? escape(Str? line) {
+		if (line == null) return null
+
 		// hmmm - I'm back in the dodgy world of escaping code (re: the medievil days of efan)
 		// I know, I'll use Regular Expressions! ...
 		code := StrBuf(line.size)

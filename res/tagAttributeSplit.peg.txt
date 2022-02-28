@@ -1,0 +1,18 @@
+// Attribute grammar stolen from HTML Parser
+
+// ---- Attributes ----
+
+grammar				= ([ \t]+ / attr:doubleQuoteAttr / attr:singleQuoteAttr / attr:unquotedAttr / emptyAttr)*
+attrName			= [^ \t\n\r\f"'>/=]+
+emptyAttr			= attrName+
+unquotedAttr		= attrName [ \t]* "=" [ \t]* attrValue:(text:[^ \t\n\r\f"'=<>`&]+ / charRef)+
+singleQuoteAttr		= attrName [ \t]* "=" [ \t]* "'" attrValue:(text:[^'&]+ / charRef)* "'"
+doubleQuoteAttr		= attrName [ \t]* "=" [ \t]* "\"" attrValue:(text:[^"&]+ / charRef)* "\""
+
+// ---- Character References ----
+
+charRef				= &"&" (decNumCharRef / hexNumCharRef / namedCharRef / borkedRef)
+namedCharRef		= "&" [^;>]+ ";"
+decNumCharRef		= "&#" [0-9]+ ";"
+hexNumCharRef		= "&#x" [a-fA-F0-9]+ ";"
+borkedRef			= "&" &[ \t]

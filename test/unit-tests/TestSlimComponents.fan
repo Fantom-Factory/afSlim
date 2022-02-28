@@ -16,7 +16,7 @@ class TestSlimComponents : Test {
 		])
 		
 		str := slim.renderFromStr("div\n  fo-o#brandy.fine.cognac (beers) glug")
-		verifyEq("<div><bar brandy [fine, cognac] beers>glug</bar></div>", str)
+		verifyEq("<div><bar brandy [fine, cognac] [beers:null]>glug</bar></div>", str)
 	}
 	
 	Void testComponentMixin() {
@@ -30,7 +30,7 @@ class TestSlimComponents : Test {
 				}
 			}
 		])
-		
+	
 		// test the "tag:mixin" format
 		str := slim.renderFromStr("div\n  foo:bar glug")
 		verifyEq("<div><foo suckers>glug</foo></div>", str)	
@@ -55,12 +55,12 @@ class TestSlimComponents : Test {
 		// test that $interpolation gets converted to efan code
 		tem := slim.compileFromStr("div\n  foo#\${ctx.one}.\${ctx.the} (one \${ctx.two} three) glug", typeof)
 		verifyEq("<div><%#
-		          	%><div <%= ((Obj?)(ctx.one))?.toStr?.toXml %> [<%= ((Obj?)(ctx.the))?.toStr?.toXml %>] one <%= ((Obj?)(ctx.two))?.toStr?.toXml %> three>glug</div><%#
+		          	%><div <%= ((Obj?)(ctx.one))?.toStr?.toXml %> [<%= ((Obj?)(ctx.the))?.toStr?.toXml %>] [one:null, <%= ((Obj?)(ctx.two))?.toStr?.toXml %>:null, three:null]>glug</div><%#
 		          %></div>", tem.templateSrc)
 
 		// test it still works!
 		str := tem.render(this)
-		verifyEq("<div><div judge [dredd] one Hello! three>glug</div></div>", str)	
+		verifyEq("<div><div judge [dredd] [one:null, Hello!:null, three:null]>glug</div></div>", str)	
 	}
 	Str one() { "judge" }
 	Str two() { "Hello!" }

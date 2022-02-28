@@ -58,7 +58,7 @@ const class SlimComponentCtx {
 	const	Str[]		classes
 	
 	** Any attributes defined by the element.
-	const	Str?		attrs
+	const	Str:Str?	attrs
 	
 	** Any plain text inside the element.
 	const	Str?		text

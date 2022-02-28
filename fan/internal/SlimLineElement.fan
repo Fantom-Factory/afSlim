@@ -1,18 +1,21 @@
 using afPegger::Peg
 using afPegger::Grammar
 using afPegger::PegGrammar
+using afPegger::Match
 
 internal class SlimLineElementCompiler : SlimLineCompiler {
 	private const	TagStyle			tagStyle
 	private const	Str:SlimComponent	components
-	private			Grammar				attrGrammar
 	private 		Grammar				tagGrammar
+	private			Grammar				attrGrammar
+	private			Grammar				splitGrammar
 	
 	new make(TagStyle tagStyle, SlimComponent[] components) {
 		this.tagStyle	 = tagStyle
-		this.attrGrammar = Peg.parseGrammar(`fan://afSlim/res/tagAttributes.peg.txt`.toFile.readAllStr)
-		this.tagGrammar	 = Peg.parseGrammar(`fan://afSlim/res/tagIdClass.peg.txt`	.toFile.readAllStr)
-		
+		this.tagGrammar	 = Peg.parseGrammar(`fan://afSlim/res/tagIdClass.peg.txt`		.toFile.readAllStr)
+		this.attrGrammar = Peg.parseGrammar(`fan://afSlim/res/tagAttributes.peg.txt`	.toFile.readAllStr)
+		this.splitGrammar= Peg.parseGrammar(`fan://afSlim/res/tagAttributeSplit.peg.txt`.toFile.readAllStr)
+
 		comMap	 := Str:SlimComponent[:]
 		components.each { comMap[it.name] = it }
 		this.components	= comMap
@@ -53,21 +56,20 @@ internal class SlimLineElementCompiler : SlimLineCompiler {
 		
 		id			:= escape(vals["id"]?.toStr?.trimToNull)
 		classes 	:= vals.matches.findAll { it.name == "class" }.map { escape(it.matched) }
-		eAttr		:= escape(attr.trimToNull)
+		eAttr		:= attr.trimToNull
 		eText		:= escape(text.trimToNull == null ? null : text)	// don't trim extra space
 		comCtx		:= null as SlimComponentCtx
 		
-		if (component != null) {
+		if (component != null)
 			comCtx	= SlimComponentCtx {
 				it.tagStyle	= this.tagStyle
 				it.tagName	= tagName
 				it.comName	= comName
 				it.id		= id
 				it.classes	= classes
-				it.attrs	= eAttr
+				it.attrs	= splitAttrs(eAttr)
 				it.text		= eText
 			}
-		}
 	
 		attrs		:= Str[,]
 		if (id != null)
@@ -77,7 +79,7 @@ internal class SlimLineElementCompiler : SlimLineCompiler {
 			attrs.add("class=\"${css}\"")
 		}
 		if (eAttr != null)
-			attrs.add(eAttr)		
+			attrs.add(escape(eAttr))		
 		element		:= SlimLineElement(tagStyle, tagName, attrs.join(" "), eText ?: "", component, comCtx)
 
 		if (multi) {
@@ -92,6 +94,17 @@ internal class SlimLineElementCompiler : SlimLineCompiler {
 		}
 
 		return element
+	}
+	
+	Str:Str? splitAttrs(Str? attrsStr) {
+		pegged	:= (Match?) (attrsStr == null ? null : splitGrammar.firstRule.match(attrsStr))
+		attrs	:= Str:Str?[:] { it.ordered = true }
+		pegged?.matches?.each |m| {
+			nom	:= escape(m.getMatch("attrName" ) .matched)
+			val := escape(m.getMatch("attrValue")?.matched)
+			attrs[nom] = val
+		}
+		return attrs
 	}
 }
 

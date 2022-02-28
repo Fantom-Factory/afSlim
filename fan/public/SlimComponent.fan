@@ -74,4 +74,19 @@ const class SlimComponentCtx {
 		if (this.text != null && this.text.size > 0 && this.text[0].isSpace)
 			this.text = this.text[1..-1]
 	}
+	
+	** Helper method for writing out tag values.
+	Void writeTag(StrBuf out, Str tagName, [Str:Str?]? attrs) {
+		out.addChar('<').add(tagName)
+		
+		// we purposely do NOT escape XML so we can write efan code values
+		if (attrs != null && attrs.size > 0)
+			attrs.each |val, nom| {
+				out.join(nom, " ")
+				if (val != null)
+					out.addChar('=').addChar('"').add(val).addChar('"')
+			}
+		
+		out.addChar('>')
+	}
 }

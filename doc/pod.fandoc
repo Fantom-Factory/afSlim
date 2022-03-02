@@ -424,6 +424,8 @@ with a 'Content-Type' of:
 While HTML is nice for browsers, this format doesn't lend itself to XML parsing; should you wish to use
 [Sizzle]`pod:afSizzle` for instance. So 'Slim' offers alternative renderings of tag endings.
 
+
+
 XHTML
 =====
 By creating `Slim` with a `TagStyle` of 'xhtml' all [void elements]`http://www.w3.org/html/wg/drafts/html/master/syntax.html#void-elements`
@@ -454,6 +456,8 @@ shown to the user.
     ...
   </html>
 
+
+
 XML
 ===
 If you create `Slim` with a `TagStyle` of 'xml' then *ALL* empty tags are self-closing and void tags have no special meaning.
@@ -463,6 +467,20 @@ Use this style when Slim is to create pure XML documents.
 
   text/xml
   application/xml
+
+
+
+Custom Components
+*****************
+If standard HTML tags aren't enough, you may register your own tags with Slim that render custom templates.
+
+Pass your cutsom [SlimComponents]`SlimComponent` to the Slim ctor and they get invoked whenever they are encountered in the Slim template.
+
+  div:componentName#id.class (attributes)
+
+or more simply:
+
+  componentName#id.class (attributes)
 
 
 

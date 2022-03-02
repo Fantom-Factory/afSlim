@@ -4,7 +4,7 @@
 ** Implement and pass instances to the 'Slim' ctor.
 const mixin SlimComponent {
 	
-	** The tag that this component overrides. May be a *regex glob*. 
+	** The tag name this component overrides. May be a *regex glob*. 
 	abstract Str name()	
 	
 	** Called when the component is to render its opening tags. Write HTML to the given 'buf'.

@@ -1,8 +1,8 @@
-# Slim v1.3.2
+# Slim v1.4.0
 ---
 
 [![Written in: Fantom](http://img.shields.io/badge/written%20in-Fantom-lightgray.svg)](https://fantom-lang.org/)
-[![pod: v1.3.2](http://img.shields.io/badge/pod-v1.3.2-yellow.svg)](http://eggbox.fantomfactory.org/pods/afSlim)
+[![pod: v1.4.0](http://img.shields.io/badge/pod-v1.4.0-yellow.svg)](http://eggbox.fantomfactory.org/pods/afSlim)
 [![Licence: ISC](http://img.shields.io/badge/licence-ISC-blue.svg)](https://choosealicense.com/licenses/isc/)
 
 ## Overview
@@ -36,7 +36,7 @@ Or install `Slim` with [fanr](https://fantom.org/doc/docFanr/Tool.html#install):
 
 To use in a [Fantom](https://fantom-lang.org/) project, add a dependency to `build.fan`:
 
-    depends = ["sys 1.0", ..., "afSlim 1.3"]
+    depends = ["sys 1.0", ..., "afSlim 1.4"]
 
 ## <a name="documentation"></a>Documentation
 
@@ -433,6 +433,18 @@ If you create [Slim](http://eggbox.fantomfactory.org/pods/afSlim/api/Slim) with 
 
     text/xml
     application/xml
+
+## Custom Components
+
+If standard HTML tags aren't enough, you may register your own tags with Slim that render custom templates.
+
+Pass your cutsom [SlimComponents](http://eggbox.fantomfactory.org/pods/afSlim/api/SlimComponent) to the Slim ctor and they get invoked whenever they are encountered in the Slim template.
+
+    div:componentName#id.class (attributes)
+
+or more simply:
+
+    componentName#id.class (attributes)
 
 ## IoC
 

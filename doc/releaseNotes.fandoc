@@ -1,3 +1,13 @@
+v1.4
+****
+Extend Slim with custom components!
+
+v1.4.0
+======
+ - New: Custom Slim Components let you add, and mixin, custom templates to Slim files.
+
+
+
 v1.3
 ****
 New code base that uses the re-written [efan 2.0]`pod:afEfan` library.

@@ -26,10 +26,10 @@ class Build : BuildPod {
 			// ---- Testing ---------------------
 			"concurrent 1.0.71 - 1.0"
 		]
-		
+	
 		srcDirs = [`fan/`, `fan/internal/`, `fan/public/`, `test/unit-tests/`]
 		resDirs = [`doc/`, `res/`]
-		
+
 		meta["afBuild.testPods"]	= "concurrent"
 	}
 }

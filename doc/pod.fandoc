@@ -1,4 +1,4 @@
-Overview
+Overview [#overview]
 ********
 Slim is a library for generating HTML from concise, lightweight templates. Slim is based on [Jade]`http://jade-lang.com/` for javascript and [Slim]`http://slim-lang.com/` for Ruby.
 
@@ -15,7 +15,7 @@ Features include:
 
 
 
-Quick Start
+Quick Start [#quickStart]
 ***********
 1. Create a text file called 'Example.slim'
 
@@ -97,7 +97,7 @@ Quick Start
 
 
 
-Syntax
+Syntax [#syntax]
 ******
 The first non-whitespace characters of each line defines the content of the line:
 
@@ -117,7 +117,7 @@ doctype : <!DOCTYPE ... >
 > IDE and make sure you are not mixing up tabs and spaces.
 
 
-Doctype
+Doctype [#doctype]
 =======
 Start a line with 'doctype' to print a document type. The common type would be 'html':
 
@@ -179,7 +179,7 @@ To print custom DOCTYPE declarations, use the '|' character to print a standard 
 
 
 
-Using Statements
+Using Statements [#using]
 ================
 Start any line with '-?' to add a Fantom using statement.
 
@@ -192,7 +192,7 @@ The 'using statement' means you don't have to use fully qualified class names:
 
 
 
-Elements
+Elements [#elements]
 ========
 Element lines are formatted as:
 
@@ -250,7 +250,7 @@ pre>
 
 
 
-Single Line Comments
+Single Line Comments [#comments-line]
 ====================
 Start any line with '//' to add a comment.
 
@@ -261,7 +261,7 @@ Comments *do not* appear in the generated html, but *do* appear in the efan temp
 
 
 
-Block Comments
+Block Comments [#comments-block]
 ==============
 Start any line with '/*' to add a block comment.
 
@@ -273,7 +273,7 @@ Block comments *do not* appear in the generated html, but *do* appear in the efa
 
 
 
-HTML Comments
+HTML Comments [#comments-html]
 =============
 Start any line with '/!' to add a HTML comment.
 
@@ -287,7 +287,7 @@ HTML comments *do* appear in the generated HTML.
 
 
 
-Fantom Code
+Fantom Code [#fantomCode]
 ===========
 Start any line with '--' to write Fantom code. Use to call efan helper methods.
 
@@ -305,7 +305,7 @@ Due to indentation, Slim works out where they should be.
 
 
 
-Fantom Eval
+Fantom Eval [#fantomEval]
 ===========
 Start any line with '==' to evaluate a line of Fantom code and print it out in the template
 
@@ -315,7 +315,7 @@ The resulting string is printed raw and is *not* HTML escaped.
 
 
 
-Plain Text
+Plain Text [#plainText]
 ==========
 Any line starting with a '|' denotes plain text and is printed raw. You can even embed HTML:
 
@@ -376,7 +376,7 @@ Slim trims 1 character of whitespace after a '|' and preserves trailing whitespa
 
 
 
-HTML Escaping
+HTML Escaping [#htmlEscaping]
 =============
 Similar to [Fantom Str interpolation]`docLang::Literals#interpolation`, you can output Fantom
 expressions *anywhere* in the template using the standard '${...}' notation;
@@ -401,10 +401,10 @@ For simple expressions, the curly brackets may be omitted:
 
 
 
-HTML vs XHTML vs XML
+HTML vs XHTML vs XML [#HtmlXhtmlXml]
 ********************
 
-HTML
+HTML [#html]
 ====
 By default 'Slim' renders tags as HTML5 elements; that is, all tags representing
 [void elements]`http://www.w3.org/html/wg/drafts/html/master/syntax.html#void-elements` such as 'meta', 'br' and 'input' are
@@ -426,7 +426,7 @@ While HTML is nice for browsers, this format doesn't lend itself to XML parsing;
 
 
 
-XHTML
+XHTML [#xhtml]
 =====
 By creating `Slim` with a `TagStyle` of 'xhtml' all [void elements]`http://www.w3.org/html/wg/drafts/html/master/syntax.html#void-elements`
 are rendered as a self-closing tags.
@@ -458,7 +458,7 @@ shown to the user.
 
 
 
-XML
+XML [#xml]
 ===
 If you create `Slim` with a `TagStyle` of 'xml' then *ALL* empty tags are self-closing and void tags have no special meaning.
 Use this style when Slim is to create pure XML documents.
@@ -470,7 +470,7 @@ Use this style when Slim is to create pure XML documents.
 
 
 
-Custom Components
+Custom Components [#customComponents]
 *****************
 If standard HTML tags aren't enough, you may register your own tags with Slim that render custom templates.
 
@@ -484,7 +484,7 @@ or more simply:
 
 
 
-IoC
+IoC [#ioc]
 ***
 Slim makes use of the non-invasive module feature of IoC 3.
 

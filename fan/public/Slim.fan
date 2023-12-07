@@ -16,7 +16,6 @@ const class Slim {
 	private const EfanCompiler		efanCompiler	:= EfanCompiler()
 	private const SlimParser		slimParser
 	private const SlimComponent[]	components
-	private const Func				localeFn
 
 	** Creates a 'Slim' instance, setting the ending style for tags.
 	** 
@@ -24,17 +23,17 @@ const class Slim {
 	** 
 	** pre>
 	** table:
-	** name          default                desc
-	** ------------  ---------------------  ----
-	** 'tagStyle'    'TagStyle.html'        Describes how tags are ended.
-	** 'components'  'SlimComponent[]'      SlimComponents to use.
-	** 'localeFn'    'Slim#localeStr.func'  The func used to obtain L11N translations.
+	** name          default            desc
+	** ------------  -----------------  ----
+	** 'tagStyle'    'TagStyle.html'    Describes how tags are ended.
+	** 'components'  'SlimComponent[]'  SlimComponents to use.
+	** 'localeFn'    'Slim#localeFn'    The static method used to obtain L11N translations.
 	** <pre
 	new make([Str:Obj]? opts := null) {
-		this.tagStyle	= (opts?.get("tagStyle"  ) as TagStyle)			?: TagStyle.html
-		this.components	= (opts?.get("components") as SlimComponent[])	?: SlimComponent#.emptyList
-		this.localeFn	= (opts?.get("localeFn"  ) as Func)				?: #localeStr.func
-		this.slimParser	= SlimParser(tagStyle, this.components)
+		this.tagStyle	 = (opts?.get("tagStyle"  ) as TagStyle)		?: TagStyle.html
+		this.components	 = (opts?.get("components") as SlimComponent[])	?: SlimComponent#.emptyList
+			 localeFn	:= (opts?.get("localeFn"  ) as Method)			?: #localeFn
+		this.slimParser	 = SlimParser(tagStyle, this.components, localeFn)
 	}
 	
 	** Parses the given slim template into an efan template.
@@ -92,12 +91,20 @@ const class Slim {
 	}
 	
 	** Returns a locale string for the given key and args.
-	** Translations are looked up in the given pod (may be a 'Pod', 'Str', 'Type', or instance). 
+	** Translations are looked up in the given pod (may be a 'Pod', 'Str', 'Type', or instance).
+	** 
+	** If 'locale' is null, the thread's current locale is used. 
 	** 
 	** Args may be interpolated with '${1}'. For more than 4 args, pass a list as 'arg1'.
 	** For named args, pass a Map as 'arg1' - '${someKey}'
-	Str localeStr(Obj poddy, Str key, Obj? arg1 := null, Obj? arg2 := null, Obj? arg3 := null, Obj? arg4 := null) {
+	static Str localeStr(Obj poddy, Str key, Locale? locale := null, Obj? arg1 := null, Obj? arg2 := null, Obj? arg3 := null, Obj? arg4 := null) {
 		// TODO
 		return key
+	}
+	
+	@NoDoc
+	static Str localeFn(Obj poddy, Str key, Obj? arg1 := null, Obj? arg2 := null, Obj? arg3 := null, Obj? arg4 := null) {
+		// defer to localeStr() as it is more useful / generic as it also takes a Locale
+		localeStr(poddy, key, null, arg1, arg2, arg3, arg4)
 	}
 }

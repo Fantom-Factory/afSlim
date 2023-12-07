@@ -4,24 +4,26 @@ internal const class SlimParser {
 	private const TagStyle				tagStyle
 	private const SlimLineCompiler[]	compilers
 	private const SlimComponent[]		components
+	private const Method				localeFn
 
-	new make(TagStyle tagStyle, SlimComponent[] components) {
+	new make(TagStyle tagStyle, SlimComponent[] components, Method localeFn) {
 		this.tagStyle	= tagStyle
 		this.components	= components
+		this.localeFn	= localeFn
 		this.compilers	= [
 			SlimLineDoctypeCompiler(),
 			SlimLineFanCodeCompiler(),
 			SlimLineFanEvalCompiler(),
 			SlimLineInstructionCompiler(),
 			SlimLineFanCommentCompiler(),
-			SlimLineHtmlCommentCompiler(),
+			SlimLineHtmlCommentCompiler(localeFn),
 			SlimLineBlockCommentCompiler(),
-			SlimLineTextCompiler(),
+			SlimLineTextCompiler(localeFn),
 		]
 	}
 
 	Void parse(Uri srcLocation, Str slimTemplate, SlimLine current) {
-		compilers  := compilers.rw.add(SlimLineElementCompiler(tagStyle, components))
+		compilers  := compilers.rw.add(SlimLineElementCompiler(tagStyle, components, localeFn))
 		srcSnippet := SrcCodeSnippet(srcLocation, slimTemplate)
 		slimTemplate.splitLines.each |line, lineNo| {
 			try {

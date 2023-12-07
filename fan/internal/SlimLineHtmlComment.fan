@@ -1,12 +1,18 @@
 
 internal const class SlimLineHtmlCommentCompiler : SlimLineCompiler {
 	
+	private const Method localeFn
+	
+	new make(Method localeFn) {
+		this.localeFn = localeFn
+	}
+	
 	override Bool matches(Str line) {
 		line.startsWith("/!")
 	}
 	
 	override SlimLine compile(Str line) {
-		SlimLineHtmlComment(escape(line[2..-1].trim))
+		SlimLineHtmlComment(escape(line[2..-1].trim, localeFn))
 	}
 }
 

@@ -1,6 +1,12 @@
 
 internal const class SlimLineTextCompiler : SlimLineCompiler {
 
+	private const Method localeFn
+	
+	new make(Method localeFn) {
+		this.localeFn = localeFn
+	}
+
 	override Bool matches(Str line) {
 		line.startsWith("|")
 	}
@@ -8,7 +14,7 @@ internal const class SlimLineTextCompiler : SlimLineCompiler {
 	override SlimLineText compile(Str line) {
 		text := line.trimStart[1..-1]
 		text  = (text.chars.first?.isSpace ?: false) ? text[1..-1] : text
-		return SlimLineText(escape(text))
+		return SlimLineText(escape(text, localeFn), localeFn)
 	}
 	
 	static Bool isMultiLine(Str line) {
@@ -17,14 +23,17 @@ internal const class SlimLineTextCompiler : SlimLineCompiler {
 }
 
 internal class SlimLineText : SlimLine, SlimEscape {
-	private const SlimLineTextCompiler textCompiler	:= SlimLineTextCompiler()
+	private const SlimLineTextCompiler	textCompiler
+	private const Method				localeFn
 	
 	Str 	text
 	Bool	textOnFirstLine
 
-	new make(Str text) {
-		this.text = text
-		textOnFirstLine = !text.trimStart.isEmpty
+	new make(Str text, Method localeFn) {
+		this.text			 = text
+		this.textOnFirstLine = !text.trimStart.isEmpty
+		this.textCompiler	 = SlimLineTextCompiler(localeFn)
+		this.localeFn		 = localeFn
 	}
 	
 	override SlimLine add(SlimLine slimLine, Bool multiLine) {
@@ -78,7 +87,10 @@ internal class SlimLineText : SlimLine, SlimEscape {
 				// soak up a space for what would be the '|' char
 				line = line.chars.first.isSpace ? line[1..-1] : line
 
-		text	+= nline ? "\n${escape(line)}" : escape(line) 
+		if (nline)
+			text += "\n"
+
+		text += escape(line, localeFn) 
 
 		return true
 	}

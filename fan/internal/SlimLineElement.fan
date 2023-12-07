@@ -6,12 +6,14 @@ using afPegger::Match
 internal class SlimLineElementCompiler : SlimLineCompiler {
 	private const	TagStyle			tagStyle
 	private const	Str:SlimComponent	components
+	private const	Method				localeFn
 	private 		Grammar				tagGrammar
 	private			Grammar				attrGrammar
 	private			Grammar				splitGrammar
 	
-	new make(TagStyle tagStyle, SlimComponent[] components) {
+	new make(TagStyle tagStyle, SlimComponent[] components, Method localeFn) {
 		this.tagStyle	 = tagStyle
+		this.localeFn	 = localeFn
 		this.tagGrammar	 = Peg.parseGrammar(`fan://afSlim/res/tagIdClass.peg.txt`		.toFile.readAllStr)
 		this.attrGrammar = Peg.parseGrammar(`fan://afSlim/res/tagAttributes.peg.txt`	.toFile.readAllStr)
 		this.splitGrammar= Peg.parseGrammar(`fan://afSlim/res/tagAttributeSplit.peg.txt`.toFile.readAllStr)
@@ -38,7 +40,7 @@ internal class SlimLineElementCompiler : SlimLineCompiler {
 		vals		:= tagGrammar.firstRule.match(tag) 
 
 		// allow "tag:component" syntax
-		tagName		:= escape(vals["tag"].matched)
+		tagName		:= escape(vals["tag"].matched, localeFn)
 		comName		:= null as Str
 		if (tagName.contains(":") && !tagName.contains("\$")) {
 			noms	:= tagName.split(':')
@@ -54,10 +56,10 @@ internal class SlimLineElementCompiler : SlimLineCompiler {
 			tagName	= "div"
 		}
 		
-		id			:= escape(vals["id"]?.toStr?.trimToNull)
-		classes 	:= vals.matches.findAll { it.name == "class" }.map { escape(it.matched) }
+		id			:= escape(vals["id"]?.toStr?.trimToNull, localeFn)
+		classes 	:= vals.matches.findAll { it.name == "class" }.map { escape(it.matched, localeFn) }
 		eAttr		:= attr.trimToNull
-		eText		:= escape(text.trimToNull == null ? null : text)	// don't trim extra space
+		eText		:= escape(text.trimToNull == null ? null : text, localeFn)	// don't trim extra space
 		comCtx		:= null as SlimComponentCtx
 		
 		if (component != null)
@@ -79,7 +81,7 @@ internal class SlimLineElementCompiler : SlimLineCompiler {
 			attrs.add("class=\"${css}\"")
 		}
 		if (eAttr != null)
-			attrs.add(escape(eAttr))		
+			attrs.add(escape(eAttr, localeFn))		
 		element		:= SlimLineElement(tagStyle, tagName, attrs.join(" "), eText ?: "", component, comCtx)
 
 		if (multi) {
@@ -100,8 +102,8 @@ internal class SlimLineElementCompiler : SlimLineCompiler {
 		pegged	:= (Match?) (attrsStr == null ? null : splitGrammar.firstRule.match(attrsStr))
 		attrs	:= Str:Str?[:] { it.ordered = true }
 		pegged?.matches?.each |m| {
-			nom	:= escape(m.getMatch("attrName" ) .matched)
-			val := escape(m.getMatch("attrValue")?.matched)
+			nom	:= escape(m.getMatch("attrName" ) .matched, localeFn)
+			val := escape(m.getMatch("attrValue")?.matched, localeFn)
 			attrs[nom] = val
 		}
 		return attrs

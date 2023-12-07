@@ -53,25 +53,25 @@ internal class TestEscaping : SlimTest {
 	}
 
 	Void testMultiple2() {
-		text := oneLine.escape("before \$\${1} middle \$\${2} end")
-		verifyEq(text, "before <%= 1 %> middle <%= 2 %> end")
+		text := oneLine.escape(Str<| before $${1} middle $${2} end |>)
+		verifyEq(text, Str<| before <%= 1 %> middle <%= 2 %> end |>)
 	}
 
 	// ---- Ignored Text v1 ----
 	
 	Void testEscaping() {
-		text := oneLine.escape("\\\${wotever}")
-		verifyEq(text, "\${wotever}")
+		text := oneLine.escape(Str<| \${wotever} |>)
+		verifyEq(text, Str<| ${wotever} |>)
 	}
 
 	Void testEscapingBoth() {
-		text := oneLine.escape("before\\\${wotever}after")
-		verifyEq(text, "before\${wotever}after")
+		text := oneLine.escape(Str<| before\${wotever}after |>)
+		verifyEq(text, Str<| before${wotever}after |>)
 	}
 
 	Void testEscapingHanging() {
-		text := oneLine.escape("before\\\${wotever")
-		verifyEq(text, "before\\\${wotever")
+		text := oneLine.escape(Str<| before\${wotever |>)
+		verifyEq(text, Str<| before\${wotever |>)
 	}
 
 	// ---- Ignored Text v2 ----

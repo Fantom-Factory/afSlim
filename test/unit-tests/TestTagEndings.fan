@@ -7,13 +7,13 @@ internal class TestTagEndings : SlimTest {
 	}
 	
 	Void testHtmlVoid() {
-		slim := Slim(null, TagStyle.html)
+		slim := Slim(["tagStyle":TagStyle.html])
 		text := slim.parseFromStr("meta (dude)")
 		verifyEq(text.splitLines[-1], "<meta dude>")
 	}
 
 	Void testHtmlNonVoid() {
-		slim := Slim(null, TagStyle.html)
+		slim := Slim(["tagStyle":TagStyle.html])
 		text := slim.parseFromStr("script (src='')")
 		verifyEq(text.splitLines[-1], "<script src=''></script>")		
 	}
@@ -22,7 +22,7 @@ internal class TestTagEndings : SlimTest {
 		handler := |LogRec rec| { Actor.locals["slim.log"] = rec.msg }
 		Log.addHandler(handler)
 		
-		slim := Slim(null, TagStyle.html)
+		slim := Slim(["tagStyle":TagStyle.html])
 		text := slim.parseFromStr("meta\n span text")
 		Log.removeHandler(handler)
 
@@ -37,7 +37,7 @@ internal class TestTagEndings : SlimTest {
 		handler := |LogRec rec| { Actor.locals["slim.log"] = rec.msg }
 		Log.addHandler(handler)
 		
-		slim := Slim(null, TagStyle.html)
+		slim := Slim(["tagStyle":TagStyle.html])
 		text := slim.parseFromStr("meta dude")
 		Log.removeHandler(handler)
 
@@ -51,13 +51,13 @@ internal class TestTagEndings : SlimTest {
 	
 	
 	Void testXhtmlVoid() {
-		slim := Slim(null, TagStyle.xhtml)
+		slim := Slim(["tagStyle":TagStyle.xhtml])
 		text := slim.parseFromStr("meta (dude)")
 		verifyEq(text.splitLines[-1], "<meta dude />")
 	}
 
 	Void testXhtmlNonVoid() {
-		slim := Slim(null, TagStyle.xhtml)
+		slim := Slim(["tagStyle":TagStyle.xhtml])
 		text := slim.parseFromStr("script (src='')")
 		verifyEq(text.splitLines[-1], "<script src=''></script>")		
 	}
@@ -66,7 +66,7 @@ internal class TestTagEndings : SlimTest {
 		handler := |LogRec rec| { Actor.locals["slim.log"] = rec.msg }
 		Log.addHandler(handler)
 		
-		slim := Slim(null, TagStyle.html)
+		slim := Slim(["tagStyle":TagStyle.html])
 		text := slim.parseFromStr("meta\n span text")
 		Log.removeHandler(handler)
 		
@@ -81,7 +81,7 @@ internal class TestTagEndings : SlimTest {
 		handler := |LogRec rec| { Actor.locals["slim.log"] = rec.msg }
 		Log.addHandler(handler)
 		
-		slim := Slim(null, TagStyle.xhtml)
+		slim := Slim(["tagStyle":TagStyle.xhtml])
 		text := slim.parseFromStr("meta dude")
 		Log.removeHandler(handler)
 
@@ -95,13 +95,13 @@ internal class TestTagEndings : SlimTest {
 
 
 	Void testXmlVoid() {
-		slim := Slim(null, TagStyle.xml)
+		slim := Slim(["tagStyle":TagStyle.xml])
 		text := slim.parseFromStr("meta (dude)")
 		verifyEq(text.splitLines[-1], "<meta dude />")
 	}
 
 	Void testXmlNonVoid() {
-		slim := Slim(null, TagStyle.xml)
+		slim := Slim(["tagStyle":TagStyle.xml])
 		text := slim.parseFromStr("script (src='')")
 		verifyEq(text.splitLines[-1], "<script src='' />")	// this is XML, so no special treatment for tags
 	}
@@ -110,7 +110,7 @@ internal class TestTagEndings : SlimTest {
 		handler := |LogRec rec| { Actor.locals["slim.log"] = rec.msg }
 		Log.addHandler(handler)
 		
-		slim := Slim(null, TagStyle.xml)
+		slim := Slim(["tagStyle":TagStyle.xml])
 		text := slim.parseFromStr("meta\n span text")
 		Log.removeHandler(handler)
 
@@ -124,7 +124,7 @@ internal class TestTagEndings : SlimTest {
 		handler := |LogRec rec| { Actor.locals["slim.log"] = rec.msg }
 		Log.addHandler(handler)
 		
-		slim := Slim(null, TagStyle.xml)
+		slim := Slim(["tagStyle":TagStyle.xml])
 		text := slim.parseFromStr("meta dude")
 		Log.removeHandler(handler)
 

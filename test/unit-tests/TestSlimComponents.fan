@@ -3,7 +3,7 @@ class TestSlimComponents : Test {
 	
 	Void testComponent() {
 		that := Unsafe(this)
-		slim := Slim([
+		slim := Slim(["components":[
 			SlimComponent.fromFn("fo-o") |entryExit, buf, ctx| {
 				if (entryExit) {
 					buf.add("<bar $ctx.id $ctx.classes $ctx.attrs>")
@@ -13,7 +13,7 @@ class TestSlimComponents : Test {
 					buf.add("</bar>")
 				}
 			}
-		])
+		]])
 		
 		str := slim.renderFromStr("div\n  fo-o#brandy.fine.cognac (beers) glug")
 		verifyEq("<div><bar brandy [fine, cognac] [beers:null]>glug</bar></div>", str)
@@ -21,7 +21,7 @@ class TestSlimComponents : Test {
 	
 	Void testComponentMixin() {
 		that := Unsafe(this)
-		slim := Slim([
+		slim := Slim(["components":[
 			SlimComponent.fromFn("bar") |entryExit, buf, ctx| {
 				if (entryExit) {
 					buf.add("<$ctx.tagName suckers>")
@@ -29,7 +29,7 @@ class TestSlimComponents : Test {
 					buf.add("</$ctx.tagName>")
 				}
 			}
-		])
+		]])
 	
 		// test the "tag:mixin" format
 		str := slim.renderFromStr("div\n  foo:bar glug")
@@ -42,7 +42,7 @@ class TestSlimComponents : Test {
 
 	Void testAttrInterpolationComponent() {
 		that := Unsafe(this)
-		slim := Slim([
+		slim := Slim(["components":[
 			SlimComponent.fromFn("foo") |entryExit, buf, ctx| {
 				if (entryExit) {
 					buf.add("<div ${ctx.id} ${ctx.classes} ${ctx.attrs}>")
@@ -50,7 +50,7 @@ class TestSlimComponents : Test {
 					buf.add("</div>")
 				}
 			}
-		])
+		]])
 		
 		// test that $interpolation gets converted to efan code
 		tem := slim.compileFromStr("div\n  foo#\${ctx.one}.\${ctx.the} (one \${ctx.two} three) glug", typeof)

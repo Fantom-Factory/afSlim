@@ -16,19 +16,25 @@ const class Slim {
 	private const EfanCompiler		efanCompiler	:= EfanCompiler()
 	private const SlimParser		slimParser
 	private const SlimComponent[]	components
-	
+	private const Func				localeFn
+
 	** Creates a 'Slim' instance, setting the ending style for tags.
 	** 
-	** 'tagStyle' defaults to 'TagStyle.html'.
-	new make(SlimComponent[]? components := null, TagStyle tagStyle := TagStyle.html) {
-		this.tagStyle	= tagStyle
-		this.components	= components ?: SlimComponent#.emptyList
+	** Default opts:
+	** 
+	** pre>
+	** table:
+	** name          default                desc
+	** ------------  ---------------------  ----
+	** 'tagStyle'    'TagStyle.html'        Describes how tags are ended.
+	** 'components'  'SlimComponent[]'      SlimComponents to use.
+	** 'localeFn'    'Slim#localeStr.func'  The func used to obtain L11N translations.
+	** <pre
+	new make([Str:Obj]? opts := null) {
+		this.tagStyle	= (opts?.get("tagStyle"  ) as TagStyle)			?: TagStyle.html
+		this.components	= (opts?.get("components") as SlimComponent[])	?: SlimComponent#.emptyList
+		this.localeFn	= (opts?.get("localeFn"  ) as Func)				?: #localeStr.func
 		this.slimParser	= SlimParser(tagStyle, this.components)
-	}
-	
-	@NoDoc @Deprecated
-	static new makeLegacy(TagStyle tagStyle) {
-		Slim(null, tagStyle)
 	}
 	
 	** Parses the given slim template into an efan template.
@@ -83,5 +89,15 @@ const class Slim {
 	Str renderFromFile(File slimFile, Obj? ctx := null, Type[]? viewHelpers := null) {
 		template := this.compileFromFile(slimFile, ctx?.typeof, viewHelpers)
 		return template.render(ctx)
+	}
+	
+	** Returns a locale string for the given key and args.
+	** Translations are looked up in the given pod (may be a 'Pod', 'Str', 'Type', or instance). 
+	** 
+	** Args may be interpolated with '${1}'. For more than 4 args, pass a list as 'arg1'.
+	** For named args, pass a Map as 'arg1' - '${someKey}'
+	Str localeStr(Obj poddy, Str key, Obj? arg1 := null, Obj? arg2 := null, Obj? arg3 := null, Obj? arg4 := null) {
+		// TODO
+		return key
 	}
 }

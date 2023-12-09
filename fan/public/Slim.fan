@@ -16,6 +16,8 @@ const class Slim {
 	private const EfanCompiler		efanCompiler	:= EfanCompiler()
 	private const SlimParser		slimParser
 	private const SlimComponent[]	components
+	
+	// TODO debugStr() for AFX - tagStyle, component list, and l10nMethod
 
 	** Creates a 'Slim' instance, setting the ending style for tags.
 	** 
@@ -23,16 +25,17 @@ const class Slim {
 	** 
 	** pre>
 	** table:
-	** name          default            desc
-	** ------------  -----------------  ----
-	** 'tagStyle'    'TagStyle.html'    Describes how tags are ended.
-	** 'components'  'SlimComponent[]'  SlimComponents to use.
-	** 'localeFn'    'Slim#localeFn'    The static method used to obtain L11N translations.
+	** name            default            desc
+	** --------------  -----------------  ----
+	** 'tagStyle'      'TagStyle.html'    Describes how tags are ended.
+	** 'components'    'SlimComponent[]'  SlimComponents to use.
+	** 'localeMethod'  'Slim#localeFn'    The static method used to obtain L10N translations.
 	** <pre
 	new make([Str:Obj]? opts := null) {
-		this.tagStyle	 = (opts?.get("tagStyle"  ) as TagStyle)		?: TagStyle.html
-		this.components	 = (opts?.get("components") as SlimComponent[])	?: SlimComponent#.emptyList
-			 localeFn	:= (opts?.get("localeFn"  ) as Method)			?: #localeFn
+		// this opts ctor makes this Slim class an easy AFX service to contribute to! 
+		this.tagStyle	 = (opts?.get("tagStyle"	) as TagStyle)			?: TagStyle.html
+		this.components	 = (opts?.get("components"	) as SlimComponent[])	?: SlimComponent#.emptyList
+			 localeFn	:= (opts?.get("localeMethod") as Method)			?: #localeFn
 		this.slimParser	 = SlimParser(tagStyle, this.components, localeFn)
 	}
 	
@@ -93,13 +96,53 @@ const class Slim {
 	** Returns a locale string for the given key and args.
 	** Translations are looked up in the given pod (may be a 'Pod', 'Str', 'Type', or instance).
 	** 
-	** If 'locale' is null, the thread's current locale is used. 
+	** If 'locale' is null, the thread's current Locale is used. 
 	** 
 	** Args may be interpolated with '${1}'. For more than 4 args, pass a list as 'arg1'.
 	** For named args, pass a Map as 'arg1' - '${someKey}'
 	static Str localeStr(Obj poddy, Str key, Locale? locale := null, Obj? arg1 := null, Obj? arg2 := null, Obj? arg3 := null, Obj? arg4 := null) {
-		// TODO
-		return key
+		// look for a pod that may contain the translation - ignoring afPlastic abominations
+		pod := poddy as Pod
+
+		if (pod == null && poddy is Str)
+			pod = Pod.find(poddy, false)
+
+		if (pod == null) {
+			type := poddy as Type
+			if (type == null)
+				type = poddy.typeof
+			while (type.pod.name.startsWith("afPlastic"))
+				type = type.base
+			pod = type.pod
+		}
+
+		locale = locale ?: Locale.cur
+		str := Env.cur.locale(pod, key, null, locale)
+
+		// try just the lang, e.g. en-GB -> en
+		if (str == null && locale.country != null) {
+			lang := Locale(locale.lang)
+			str = Env.cur.locale(pod, key, null, lang)
+		}
+
+		if (str == null)
+			str = Env.cur.locale(pod, key, null, Locale.en)
+
+		// backdoor for testing - let poddy also be a Map
+		if (str == null && poddy is Map)
+			str = ((Str:Str) poddy)["${key}.${locale}"]
+
+		if (str == null) {
+			pod.log.warn("Could NOT find locale str - ${pod.name}::${key}")
+			return "???"
+		}
+		
+		if (arg1 != null)
+			str = str.replace("\${1}", arg1.toStr)
+		
+		// TODO test and perform MOAR interpolation
+
+		return str
 	}
 	
 	@NoDoc

@@ -7,6 +7,9 @@ internal const class SlimParser {
 	private const Method				localeFn
 
 	new make(TagStyle tagStyle, SlimComponent[] components, Method localeFn) {
+		if (localeFn.isStatic == false)
+			throw ArgErr("Locale method MUST be static: ${localeFn.qname}")
+
 		this.tagStyle	= tagStyle
 		this.components	= components
 		this.localeFn	= localeFn

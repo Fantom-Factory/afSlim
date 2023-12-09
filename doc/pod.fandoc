@@ -376,10 +376,9 @@ Slim trims 1 character of whitespace after a '|' and preserves trailing whitespa
 
 
 
-HTML Escaping [#htmlEscaping]
-=============
-Similar to [Fantom Str interpolation]`docLang::Literals#interpolation`, you can output Fantom
-expressions *anywhere* in the template using the standard '${...}' notation;
+Fantom Interpolation [#fantomInterpolation]
+********************
+Similar to [Fantom Str interpolation]`docLang::Literals#interpolation`, you can output Fantom expressions *anywhere* in the template using the standard '${...}' notation;
 
   div Mmmm... ${ctx.doughnut.filling} is my favourite!
 
@@ -398,6 +397,55 @@ pre>
 For simple expressions, the curly brackets may be omitted:
 
   div Mmmm... $ctx.doughnut.filling is my favourite!
+
+
+
+Localisation [#localisation]
+************
+Similar to [Fantom Locale Literals]`docLang::Localization#localeLiterals`, you can output localised Fantom strings
+*anywhere* in the template using the standard '$<key>' notation;
+
+  div Mmmm... $<doughnut.filling.raspberry> is my favourite!
+
+Values pertaining to the key must be defined in locale props files as specified by [Fantom Localized Properties]`docLang::Localization#props`. Property resolution follows the usual fallbacks of 'locale -> lang -> en'. The 'key' itself is printed should a localised value not exist.
+
+By default all text rendered via '$<...>' is XML escaped. To print raw / unescaped text use '$$<...>'. Backslash escape any
+expression to ignore it and print it as is.
+
+To summarise:
+pre>
+.
+  $<...> : XML escaped
+ \$<...> : ignored
+ $$<...> : raw / unescaped
+\$$<...> : ignored
+<pre
+
+
+
+Arg Interpolation
+=================
+Arguments may be passed as fantom literals / code to be interpolated into the localised values. Up to 4 arguments may be provided.
+
+  div Mmmm... $<doughnuts, "cream", raspberry()> are my favourites!
+
+Arguments are specified by '${x}' notation in the property value.
+
+  doughnuts = Doughnuts with ${1} and ${2}
+
+If more arguments are required, a list may be passed as the first argument.
+
+  div Mmmm... $<doughnuts, ["cream", "raspberry", "vanilla", "strawberry", "chocolate"]> are my favourites!
+
+A map may also be passed as the first arguments.
+
+  div Mmmm... $<doughnuts, ["1st":"raspberry", "2nd":"cream"]>
+
+Map arguments are interpolated via their keys.
+
+  doughnuts = Doughnuts with ${1st} and ${2nd}
+
+No checks are made to ensure all args are used, and no error is thrown should an arg does not exist.
 
 
 

@@ -128,11 +128,12 @@ internal class TestLocaleInterpolation : SlimTest{
 		], "look.up.foo", Locale.fromStr("cy"))
 		verifyEq(string, "Once upon a midnight dreary")
 		
-//		// verify correct warning is printed when key doesn't exist for the locale
-//		string	= slim.localeStr(Locale.fromStr("cy"), [
-//			"look.up.foo.en" 	: "Once upon a midnight dreary",
-//		], "look.up.foo")
-//		verifyEq(logs.first.toStr.contains("Could NOT find locale str - sys::look.up.foo"), true)
+		// verify a warning is logged when key doesn't exist for the locale
+		verifyEq(Log.get("sys").level.toStr, "info") // make sure nothing has raised the level previously - we need to detect a change!
+		string	= Slim.localeStr([
+			"look.up.foo.en" 	: "Once upon a midnight dreary",
+		], "look.up.foo",  Locale.fromStr("cy"))
+		verifyEq(Log.get("sys").isWarn, true)
 		
 		
 		// test null handling 

@@ -13,7 +13,7 @@ internal mixin SlimEscape {
 	static const Regex fantomRegex	:= Regex<|(.*?)(?:(?:(\\?\$?\$\{)(.+?)})|(\\?\$?\$)([a-zA-Z0-9\.]+)|(?:(?:(\\?\$?\$\<)(.+?)(?:>|,(.+?)>))))|> 
 	
 	Str? escape(Str? line, Method localeFn) {
-		
+
 		if (line == null) return null
 
 		// hmmm - I'm back in the dodgy world of escaping code (re: the medievil days of efan)
@@ -33,8 +33,6 @@ internal mixin SlimEscape {
 		last := 0
 		
 		while (find) {
-			
-			echo(code)
 			
 			if (regx.group(2) != null) {
 				if (regx.group(2) == "\${") {

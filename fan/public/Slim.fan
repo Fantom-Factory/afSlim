@@ -116,17 +116,9 @@ const class Slim {
 			pod = type.pod
 		}
 
+		// Env.cur.locale handles the fallbacks as needed
 		locale = locale ?: Locale.cur
 		str := Env.cur.locale(pod, key, null, locale)
-
-		// try just the lang, e.g. en-GB -> en
-		if (str == null && locale.country != null) {
-			lang := Locale(locale.lang)
-			str = Env.cur.locale(pod, key, null, lang)
-		}
-
-		if (str == null)
-			str = Env.cur.locale(pod, key, null, Locale.en)
 
 		// backdoor for testing - let poddy also be a Map
 		if (str == null && poddy is Map)
@@ -137,11 +129,31 @@ const class Slim {
 			return "???"
 		}
 		
-		if (arg1 != null)
+		if (arg1 != null && arg1 is List == false && arg1 is Map == false)
 			str = str.replace("\${1}", arg1.toStr)
+		if (arg2 != null)
+			str = str.replace("\${2}", arg2.toStr)
+		if (arg3 != null)
+			str = str.replace("\${3}", arg3.toStr)
+		if (arg4 != null)
+			str = str.replace("\${4}", arg4.toStr)
 		
-		// TODO test and perform MOAR interpolation
-
+		if (arg1 is List) {
+			list 	:= (Obj?[]) arg1
+			list.each |Obj? obj, Int index| {
+				x := index + 1 // F4 forced me!
+				objNotNull := obj ?: "null"  
+				str = str.replace("\${$x}", objNotNull.toStr)
+			}
+		}
+		if (arg1 is Map) {
+			map 	:= (Str:Obj?) arg1
+			map.each |Obj? value, Str keyStr|{
+				valueNotNull := value ?: "null" 
+				str	= str.replace("\${$keyStr}", valueNotNull.toStr)
+			}
+		}
+		
 		return str
 	}
 	

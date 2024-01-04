@@ -53,7 +53,7 @@ internal class SlimLineElementCompiler : SlimLineCompiler {
 		component	:= components[comName ?: tagName]
 		if (component != null && comName == null) {
 			comName = tagName
-			tagName	= "div"
+			tagName	= null	// tagName was undefined
 		}
 		
 		id			:= escape(vals["id"]?.toStr?.trimToNull, localeFn)
@@ -82,7 +82,7 @@ internal class SlimLineElementCompiler : SlimLineCompiler {
 		}
 		if (eAttr != null)
 			attrs.add(escape(eAttr, localeFn))		
-		element		:= SlimLineElement(tagStyle, tagName, attrs.join(" "), eText ?: "", component, comCtx)
+		element		:= SlimLineElement(tagStyle, tagName ?: "div", attrs.join(" "), eText ?: "", component, comCtx)
 
 		if (multi) {
 			element.nextLine = text

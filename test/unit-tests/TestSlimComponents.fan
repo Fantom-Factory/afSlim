@@ -24,9 +24,9 @@ class TestSlimComponents : Test {
 		slim := Slim(["components":[
 			SlimComponent.fromFn("bar") |entryExit, buf, ctx| {
 				if (entryExit) {
-					buf.add("<$ctx.tagName suckers>")
+					buf.add("<" + (ctx.tagName ?: "div") + " suckers>")
 				} else {
-					buf.add("</$ctx.tagName>")
+					buf.add("</" + (ctx.tagName ?: "div") + ">")
 				}
 			}
 		]])
@@ -55,7 +55,7 @@ class TestSlimComponents : Test {
 		// test that $interpolation gets converted to efan code
 		tem := slim.compileFromStr("div\n  foo#\${ctx.one}.\${ctx.the} (one \${ctx.two} three) glug", typeof)
 		verifyEq("<div><%#
-		          	%><div <%= ((Obj?)(ctx.one))?.toStr?.toXml %> [<%= ((Obj?)(ctx.the))?.toStr?.toXml %>] [one:null, <%= ((Obj?)(ctx.two))?.toStr?.toXml %>:null, three:null]>glug</div><%#
+		          	%><div <%= ((Obj?) (ctx.one))?.toStr?.toXml %> [<%= ((Obj?) (ctx.the))?.toStr?.toXml %>] [one:null, <%= ((Obj?) (ctx.two))?.toStr?.toXml %>:null, three:null]>glug</div><%#
 		          %></div>", tem.templateSrc)
 
 		// test it still works!

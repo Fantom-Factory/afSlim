@@ -28,10 +28,11 @@ internal mixin SlimEscape {
 	}
 
 	private Void escapeFantom(StrBuf code, Str line, Method localeFn) {
-		regx := fantomRegex.matcher(line)
-		find := regx.find
-		last := 0
-		
+		regx 		:= fantomRegex.matcher(line)
+		find 		:= regx.find
+		last 		:= 0
+		append 		:= true
+
 		while (find) {
 			
 			if (regx.group(2) != null) {
@@ -105,7 +106,7 @@ internal mixin SlimEscape {
 					code.add( localeFn.qname			)
 					code.add( "(this.typeof, "			)
 					code.add( escapeEfan(regx.group(7)).toCode	)
-					if (regx.group(8) != null)
+					if (regx.group(8) != null) 
 						code.add(", ").add(regx.group(8).trim)
 					code.add( ")"						)
 					code.add( ")?.toStr?.toXml %>"		)
@@ -124,24 +125,32 @@ internal mixin SlimEscape {
 					code.add( localeFn.qname			)
 					code.add( "(this.typeof, "			)
 					code.add( escapeEfan(regx.group(7)).toCode	)
-					if (regx.group(8) != null)
+					if (regx.group(8) != null) {
 						code.add(", ").add(regx.group(8).trim)
+						code.add(escapeEfan(line[regx.end(8)..-2]))
+						append = false
+					}
 					code.add( ")"						)
 					code.add( " %>"						)				
 				}
-	
+				
 				if (regx.group(6) == "\\\$\$<") {
 					code.add( escapeEfan(regx.group(1))	)
 					code.add( "\$\$<"					)
 					code.add( escapeEfan(regx.group(7))	)
+					code.add(", ").add( escapeEfan(regx.group(8).trim))
 					code.add( ">"						)
 				}
 			
-				last = regx.end(7) + 1	// +1 for >
+				if (regx.group(8) == null)
+					last = regx.end(7) + 1	// +1 for >
+				else
+					last = regx.end(8) + 1	// +1 for >
 				find = regx.find
 			}
 		}
-
-		code.add( escapeEfan(line[last..-1]) )
+		
+		if (append == true)
+			code.add( escapeEfan(line[last..-1]) )
 	}
 }

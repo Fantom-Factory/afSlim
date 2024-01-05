@@ -48,10 +48,12 @@ const class Slim {
 		slimParser.parse(srcLocation, slimTemplate, tree)
 		buf	 := StrBuf(slimTemplate.size)
 		efan := tree.toEfan(buf).toStr.trim
+
 		if (efan.startsWith("%>"))
 			efan = efan[2..-1]
 		if (efan.endsWith("<%#"))
 			efan = efan[0..-4]
+		
 		return efan
 	}
 
@@ -103,7 +105,7 @@ const class Slim {
 	static Str localeStr(Obj poddy, Str key, Locale? locale := null, Obj? arg1 := null, Obj? arg2 := null, Obj? arg3 := null, Obj? arg4 := null) {
 		// look for a pod that may contain the translation - ignoring afPlastic abominations
 		pod := poddy as Pod
-
+		
 		if (pod == null && poddy is Str)
 			pod = Pod.find(poddy, false)
 
@@ -162,4 +164,25 @@ const class Slim {
 		// defer to localeStr() as it is more useful / generic as it also takes a Locale
 		localeStr(poddy, key, null, arg1, arg2, arg3, arg4)
 	}
+	
+	Str debugStr() {
+		buf := StrBuf()
+		
+		buf.add("Tag Style:").addChar('\n').add("- ").add(this.tagStyle.toStr).addChar('\n').addChar('\n')
+		
+		buf.add("Components:").addChar('\n')
+		components.each |component| {
+			buf.add("- ").add(component.toStr).addChar('\n')
+		}
+		buf.addChar('\n')
+		
+		buf.add("Locale Method:").addChar('\n').add("- ").add(#localeFn.toStr)
+		
+		return buf.toStr
+	}
+	
+	override Str toStr() {
+		this.debugStr
+	}
+	
 }

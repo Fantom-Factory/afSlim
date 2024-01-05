@@ -24,9 +24,9 @@ class TestSlimComponents : Test {
 		slim := Slim(["components":[
 			SlimComponent.fromFn("bar") |entryExit, buf, ctx| {
 				if (entryExit) {
-					buf.add("<$ctx.tagName suckers>")
+					buf.add("<" + (ctx.tagName ?: "div") + " suckers>")
 				} else {
-					buf.add("</$ctx.tagName>")
+					buf.add("</" + (ctx.tagName ?: "div") + ">")
 				}
 			}
 		]])

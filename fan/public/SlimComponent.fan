@@ -45,8 +45,8 @@ const class SlimComponentCtx {
 	** The tag style.
 	const	TagStyle	tagStyle
 	
-	** The tag name.
-	const	Str			tagName
+	** The tag name (if defined in the Slim template).
+	const	Str?		tagName
 	
 	** The component name.
 	const	Str			comName
@@ -75,18 +75,10 @@ const class SlimComponentCtx {
 			this.text = this.text[1..-1]
 	}
 	
-	** Helper method for writing out tag values.
-	Void writeTag(StrBuf out, Str tagName, [Str:Str?]? attrs) {
-		out.addChar('<').add(tagName)
-		
-		// we purposely do NOT escape XML so we can write efan code values
-		if (attrs != null && attrs.size > 0)
-			attrs.each |val, nom| {
-				out.join(nom, " ")
-				if (val != null)
-					out.addChar('=').addChar('"').add(val).addChar('"')
-			}
-		
-		out.addChar('>')
+	@NoDoc
+	override Str toStr() {
+		out := StrBuf()
+		SlimTag(this).write(out)
+		return out.toStr
 	}
 }

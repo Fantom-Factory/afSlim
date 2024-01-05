@@ -4,7 +4,8 @@ Slim now supports Fantom L10N literal syntax!
 
 v1.5.0 [#v1.5.0]
 ======
- - New: Added Fantom L10N literals to syntax.
+ - New: Slim syntax now handled *extended* Fantom L10N literals!.
+ - New: 'SlimTag' utility class to ease Slim component creation.
  - Chg: 'Slim' ctor now takes a map of options. **(Backwards breaking change.)**
 
 

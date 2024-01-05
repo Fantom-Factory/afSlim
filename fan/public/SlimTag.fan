@@ -6,11 +6,11 @@ class SlimTag {
 	** The standard sizes.
 	static const Str[]	sizes	:= "xs sm lg xl".split
 
-	private Str			tagName
-	private	Str?		id
-	private Str:Str?	attrs
-	private Str[]		classes
-	private Str			style
+	Str			tagName
+	Str?		id
+	Str:Str?	attrs
+	Str[]		classes
+	Str			style
 	
 	** Creates a tag builder initialised from the given 'SlimComponentCtx'.
 	** 

@@ -1,11 +1,11 @@
-# Slim v1.4.0
+# Slim v1.5.0
 ---
 
 [![Written in: Fantom](http://img.shields.io/badge/written%20in-Fantom-lightgray.svg)](https://fantom-lang.org/)
-[![pod: v1.4.0](http://img.shields.io/badge/pod-v1.4.0-yellow.svg)](http://eggbox.fantomfactory.org/pods/afSlim)
+[![pod: v1.5.0](http://img.shields.io/badge/pod-v1.5.0-yellow.svg)](http://eggbox.fantomfactory.org/pods/afSlim)
 [![Licence: ISC](http://img.shields.io/badge/licence-ISC-blue.svg)](https://choosealicense.com/licenses/isc/)
 
-## Overview
+## <a name="overview"></a>Overview
 
 Slim is a library for generating HTML from concise, lightweight templates. Slim is based on [Jade](http://jade-lang.com/) for javascript and [Slim](http://slim-lang.com/) for Ruby.
 
@@ -36,13 +36,13 @@ Or install `Slim` with [fanr](https://fantom.org/doc/docFanr/Tool.html#install):
 
 To use in a [Fantom](https://fantom-lang.org/) project, add a dependency to `build.fan`:
 
-    depends = ["sys 1.0", ..., "afSlim 1.4"]
+    depends = ["sys 1.0", ..., "afSlim 1.5"]
 
 ## <a name="documentation"></a>Documentation
 
 Full API & fandocs are available on the [Eggbox](http://eggbox.fantomfactory.org/pods/afSlim/) - the Fantom Pod Repository.
 
-## Quick Start
+## <a name="quickStart"></a>Quick Start
 
 1. Create a text file called `Example.slim`    -? using concurrent
     doctype html
@@ -117,7 +117,7 @@ Full API & fandocs are available on the [Eggbox](http://eggbox.fantomfactory.org
 
 
 
-## Syntax
+## <a name="syntax"></a>Syntax
 
 The first non-whitespace characters of each line defines the content of the line:
 
@@ -135,7 +135,7 @@ The first non-whitespace characters of each line defines the content of the line
 > **ALIEN-AID:** Whitespace indentation is *very* important! If your HTML looks wrong, click `Show Whitespace` in your editor / IDE and make sure you are not mixing up tabs and spaces.
 
 
-### Doctype
+### <a name="doctype"></a>Doctype
 
 Start a line with `doctype` to print a document type. The common type would be `html`:
 
@@ -193,7 +193,7 @@ To print custom DOCTYPE declarations, use the `|` character to print a standard 
 
     | <!DOCTYPE wotever PUBLIC "http://www.wotever.com">
 
-### Using Statements
+### <a name="using"></a>Using Statements
 
 Start any line with `-?` to add a Fantom using statement.
 
@@ -204,7 +204,7 @@ The `using statement` means you don't have to use fully qualified class names:
     -? using concurrent
     == Actor.locals("my.value")
 
-### Elements
+### <a name="elements"></a>Elements
 
 Element lines are formatted as:
 
@@ -254,7 +254,7 @@ If an element has no text, then it may be immediatly followed by a semi-colon `;
       li; == ctx.otherPage
     
 
-### Single Line Comments
+### <a name="comments-line"></a>Single Line Comments
 
 Start any line with `//` to add a comment.
 
@@ -263,7 +263,7 @@ Start any line with `//` to add a comment.
 
 Comments *do not* appear in the generated html, but *do* appear in the efan template.
 
-### Block Comments
+### <a name="comments-block"></a>Block Comments
 
 Start any line with `/*` to add a block comment.
 
@@ -273,7 +273,7 @@ Start any line with `/*` to add a block comment.
 
 Block comments *do not* appear in the generated html, but *do* appear in the efan template.
 
-### HTML Comments
+### <a name="comments-html"></a>HTML Comments
 
 Start any line with `/!` to add a HTML comment.
 
@@ -285,7 +285,7 @@ becomes
 
 HTML comments *do* appear in the generated HTML.
 
-### Fantom Code
+### <a name="fantomCode"></a>Fantom Code
 
 Start any line with `--` to write Fantom code. Use to call efan helper methods.
 
@@ -300,7 +300,7 @@ Note because Slim does not have end tags, you do not specify opening or closing 
         -- ctx.doughnuts.each |nut|
           li Mmm... ${nut.filling}!
 
-### Fantom Eval
+### <a name="fantomEval"></a>Fantom Eval
 
 Start any line with `==` to evaluate a line of Fantom code and print it out in the template
 
@@ -308,7 +308,7 @@ Start any line with `==` to evaluate a line of Fantom code and print it out in t
 
 The resulting string is printed raw and is *not* HTML escaped.
 
-### Plain Text
+### <a name="plainText"></a>Plain Text
 
 Any line starting with a `|` denotes plain text and is printed raw. You can even embed HTML:
 
@@ -362,7 +362,7 @@ and not
 
 Slim trims 1 character of whitespace after a `|` and preserves trailing whitespace.
 
-### HTML Escaping
+## <a name="fantomInterpolation"></a>Fantom Interpolation
 
 Similar to [Fantom Str interpolation](https://fantom.org/doc/docLang/Literals.html), you can output Fantom expressions *anywhere* in the template using the standard `${...}` notation;
 
@@ -383,9 +383,52 @@ For simple expressions, the curly brackets may be omitted:
 
     div Mmmm... $ctx.doughnut.filling is my favourite!
 
-## HTML vs XHTML vs XML
+## <a name="localisation"></a>Localisation
 
-### HTML
+Similar to [Fantom Locale Literals](https://fantom.org/doc/docLang/Localization.html), you can output localised Fantom strings *anywhere* in the template using the standard `$<key>` notation;
+
+    div Mmmm... $<doughnut.filling.raspberry> is my favourite!
+
+Values pertaining to the key must be defined in locale props files as specified by [Fantom Localized Properties](https://fantom.org/doc/docLang/Localization.html). Property resolution follows the usual fallbacks of `locale -> lang -> en`. The `key` itself is printed should a localised value not exist.
+
+By default all text rendered via `$<...>` is XML escaped. To print raw / unescaped text use `$$<...>`. Backslash escape any expression to ignore it and print it as is.
+
+To summarise:
+
+    .
+      $<...> : XML escaped
+     \$<...> : ignored
+     $$<...> : raw / unescaped
+    \$$<...> : ignored
+    
+
+### Arg Interpolation
+
+Arguments may be passed as fantom literals / code to be interpolated into the localised values. Up to 4 arguments may be provided.
+
+    div Mmmm... $<doughnuts, "cream", raspberry()> are my favourites!
+
+Arguments are specified by `${x}` notation in the property value.
+
+    doughnuts = Doughnuts with ${1} and ${2}
+
+If more arguments are required, a list may be passed as the first argument.
+
+    div Mmmm... $<doughnuts, ["cream", "raspberry", "vanilla", "strawberry", "chocolate"]> are my favourites!
+
+A map may also be passed as the first arguments.
+
+    div Mmmm... $<doughnuts, ["1st":"raspberry", "2nd":"cream"]>
+
+Map arguments are interpolated via their keys.
+
+    doughnuts = Doughnuts with ${1st} and ${2nd}
+
+No checks are made to ensure all args are used, and no error is thrown should an arg does not exist.
+
+## <a name="HtmlXhtmlXml"></a>HTML vs XHTML vs XML
+
+### <a name="html"></a>HTML
 
 By default `Slim` renders tags as HTML5 elements; that is, all tags representing [void elements](http://www.w3.org/html/wg/drafts/html/master/syntax.html#void-elements) such as `meta`, `br` and `input` are printed without an end tag:
 
@@ -400,7 +443,7 @@ HTML5 documents should be served up (from a web / app server such as [BedSheet](
 
 While HTML is nice for browsers, this format doesn't lend itself to XML parsing; should you wish to use [Sizzle](http://eggbox.fantomfactory.org/pods/afSizzle) for instance. So `Slim` offers alternative renderings of tag endings.
 
-### XHTML
+### <a name="xhtml"></a>XHTML
 
 By creating [Slim](http://eggbox.fantomfactory.org/pods/afSlim/api/Slim) with a [TagStyle](http://eggbox.fantomfactory.org/pods/afSlim/api/TagStyle) of `xhtml` all [void elements](http://www.w3.org/html/wg/drafts/html/master/syntax.html#void-elements) are rendered as a self-closing tags. Warnings are logged should a void element NOT be empty.
 
@@ -425,7 +468,7 @@ Note that Internet Explorer versions 8 and below are reported not to accept this
       ...
     </html>
 
-### XML
+### <a name="xml"></a>XML
 
 If you create [Slim](http://eggbox.fantomfactory.org/pods/afSlim/api/Slim) with a [TagStyle](http://eggbox.fantomfactory.org/pods/afSlim/api/TagStyle) of `xml` then *ALL* empty tags are self-closing and void tags have no special meaning. Use this style when Slim is to create pure XML documents.
 
@@ -434,7 +477,7 @@ If you create [Slim](http://eggbox.fantomfactory.org/pods/afSlim/api/Slim) with 
     text/xml
     application/xml
 
-## Custom Components
+## <a name="customComponents"></a>Custom Components
 
 If standard HTML tags aren't enough, you may register your own tags with Slim that render custom templates.
 
@@ -446,7 +489,7 @@ or more simply:
 
     componentName#id.class (attributes)
 
-## IoC
+## <a name="ioc"></a>IoC
 
 Slim makes use of the non-invasive module feature of IoC 3.
 

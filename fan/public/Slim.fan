@@ -16,9 +16,8 @@ const class Slim {
 	private const EfanCompiler		efanCompiler	:= EfanCompiler()
 	private const SlimParser		slimParser
 	private const SlimComponent[]	components
+	private const Method			localeMeth
 	
-	// TODO debugStr() for AFX - tagStyle, component list, and l10nMethod
-
 	** Creates a 'Slim' instance, setting the ending style for tags.
 	** 
 	** Default opts:
@@ -33,10 +32,10 @@ const class Slim {
 	** <pre
 	new make([Str:Obj]? opts := null) {
 		// this opts ctor makes this Slim class an easy AFX service to contribute to! 
-		this.tagStyle	 = (opts?.get("tagStyle"	) as TagStyle)			?: TagStyle.html
-		this.components	 = (opts?.get("components"	) as SlimComponent[])	?: SlimComponent#.emptyList
-			 localeFn	:= (opts?.get("localeMethod") as Method)			?: #localeFn
-		this.slimParser	 = SlimParser(tagStyle, this.components, localeFn)
+		this.tagStyle	= (opts?.get("tagStyle"		) as TagStyle)			?: TagStyle.html
+		this.components	= (opts?.get("components"	) as SlimComponent[])	?: SlimComponent#.emptyList
+		this.localeMeth	= (opts?.get("localeMethod"	) as Method)			?: #localeFn
+		this.slimParser	= SlimParser(tagStyle, this.components, localeMeth)
 	}
 	
 	** Parses the given slim template into an efan template.
@@ -167,26 +166,27 @@ const class Slim {
 	
 	Str debugStr() {
 		buf := StrBuf()
-		max := components.reduce(32) |Int max, component->Int| {  max.max(component.toStr.size) } as Int
+		max := components.reduce(32) |Int max, component->Int| {  max.max(component.name.size) } as Int
 		max  = (max + 1).min(128)	
 		
-		buf.add("Tag Style:").addChar('\n').add("- ").add(this.tagStyle.toStr).addChar('\n').addChar('\n')
+		buf.add("Tag Style:").addChar('\n').add("  ").add(tagStyle).addChar('\n').addChar('\n')
 		
 		buf.add("Components:").addChar('\n')
 		components.each |component| {
-			buf.add("- ").add(component.name)
+			buf.add("  ").add(component.name)
 			
-			pad := "." * (max - component.name.toStr.size)
+			pad := "." * (max - component.name.size)
 			buf.addChar(' ').add(pad).add(" : ").add(component.typeof.qname)
 			
-			if (component.typeof.method("toStr").isOverride) {
-				buf.add(" - ").add(component.toStr)
-			}
+			if (component.typeof.method("toStr").isOverride)
+				buf.add(" - ").add(component)
 			buf.addChar('\n')
 		}
+		if (components.isEmpty)
+			buf.add("  none\n")
 		buf.addChar('\n')
-		
-		buf.add("Locale Method:").addChar('\n').add("- ").add(#localeFn.toStr)
+
+		buf.add("Locale Method:").addChar('\n').add("  ").add(localeMeth)
 		
 		return buf.toStr
 	}
@@ -194,5 +194,4 @@ const class Slim {
 	override Str toStr() {
 		this.debugStr
 	}
-	
 }

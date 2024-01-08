@@ -167,12 +167,22 @@ const class Slim {
 	
 	Str debugStr() {
 		buf := StrBuf()
+		max := components.reduce(32) |Int max, component->Int| {  max.max(component.toStr.size) } as Int
+		max  = (max + 1).min(128)	
 		
 		buf.add("Tag Style:").addChar('\n').add("- ").add(this.tagStyle.toStr).addChar('\n').addChar('\n')
 		
 		buf.add("Components:").addChar('\n')
 		components.each |component| {
-			buf.add("- ").add(component.toStr).addChar('\n')
+			buf.add("- ").add(component.name)
+			
+			pad := "." * (max - component.name.toStr.size)
+			buf.addChar(' ').add(pad).add(" : ").add(component.typeof.qname)
+			
+			if (component.typeof.method("toStr").isOverride) {
+				buf.add(" - ").add(component.toStr)
+			}
+			buf.addChar('\n')
 		}
 		buf.addChar('\n')
 		
